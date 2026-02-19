@@ -95,11 +95,6 @@ export default function Navigation() {
           ) : (
             <>
               <Link href="/login">
-                <Button variant="ghost" size="sm">
-                  Login
-                </Button>
-              </Link>
-              <Link href="/register">
                 <Button size="sm">Get Started</Button>
               </Link>
             </>

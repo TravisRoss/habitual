@@ -34,10 +34,6 @@ export default async function LoginPage() {
             </Button>
           </form>
         </div>
-
-        <p className="text-center text-sm text-muted-foreground">
-          By signing in, you agree to our terms of service and privacy policy.
-        </p>
       </div>
     </div>
   );
