@@ -11,8 +11,8 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
-import { LogOut, BarChart3, Settings } from "lucide-react";
-import { signOutAction } from "@/app/_lib/actions";
+import { BarChart3, Settings } from "lucide-react";
+import SignOutDialog from "@/components/features/SignOutDialog";
 
 export default function Navigation() {
   const { data: session } = useSession();
@@ -24,7 +24,7 @@ export default function Navigation() {
         <NavigationMenuItem className="mr-8">
           <Link
             href={session ? "/dashboard" : "/"}
-            className="font-bold text-xl bg-gradient-to-r from-zinc-900 to-zinc-700 bg-clip-text text-transparent"
+            className="font-bold text-xl bg-linear-to-r from-zinc-900 to-zinc-700 bg-clip-text text-transparent"
           >
             Habitual
           </Link>
@@ -89,15 +89,9 @@ export default function Navigation() {
           </>
         )}
 
-        {/* Right Side CTAs */}
         <NavigationMenuItem className="ml-auto">
           {session ? (
-            <form action={signOutAction}>
-              <Button type="submit" variant="ghost" size="sm" className="flex items-center gap-2">
-                <LogOut className="h-4 w-4" />
-                Logout
-              </Button>
-            </form>
+            <SignOutDialog />
           ) : (
             <>
               <Link href="/login">
