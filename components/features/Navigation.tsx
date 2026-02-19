@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -10,12 +11,11 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
-import { LogOut, Calendar, BarChart3, Settings } from "lucide-react";
-import { auth } from "@/app/_lib/auth";
+import { LogOut, BarChart3, Settings } from "lucide-react";
 import { signOutAction } from "@/app/_lib/actions";
 
-export default async function Navigation() {
-  const session = await auth();
+export default function Navigation() {
+  const { data: session } = useSession();
 
   return (
     <NavigationMenu className="max-w-screen-2xl mx-auto px-4">
