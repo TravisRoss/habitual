@@ -1,4 +1,5 @@
-import NextAuth from "next-auth";
+import NextAuth, { type Session } from "next-auth";
+import type { NextRequest } from "next/server";
 import Google from "next-auth/providers/google";
 import GitHub from "next-auth/providers/github";
 
@@ -15,6 +16,20 @@ const authConfig = {
   ],
   pages: {
     signIn: "/login",
+  },
+  callbacks: {
+    authorized({
+      auth,
+      request: { nextUrl },
+    }: {
+      auth: Session | null;
+      request: NextRequest;
+    }) {
+      const isLoggedIn = !!auth?.user;
+      const isOnDashboard = nextUrl.pathname.startsWith("/dashboard");
+      if (isOnDashboard && !isLoggedIn) return false;
+      return true;
+    },
   },
   trustHost: true,
 };
