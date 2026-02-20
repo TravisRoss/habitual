@@ -20,8 +20,8 @@ export default function SignOutDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="ghost" size="sm" className="flex items-center gap-2">
-          <LogOut className="h-4 w-4" />
+        <Button variant="ghost" size="sm" className="font-nunito font-semibold text-[#64748B] hover:text-[#F59E0B] hover:bg-transparent gap-1.5">
+          <LogOut className="h-3.5 w-3.5" />
           Logout
         </Button>
       </DialogTrigger>
@@ -29,19 +29,13 @@ export default function SignOutDialog() {
       <DialogContent className="sm:max-w-sm">
         <DialogHeader>
           <DialogTitle>Sign out</DialogTitle>
-          <DialogDescription>
-            Are you sure you want to sign out?
-          </DialogDescription>
+          <DialogDescription>Are you sure you want to sign out?</DialogDescription>
         </DialogHeader>
 
         <DialogFooter className="gap-2">
-          <Button variant="outline" onClick={() => setOpen(false)}>
-            Cancel
-          </Button>
+          <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
           <form action={signOutAction}>
-            <Button type="submit" variant="destructive">
-              Sign out
-            </Button>
+            <Button type="submit" variant="destructive">Sign out</Button>
           </form>
         </DialogFooter>
       </DialogContent>

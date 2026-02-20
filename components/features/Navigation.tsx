@@ -1,6 +1,9 @@
 "use client";
+
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import { BarChart3, Settings } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -10,97 +13,89 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { Button } from "@/components/ui/button";
-import { BarChart3, Settings } from "lucide-react";
 import SignOutDialog from "@/components/features/SignOutDialog";
+
+const linkClass = "font-nunito font-semibold text-[#64748B] hover:text-[#F59E0B] hover:bg-transparent focus:bg-transparent";
 
 export default function Navigation() {
   const { data: session } = useSession();
 
   return (
-    <NavigationMenu className="max-w-screen-2xl mx-auto px-4">
-      <NavigationMenuList className="flex gap-2 container mx-auto">
-        {/* Logo */}
-        <NavigationMenuItem className="mr-8">
-          <Link
-            href={session ? "/dashboard" : "/"}
-            className="font-bold text-xl bg-linear-to-r from-zinc-900 to-zinc-700 bg-clip-text text-transparent"
-          >
-            Habitual
-          </Link>
-        </NavigationMenuItem>
+    <nav className="bg-white border-b border-[#E2E8F0]">
+      <div className="max-w-screen-xl mx-auto px-6 h-14 flex items-center gap-2">
 
-        {/* Desktop Links */}
+        <Link
+          href={session ? "/dashboard" : "/"}
+          className="font-nunito font-extrabold text-lg text-[#F59E0B] mr-4"
+        >
+          Habitual
+        </Link>
+
         {session && (
-          <>
-            <NavigationMenuItem>
-              <Link href="/dashboard" className={navigationMenuTriggerStyle()}>
-                Dashboard
-              </Link>
-            </NavigationMenuItem>
+          <NavigationMenu>
+            <NavigationMenuList>
 
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Habits</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid w-48 p-4 gap-2">
-                  <li>
-                    <NavigationMenuLink asChild>
-                      <Link
-                        href="/dashboard/habits"
-                        className="block p-2 rounded-md hover:bg-zinc-100"
-                      >
-                        All Habits
-                      </Link>
-                    </NavigationMenuLink>
-                  </li>
-                  <li>
-                    <NavigationMenuLink asChild>
-                      <Link
-                        href="/dashboard/habits/new"
-                        className="block p-2 rounded-md hover:bg-zinc-100"
-                      >
-                        + New Habit
-                      </Link>
-                    </NavigationMenuLink>
-                  </li>
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} ${linkClass}`}>
+                  <Link href="/dashboard">Dashboard</Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
 
-            <NavigationMenuItem>
-              <Link
-                href="/dashboard/analytics"
-                className={navigationMenuTriggerStyle()}
-              >
-                <BarChart3 className="mr-2 h-4 w-4" />
-                Analytics
-              </Link>
-            </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className={linkClass}>Habits</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="flex flex-col w-40 p-1">
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <Link href="/dashboard/habits" className="block px-3 py-2 text-sm font-nunito text-[#0F172A] rounded-sm hover:bg-[#FFFBEB] hover:text-[#F59E0B] transition-colors">
+                          All Habits
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <Link href="/dashboard/habits/new" className="block px-3 py-2 text-sm font-nunito text-[#0F172A] rounded-sm hover:bg-[#FFFBEB] hover:text-[#F59E0B] transition-colors">
+                          + New Habit
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
 
-            <NavigationMenuItem>
-              <Link
-                href="/dashboard/settings"
-                className={navigationMenuTriggerStyle()}
-              >
-                <Settings className="mr-2 h-4 w-4" />
-                Settings
-              </Link>
-            </NavigationMenuItem>
-          </>
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} ${linkClass}`}>
+                  <Link href="/dashboard/analytics">
+                    <BarChart3 className="h-3.5 w-3.5" />
+                    Analytics
+                  </Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} ${linkClass}`}>
+                  <Link href="/dashboard/settings">
+                    <Settings className="h-3.5 w-3.5" />
+                    Settings
+                  </Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+
+            </NavigationMenuList>
+          </NavigationMenu>
         )}
 
-        <NavigationMenuItem className="ml-auto">
+        <div className="ml-auto">
           {session ? (
             <SignOutDialog />
           ) : (
-            <>
-              <Link href="/login">
-                <Button size="sm">Get Started</Button>
-              </Link>
-            </>
+            <Button asChild size="sm" className="font-nunito font-extrabold text-white border-0 btn-primary">
+              <Link href="/login">Get Started</Link>
+            </Button>
           )}
-        </NavigationMenuItem>
-      </NavigationMenuList>
-    </NavigationMenu>
+        </div>
+
+      </div>
+    </nav>
   );
 }

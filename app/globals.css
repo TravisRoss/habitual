@@ -125,3 +125,14 @@
     @apply bg-background text-foreground;
   }
 }
+
+@utility btn-primary {
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  transition: filter 150ms ease;
+  &:hover:not(:disabled) {
+    filter: brightness(0.92);
+  }
+  &:active:not(:disabled) {
+    filter: brightness(0.85);
+  }
+}

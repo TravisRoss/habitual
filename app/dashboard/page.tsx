@@ -5,7 +5,6 @@ export default async function Dashboard() {
 
   return (
     <>
-      <div>Dashboard</div>
       {habits.length === 0 && <EmptyMessage />}
     </>
   );

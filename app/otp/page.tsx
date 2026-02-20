@@ -37,8 +37,7 @@ export default function OTPPage() {
         </InputOTP>
 
         <Button
-          className="w-full h-[49px] font-nunito font-extrabold text-sm text-white border-0"
-          style={{ background: "linear-gradient(135deg, #F59E0B 0%, #D97706 100%)" }}
+          className="w-full h-[49px] font-nunito font-extrabold text-sm text-white border-0 btn-primary"
           disabled={value.length < 5}
         >
           Submit
