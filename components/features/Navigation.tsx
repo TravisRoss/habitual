@@ -22,7 +22,7 @@ export default function Navigation() {
 
   return (
     <nav className="bg-white border-b border-[#E2E8F0]">
-      <div className="max-w-screen-xl mx-auto px-6 h-14 flex items-center gap-2">
+      <div className="max-w-7xl mx-auto px-6 h-14 flex items-center gap-2">
 
         <Link
           href={session ? "/dashboard" : "/"}

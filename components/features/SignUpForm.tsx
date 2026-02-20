@@ -10,8 +10,7 @@ import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { PasswordInput } from "@/components/ui/PasswordInput";
-import { OAuthSection } from "@/components/features/OAuthSection";
-
+import { OAuthSection } from "./OAuthSection";
 const schema = z
   .object({
     name: z.string().min(1, "Name is required"),
@@ -109,17 +108,17 @@ export default function SignUpForm() {
               disabled={isSubmitting}
               className="w-full h-[49px] font-nunito font-extrabold text-sm text-white border-0 btn-primary"
             >
-              {isSubmitting ? <Spinner className="size-4" /> : "Sign Up"}
+              {isSubmitting ? <Spinner className="size-4" /> : "Create Account"}
             </Button>
           </FieldGroup>
-        </form>
+          </form>
 
-        <OAuthSection dividerLabel="Or sign up with" />
+          <OAuthSection verb="Sign up" />
 
         <p className="font-nunito text-sm text-[#94A3B8] text-center">
           Already have an account?{" "}
-          <Link href="/login" className="font-extrabold text-[#F59E0B] hover:underline">
-            Log In
+          <Link href="/login" className="font-extrabold text-[#F59E0B] underline hover:bg-blend-color-burn">
+            Sign In
           </Link>
         </p>
 

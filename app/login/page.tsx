@@ -1,16 +1,11 @@
-import { redirect } from "next/navigation";
-import { auth } from "../_lib/auth";
-import LoginForm from "@/components/features/LoginForm";
+import LoginForm from "@/components/features/LoginForm"
 
-export default async function LoginPage() {
-  const session = await auth();
-  if (session) redirect("/dashboard");
-
+export default function Page() {
   return (
-    <main className="min-h-screen bg-[#FFFBEB] flex items-center justify-center px-6 py-10">
+    <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
       <div className="w-full max-w-sm">
         <LoginForm />
       </div>
-    </main>
-  );
+    </div>
+  )
 }

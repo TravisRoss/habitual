@@ -27,10 +27,10 @@ export default async function Home() {
 
         {/* Heading */}
         <div className="flex flex-col gap-3">
-          <h1 className="font-[family-name:var(--font-nunito)] font-bold text-[44px] leading-tight text-[#0F172A]">
+          <h1 className="font-nunito font-bold text-[44px] leading-tight text-[#0F172A]">
             Build better habits.
           </h1>
-          <p className="font-[family-name:var(--font-nunito)] font-semibold text-sm text-[#64748B] max-w-[280px]">
+          <p className="font-nunito font-semibold text-sm text-[#64748B] max-w-[280px]">
             Track your progress and stay consistent, one day at a time.
           </p>
         </div>
@@ -39,7 +39,7 @@ export default async function Home() {
         <div className="flex flex-col gap-4">
           <Button
             asChild
-            className="w-full h-[49px] font-[family-name:var(--font-nunito)] font-extrabold text-sm text-white border-0 btn-primary"
+            className="w-full h-[49px] font-nunito font-extrabold text-sm text-white border-0 btn-primary"
           >
             <Link href="/signup">Get started</Link>
           </Button>
@@ -47,7 +47,7 @@ export default async function Home() {
           <Button
             asChild
             variant="outline"
-            className="w-full h-[49px] bg-white border-[#E2E8F0] font-[family-name:var(--font-nunito)] font-extrabold text-sm text-[#F59E0B]"
+            className="w-full h-[49px] bg-white border-[#E2E8F0] font-nunito font-extrabold text-sm text-[#F59E0B]"
             style={{ boxShadow: "1px 1px 14px 6px rgba(124,58,237,0.08)" }}
           >
             <Link href="/login">Log in</Link>
@@ -55,7 +55,7 @@ export default async function Home() {
         </div>
 
         {/* Footer note */}
-        <p className="font-[family-name:var(--font-nunito)] text-sm text-[#94A3B8] text-center">
+        <p className="font-nunito text-sm text-[#94A3B8] text-center">
           Free to use. No credit card required.
         </p>
 

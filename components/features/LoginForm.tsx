@@ -82,7 +82,7 @@ export default function LoginForm() {
                   Remember me
                 </Label>
               </div>
-              <Link href="#" className="font-nunito font-semibold text-sm text-[#F59E0B] hover:underline">
+              <Link href="#" className="font-nunito font-semibold text-sm text-[#F59E0B] hover:text-[#D97706] hover:underline transition-colors">
                 Forgot Password?
               </Link>
             </div>
@@ -97,11 +97,11 @@ export default function LoginForm() {
           </FieldGroup>
         </form>
 
-        <OAuthSection dividerLabel="Or log in with" />
+        <OAuthSection verb="Log in" />
 
         <p className="font-nunito text-sm text-[#94A3B8] text-center">
           Don&apos;t have an account?{" "}
-          <Link href="/signup" className="font-extrabold text-[#F59E0B] hover:underline">
+          <Link href="/signup" className="font-extrabold text-[#F59E0B] hover:text-[#D97706] hover:underline transition-colors">
             Sign Up
           </Link>
         </p>
