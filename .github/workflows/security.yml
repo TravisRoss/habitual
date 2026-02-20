@@ -1,4 +1,5 @@
 name: Security Audit
+run-name: "Security Audit — ${{ github.event_name == 'schedule' && 'scheduled' || github.ref_name }}"
 
 on:
   push:
