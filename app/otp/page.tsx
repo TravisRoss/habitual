@@ -12,15 +12,15 @@ export default function OTPPage() {
   const [value, setValue] = useState("");
 
   return (
-    <main className="min-h-screen bg-[#F8F7FF] flex items-center justify-center px-6">
+    <main className="min-h-screen bg-[#FFFBEB] flex items-center justify-center px-6">
       <div className="w-full max-w-[375px] flex flex-col gap-10 py-12">
 
         <div className="flex flex-col gap-3">
-          <h1 className="font-[family-name:var(--font-nunito)] font-bold text-[44px] leading-tight text-[#0F172A]">
+          <h1 className="font-nunito font-bold text-[44px] leading-tight text-[#0F172A]">
             Verify
           </h1>
-          <p className="font-[family-name:var(--font-nunito)] font-semibold text-sm text-[#64748B] max-w-[259px]">
-            Enter the OTP code we&apos;ve sent to your email
+          <p className="font-nunito font-semibold text-sm text-[#64748B] max-w-[259px]">
+            Enter the One Time Password (OTP) code we&apos;ve sent to your email
           </p>
         </div>
 
@@ -30,15 +30,15 @@ export default function OTPPage() {
               <InputOTPSlot
                 key={i}
                 index={i}
-                className="w-[49px] h-[48px] bg-white border-[#E2E8F0] rounded-[4px] font-[family-name:var(--font-nunito)] font-bold text-lg text-[#0F172A] focus:border-[#7C3AED] data-[active=true]:border-[#7C3AED] data-[active=true]:ring-[#7C3AED]"
+                className="w-[49px] h-[48px] bg-white border-[#E2E8F0] rounded-[4px] font-nunito font-bold text-lg text-[#0F172A] focus:border-[#D97706] data-[active=true]:border-[#D97706] data-[active=true]:ring-[#D97706]"
               />
             ))}
           </InputOTPGroup>
         </InputOTP>
 
         <Button
-          className="w-full h-[49px] font-[family-name:var(--font-nunito)] font-extrabold text-sm text-white border-0"
-          style={{ background: "linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%)" }}
+          className="w-full h-[49px] font-nunito font-extrabold text-sm text-white border-0"
+          style={{ background: "linear-gradient(135deg, #F59E0B 0%, #D97706 100%)" }}
           disabled={value.length < 5}
         >
           Submit
