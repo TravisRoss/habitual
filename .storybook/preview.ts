@@ -1,4 +1,4 @@
-import type { Preview } from "@storybook/nextjs-vite";
+import type { Preview } from "@storybook/react";
 import "../app/globals.css";
 
 const preview: Preview = {
@@ -12,7 +12,7 @@ const preview: Preview = {
     backgrounds: {
       default: "app",
       values: [
-        { name: "app", value: "#F8F7FF" },
+        { name: "app", value: "#FFFBEB" },
         { name: "white", value: "#FFFFFF" },
       ],
     },
