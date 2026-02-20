@@ -16,11 +16,12 @@ export function OAuthButton({ icon, label }: OAuthButtonProps) {
       type="submit"
       variant="outline"
       disabled={pending}
+      aria-busy={pending}
       className="w-full h-[49px] bg-white border-[#E2E8F0] font-nunito font-extrabold text-sm text-[#0F172A]"
       style={{ boxShadow: "1px 1px 14px 6px rgba(124,58,237,0.08)" }}
     >
       {pending ? <Spinner className="size-4" /> : icon}
-      {label}
+      {pending ? "Redirecting…" : label}
     </Button>
   );
 }
