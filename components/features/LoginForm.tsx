@@ -2,8 +2,9 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -13,26 +14,32 @@ import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
 import { PasswordInput } from "@/components/ui/PasswordInput";
 import { OAuthSection } from "@/components/features/OAuthSection";
-
-const schema = z.object({
-  email: z.string().min(1, "Email is required").email("Enter a valid email"),
-  password: z.string().min(1, "Password is required"),
-  remember: z.boolean().optional(),
-});
-
-type FormValues = z.infer<typeof schema>;
+import { loginSchema, type LoginFormValues } from "@/lib/zod";
 
 const inputClass = "bg-white border-[#E2E8F0] focus-visible:ring-[#F59E0B] focus-visible:border-[#F59E0B] text-[#0F172A] aria-invalid:border-red-400";
 
 export default function LoginForm() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isSubmitting },
-  } = useForm<FormValues>({ resolver: zodResolver(schema) });
+  } = useForm<LoginFormValues>({ resolver: zodResolver(loginSchema) });
 
-  async function onSubmit(_data: FormValues) {
-    // Wire up email/password auth here
+  async function onSubmit(data: LoginFormValues) {
+    const result = await signIn("credentials", {
+      email: data.email,
+      password: data.password,
+      redirect: false,
+    });
+
+    if (result?.error) {
+      setError("root", { message: "Invalid email or password." });
+      return;
+    }
+
+    router.push("/dashboard");
   }
 
   return (
@@ -86,6 +93,12 @@ export default function LoginForm() {
                 Forgot Password?
               </Link>
             </div>
+
+            {errors.root && (
+              <p role="alert" className="text-sm text-red-500 font-nunito text-center">
+                {errors.root.message}
+              </p>
+            )}
 
             <Button
               type="submit"

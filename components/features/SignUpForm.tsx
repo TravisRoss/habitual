@@ -2,8 +2,8 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
@@ -11,23 +11,8 @@ import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { PasswordInput } from "@/components/ui/PasswordInput";
 import { OAuthSection } from "./OAuthSection";
-const schema = z
-  .object({
-    name: z.string().min(1, "Name is required"),
-    email: z.string().min(1, "Email is required").email("Enter a valid email"),
-    password: z
-      .string()
-      .min(8, "Password must be at least 8 characters")
-      .regex(/[A-Z]/, "Must include an uppercase letter")
-      .regex(/[0-9]/, "Must include a number"),
-    confirm: z.string().min(1, "Please confirm your password"),
-  })
-  .refine((data) => data.password === data.confirm, {
-    message: "Passwords don't match",
-    path: ["confirm"],
-  });
-
-type FormValues = z.infer<typeof schema>;
+import { signUpWithCredentials } from "@/app/_lib/actions";
+import { signUpSchema, type SignUpFormValues } from "@/lib/zod";
 
 const inputClass = "bg-white border-[#E2E8F0] focus-visible:ring-[#F59E0B] focus-visible:border-[#F59E0B] text-[#0F172A] aria-invalid:border-red-400";
 
@@ -35,11 +20,27 @@ export default function SignUpForm() {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isSubmitting },
-  } = useForm<FormValues>({ resolver: zodResolver(schema) });
+  } = useForm<SignUpFormValues>({ resolver: zodResolver(signUpSchema) });
 
-  async function onSubmit(_data: FormValues) {
-    // Wire up email/password auth here
+  async function onSubmit(data: SignUpFormValues) {
+    const result = await signUpWithCredentials({
+      email: data.email,
+      password: data.password,
+      name: data.name,
+    });
+
+    if (result.error) {
+      setError("root", { message: result.error });
+      return;
+    }
+
+    await signIn("credentials", {
+      email: data.email,
+      password: data.password,
+      callbackUrl: "/dashboard",
+    });
   }
 
   return (
@@ -102,6 +103,12 @@ export default function SignUpForm() {
               />
               <FieldError errors={[errors.confirm]} />
             </Field>
+
+            {errors.root && (
+              <p role="alert" className="text-sm text-red-500 font-nunito text-center">
+                {errors.root.message}
+              </p>
+            )}
 
             <Button
               type="submit"
