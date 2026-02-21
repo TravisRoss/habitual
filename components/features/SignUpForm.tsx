@@ -59,7 +59,6 @@ export default function SignUpForm() {
                 id="name"
                 type="text"
                 autoComplete="name"
-                autoFocus
                 aria-invalid={!!errors.name}
                 className={inputClass}
                 {...register("name")}

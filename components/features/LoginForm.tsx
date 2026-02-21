@@ -1,6 +1,6 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -22,6 +22,7 @@ export default function LoginForm() {
   const router = useRouter();
   const {
     register,
+    control,
     handleSubmit,
     setError,
     formState: { errors, isSubmitting },
@@ -58,7 +59,6 @@ export default function LoginForm() {
                 id="email"
                 type="email"
                 autoComplete="email"
-                autoFocus
                 aria-invalid={!!errors.email}
                 className={inputClass}
                 {...register("email")}
@@ -80,10 +80,17 @@ export default function LoginForm() {
 
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Checkbox
-                  id="remember"
-                  className="border-[#E2E8F0] data-[state=checked]:bg-[#F59E0B] data-[state=checked]:border-[#F59E0B]"
-                  {...register("remember")}
+                <Controller
+                  name="remember"
+                  control={control}
+                  render={({ field }) => (
+                    <Checkbox
+                      id="remember"
+                      checked={field.value === true}
+                      onCheckedChange={(checked) => field.onChange(checked === true)}
+                      className="border-[#E2E8F0] data-[state=checked]:bg-[#F59E0B] data-[state=checked]:border-[#F59E0B]"
+                    />
+                  )}
                 />
                 <Label htmlFor="remember" className="font-nunito text-[#94A3B8] cursor-pointer">
                   Remember me
