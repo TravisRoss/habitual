@@ -59,6 +59,30 @@ export async function upsertProfile(data: {
   return { error: error?.message ?? null };
 }
 
+/** Inserts a new habit. */
+export async function insertHabit(data: {
+  user_id: string;
+  name: string;
+  frequency?: "daily" | "weekly" | "custom";
+  description?: string | null;
+  color?: string;
+  weekly_target?: number | null;
+  target_days?: number[] | null;
+}): Promise<{ error: string | null }> {
+  const supabase = createAdminClient();
+  const { error } = await supabase.from("habits").insert({
+    user_id: data.user_id,
+    name: data.name,
+    frequency: data.frequency ?? "daily",
+    description: data.description ?? null,
+    color: data.color ?? undefined,
+    weekly_target: data.weekly_target ?? null,
+    target_days: data.target_days ?? null,
+  });
+
+  return { error: error?.message ?? null };
+}
+
 /** Inserts a new profile. Used by email/password sign-up. */
 export async function insertProfile(data: {
   email: string;

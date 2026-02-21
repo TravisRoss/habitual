@@ -1,10 +1,11 @@
 "use server";
 
 import bcrypt from "bcryptjs";
-import { signIn, signOut } from "@/app/_lib/auth";
+import { auth, signIn, signOut } from "@/app/_lib/auth";
 import {
   profileExistsByEmail,
   insertProfile,
+  insertHabit,
 } from "@/lib/data-service";
 
 export async function signInWithGoogle() {
@@ -38,6 +39,36 @@ export async function signUpWithCredentials(data: {
 
   if (error) {
     return { error: "Failed to create account. Please try again." };
+  }
+
+  return {};
+}
+
+export async function createHabit(data: {
+  name: string;
+  description?: string;
+  frequency?: "daily" | "weekly" | "custom";
+  color?: string;
+  weekly_target?: number;
+  target_days?: number[];
+}): Promise<{ error?: string }> {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return { error: "You must be logged in to create a habit." };
+  }
+
+  const { error } = await insertHabit({
+    user_id: session.user.id,
+    name: data.name,
+    description: data.description || null,
+    frequency: data.frequency,
+    color: data.color,
+    weekly_target: data.frequency === "weekly" ? data.weekly_target ?? null : null,
+    target_days: data.frequency === "custom" ? data.target_days ?? null : null,
+  });
+
+  if (error) {
+    return { error: "Failed to create habit. Please try again." };
   }
 
   return {};
