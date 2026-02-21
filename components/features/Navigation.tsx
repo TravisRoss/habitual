@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-import { BarChart3, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -65,19 +64,13 @@ export default function Navigation() {
 
               <NavigationMenuItem>
                 <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} ${linkClass}`}>
-                  <Link href="/dashboard/analytics">
-                    <BarChart3 className="h-3.5 w-3.5" />
-                    Analytics
-                  </Link>
+                  <Link href="/dashboard/analytics">Analytics</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
               <NavigationMenuItem>
                 <NavigationMenuLink asChild className={`${navigationMenuTriggerStyle()} ${linkClass}`}>
-                  <Link href="/dashboard/settings">
-                    <Settings className="h-3.5 w-3.5" />
-                    Settings
-                  </Link>
+                  <Link href="/dashboard/settings">Settings</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
