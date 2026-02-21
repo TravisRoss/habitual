@@ -96,7 +96,7 @@ export default function LoginForm() {
                   Remember me
                 </Label>
               </div>
-              <Link href="#" className="font-nunito font-semibold text-sm text-[#F59E0B] hover:text-[#D97706] hover:underline transition-colors">
+              <Link href="/login/forgot-password" className="font-nunito font-semibold text-sm text-[#F59E0B] hover:text-[#D97706] hover:underline transition-colors">
                 Forgot Password?
               </Link>
             </div>
