@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+import type { Session } from "next-auth";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -16,8 +16,7 @@ import SignOutDialog from "@/components/features/SignOutDialog";
 
 const linkClass = "font-nunito font-semibold text-[#64748B] hover:text-[#F59E0B] hover:bg-transparent focus:bg-transparent";
 
-export default function Navigation() {
-  const { data: session } = useSession();
+export default function Navigation({ session }: { session: Session | null }) {
 
   return (
     <nav className="bg-white border-b border-[#E2E8F0]">

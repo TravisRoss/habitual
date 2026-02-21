@@ -1,13 +1,15 @@
+import { auth } from "@/app/_lib/auth";
 import Navigation from "@/components/features/Navigation";
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await auth();
   return (
     <div className="min-h-screen bg-[#FFFBEB]">
-      <Navigation />
+      <Navigation session={session} />
       <main className="container mx-auto px-4 py-8">{children}</main>
     </div>
   );
