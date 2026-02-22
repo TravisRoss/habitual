@@ -1,7 +1,6 @@
 /**
  * Auth E2E tests. Requires:
  * - Dev server running (npm run dev) or CI with webServer
- * - Supabase configured with profiles table (incl. password_hash)
  * - NextAuth env vars (AUTH_SECRET, etc.)
  */
 import { test, expect } from "@playwright/test";
@@ -54,7 +53,7 @@ test.describe("Authentication", () => {
       await page.getByRole("button", { name: "Create Account" }).click();
 
       await expect(
-        page.getByRole("alert").filter({ hasText: "already exists" })
+        page.getByRole("alert").filter({ hasText: "already exists" }),
       ).toBeVisible();
       await expect(page).toHaveURL("/signup");
     });
@@ -116,7 +115,7 @@ test.describe("Authentication", () => {
 
       await expect(page.getByText("Enter a valid email")).toBeVisible();
       await expect(
-        page.getByText("Password must be at least 8 characters")
+        page.getByText("Password must be at least 8 characters"),
       ).toBeVisible();
       await expect(page).toHaveURL("/login");
     });
