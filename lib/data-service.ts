@@ -3,16 +3,10 @@
  * Centralises all Supabase access so auth and server actions stay decoupled from the DB.
  */
 import { createAdminClient } from "@/lib/supabase/server";
-
-export type ProfileForCredentials = {
-  id: string;
-  email: string | null;
-  full_name: string | null;
-  password_hash: string | null;
-};
+import { Habit, ProfileForCredentials } from "@/types";
 
 export async function getProfileForCredentials(
-  email: string
+  email: string,
 ): Promise<ProfileForCredentials | null> {
   const supabase = createAdminClient();
   const { data } = await supabase
@@ -24,7 +18,9 @@ export async function getProfileForCredentials(
   return data;
 }
 
-export async function getProfileIdByEmail(email: string): Promise<string | null> {
+export async function getProfileIdByEmail(
+  email: string,
+): Promise<string | null> {
   const supabase = createAdminClient();
   const { data } = await supabase
     .from("profiles")
@@ -53,7 +49,7 @@ export async function upsertProfile(data: {
       full_name: data.full_name ?? null,
       avatar_url: data.avatar_url ?? null,
     },
-    { onConflict: "email" }
+    { onConflict: "email" },
   );
 
   return { error: error?.message ?? null };
@@ -93,4 +89,23 @@ export async function insertProfile(data: {
   const { error } = await supabase.from("profiles").insert(data);
 
   return { error: error?.message ?? null };
+}
+
+export async function getHabitsByUserId(
+  user_id: string,
+): Promise<Habit[] | null> {
+  const supabase = createAdminClient();
+  const { data, error } = await supabase
+    .from("habits")
+    .select(
+      "id, name, frequency, description, color, weekly_target, target_days",
+    )
+    .eq("user_id", user_id);
+
+  if (error) {
+    console.error("Error fetching habits:", error);
+    return null;
+  }
+
+  return data;
 }
