@@ -23,7 +23,6 @@ import {
 } from "@/components/ui/select";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
-import { createHabit } from "@/app/_lib/actions";
 import {
   createHabitSchema,
   type CreateHabitFormValues,
@@ -34,7 +33,13 @@ import { TargetDaysCheckboxes } from "./TargetDaysCheckboxes";
 import { WeeklyTargetSelect } from "./WeeklyTargetSelect";
 import { inputClass } from "./constants";
 
-export function CreateHabitForm() {
+type CreateHabitFormProps = {
+  onCreateHabit?: (data: CreateHabitFormValues) => Promise<{ error?: string }>;
+};
+
+const noopCreateHabit = async (): Promise<{ error?: string }> => ({});
+
+export function CreateHabitForm({ onCreateHabit = noopCreateHabit }: CreateHabitFormProps) {
   const router = useRouter();
   const {
     register,
@@ -52,7 +57,7 @@ export function CreateHabitForm() {
   const frequency = watch("frequency");
 
   async function onSubmit(data: CreateHabitFormValues) {
-    const result = await createHabit({
+    const result = await onCreateHabit({
       ...data,
       // Keep a stable order in DB for predictable reads/comparisons.
       target_days:
