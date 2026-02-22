@@ -4,6 +4,13 @@ import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import {
+  Item,
+  ItemContent,
+  ItemTitle,
+  ItemDescription,
+  ItemActions,
+} from "@/components/ui/item";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -17,42 +24,42 @@ export default function HabitItem({ habit }: { habit: Habit }) {
   const [completed, setCompleted] = useState(false);
 
   return (
-    <li
+    <Item
       className={cn(
-        "flex items-center justify-between px-4 py-3 rounded-lg shadow-sm relative overflow-hidden transition-colors duration-300",
+        "relative overflow-hidden border-l-4 transition-colors duration-300",
         completed ? "bg-green-50" : "bg-white",
       )}
+      style={{ borderLeftColor: habit.color ?? "#E5E7EB" }}
     >
-      <span
-        className="absolute left-0 top-0 bottom-0 w-1"
-        style={{ backgroundColor: habit.color ?? "#E5E7EB" }}
-      />
-
-      <div className="pl-3">
-        <p
+      <ItemContent>
+        <ItemTitle
           className={cn(
-            "font-nunito font-semibold text-sm transition-all duration-300",
+            "font-nunito",
             completed && "line-through text-muted-foreground",
           )}
         >
           {habit.name}
-        </p>
-        <Badge variant="outline" className="text-xs mt-0.5">
-          {habit.frequency}
-        </Badge>
-      </div>
+        </ItemTitle>
+        <ItemDescription>
+          <Badge variant="outline" className="text-xs">
+            {habit.frequency}
+          </Badge>
+        </ItemDescription>
+      </ItemContent>
 
-      <div
-        className={cn(
-          "flex items-center gap-2 transition-transform duration-150",
-          completed && "scale-110",
-        )}
-      >
-        <Checkbox
-          checked={completed}
-          onCheckedChange={(val) => setCompleted(!!val)}
-          className="h-5 w-5"
-        />
+      <ItemActions>
+        <div
+          className={cn(
+            "transition-transform duration-150",
+            completed && "scale-110",
+          )}
+        >
+          <Checkbox
+            checked={completed}
+            onCheckedChange={(val) => setCompleted(!!val)}
+            className="h-5 w-5"
+          />
+        </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button className="flex items-center p-1 text-gray-500 hover:text-gray-700">
@@ -68,7 +75,7 @@ export default function HabitItem({ habit }: { habit: Habit }) {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      </div>
-    </li>
+      </ItemActions>
+    </Item>
   );
 }
