@@ -1,5 +1,6 @@
 import { auth } from "@/app/_lib/auth";
 import Navigation from "@/components/features/Navigation";
+import FooterNav from "@/components/features/FooterNav";
 
 export default async function DashboardLayout({
   children,
@@ -11,6 +12,7 @@ export default async function DashboardLayout({
     <div className="min-h-screen bg-[#FFFBEB]">
       <Navigation session={session} />
       <main className="container mx-auto px-4 py-8">{children}</main>
+      <FooterNav />
     </div>
   );
 }
