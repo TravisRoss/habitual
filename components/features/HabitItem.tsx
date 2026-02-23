@@ -16,7 +16,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MoreVertical, Trash2 } from "lucide-react";
+import { MoreVertical, Pencil, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Habit } from "@/types";
 import { useDeleteHabit } from "@/hooks/useHabits";
@@ -75,15 +75,27 @@ export default function HabitItem({ habit }: HabitItemProps) {
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem onSelect={(e) => { e.preventDefault(); setEditOpen(true); }}>
-              Edit
+            <DropdownMenuItem
+              onSelect={(e) => {
+                e.preventDefault();
+                setEditOpen(true);
+              }}
+            >
+              <Pencil className="h-4 w-4 mr-2" />
+              <span aria-label="Edit habit">Edit</span>
             </DropdownMenuItem>
-            <HabitDialog habit={habit} action="edit" open={editOpen} onOpenChange={setEditOpen} />
+            <HabitDialog
+              habit={habit}
+              action="edit"
+              open={editOpen}
+              onOpenChange={setEditOpen}
+            />
             <DropdownMenuItem
               className="text-destructive"
               onSelect={() => deleteMutation.mutate(habit.id)}
             >
-              <Trash2 className="h-4 w-4 mr-2" /> Delete
+              <Trash2 className="h-4 w-4 mr-2" />
+              <span aria-label="Delete habit">Delete</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
