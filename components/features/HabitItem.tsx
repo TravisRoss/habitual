@@ -19,8 +19,8 @@ import {
 import { MoreVertical, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Habit } from "@/types";
-import { EditHabitDialog } from "./EditHabitDialog";
 import { useDeleteHabit } from "@/hooks/useHabits";
+import { HabitDialog } from "./HabitDialog";
 
 type HabitItemProps = {
   habit: Habit;
@@ -28,6 +28,7 @@ type HabitItemProps = {
 
 export default function HabitItem({ habit }: HabitItemProps) {
   const [completed, setCompleted] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
   const deleteMutation = useDeleteHabit();
 
   return (
@@ -74,7 +75,10 @@ export default function HabitItem({ habit }: HabitItemProps) {
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <EditHabitDialog habit={habit} />
+            <DropdownMenuItem onSelect={(e) => { e.preventDefault(); setEditOpen(true); }}>
+              Edit
+            </DropdownMenuItem>
+            <HabitDialog habit={habit} action="edit" open={editOpen} onOpenChange={setEditOpen} />
             <DropdownMenuItem
               className="text-destructive"
               onSelect={() => deleteMutation.mutate(habit.id)}

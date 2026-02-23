@@ -1,8 +1,13 @@
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 import { auth } from "../_lib/auth";
 import { getHabitsByUserId } from "@/lib/data-service";
 import { HABITS_KEY } from "@/hooks/useHabits";
 import HabitsList from "@/components/features/HabitsList";
+import { CreateHabitButton } from "@/components/features/CreateHabitButton";
 
 export const metadata = {
   title: "Dashboard",
@@ -29,6 +34,7 @@ export default async function Dashboard() {
       <HydrationBoundary state={dehydrate(queryClient)}>
         <HabitsList />
       </HydrationBoundary>
+      <CreateHabitButton />
     </div>
   );
 }

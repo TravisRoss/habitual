@@ -19,7 +19,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         }}
       />
       {children}
-      <ReactQueryDevtools />
+      <ReactQueryDevtools buttonPosition="top-right" />
     </QueryClientProvider>
   );
 }
