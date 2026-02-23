@@ -7,14 +7,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { inputClass } from "./constants";
+import { inputClass } from "@/app/_lib/constants";
 
 type WeeklyTargetSelectProps = {
   value?: number;
   onChange: (value?: number) => void;
 };
 
-export function WeeklyTargetSelect({ value, onChange }: WeeklyTargetSelectProps) {
+export function WeeklyTargetSelect({
+  value,
+  onChange,
+}: WeeklyTargetSelectProps) {
   return (
     <Select
       value={value != null ? String(value) : ""}
