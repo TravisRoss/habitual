@@ -79,6 +79,43 @@ export async function insertHabit(data: {
   return { error: error?.message ?? null };
 }
 
+export async function updateHabit(
+  habit_id: string,
+  data: {
+    name?: string;
+    frequency?: "daily" | "weekly" | "custom";
+    description?: string | null;
+    color?: string;
+    weekly_target?: number | null;
+    target_days?: number[] | null;
+  },
+): Promise<{ error: string | null }> {
+  const supabase = createAdminClient();
+  const { error } = await supabase
+    .from("habits")
+    .update({
+      name: data.name,
+      frequency: data.frequency,
+      description: data.description,
+      color: data.color,
+      weekly_target: data.weekly_target,
+      target_days: data.target_days,
+    })
+    .eq("id", habit_id);
+
+  return { error: error?.message ?? null };
+}
+
+/** Deletes a habit by ID. */
+export async function deleteHabit(
+  habit_id: string,
+): Promise<{ error: string | null }> {
+  const supabase = createAdminClient();
+  const { error } = await supabase.from("habits").delete().eq("id", habit_id);
+
+  return { error: error?.message ?? null };
+}
+
 /** Inserts a new profile. Used by email/password sign-up. */
 export async function insertProfile(data: {
   email: string;

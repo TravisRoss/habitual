@@ -16,12 +16,19 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MoreVertical, Pencil, Trash2 } from "lucide-react";
+import { MoreVertical, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Habit } from "@/types";
+import { EditHabitDialog } from "./EditHabitDialog";
+import { useDeleteHabit } from "@/hooks/useHabits";
 
-export default function HabitItem({ habit }: { habit: Habit }) {
+type HabitItemProps = {
+  habit: Habit;
+};
+
+export default function HabitItem({ habit }: HabitItemProps) {
   const [completed, setCompleted] = useState(false);
+  const deleteMutation = useDeleteHabit();
 
   return (
     <Item
@@ -67,10 +74,11 @@ export default function HabitItem({ habit }: { habit: Habit }) {
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem>
-              <Pencil className="h-4 w-4 mr-2" /> Edit
-            </DropdownMenuItem>
-            <DropdownMenuItem className="text-destructive">
+            <EditHabitDialog habit={habit} />
+            <DropdownMenuItem
+              className="text-destructive"
+              onSelect={() => deleteMutation.mutate(habit.id)}
+            >
               <Trash2 className="h-4 w-4 mr-2" /> Delete
             </DropdownMenuItem>
           </DropdownMenuContent>

@@ -1,7 +1,10 @@
-import HabitItem from "@/components/features/HabitItem";
-import type { Habit } from "@/types";
+"use client";
 
-export default function HabitsList({ habits }: { habits: Habit[] }) {
+import { useHabits } from "@/hooks/useHabits";
+import HabitItem from "@/components/features/HabitItem";
+
+export default function HabitsList() {
+  const { data: habits = [] } = useHabits();
   return (
     <ul className="flex flex-col gap-2">
       {habits.map((habit) => (

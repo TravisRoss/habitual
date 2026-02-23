@@ -8,7 +8,7 @@ export type ProfileForCredentials = {
 export type Habit = {
   id: string;
   name: string;
-  frequency: string;
+  frequency: "daily" | "weekly" | "custom";
   description: string | null;
   color: string | null;
   weekly_target: number | null;
