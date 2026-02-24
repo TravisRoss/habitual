@@ -4,7 +4,7 @@ export function dateToDayNumber(date: string): number {
   return d.getDay();
 }
 
-/** Returns today's date as a string in YYYY-MM-DD format (e.g. "2026-02-24") */
-export function getToday(): string {
-  return new Date().toISOString().slice(0, 10);
+/** Returns a date as a string in YYYY-MM-DD format (e.g. "2026-02-24") */
+export function formatDate(date: Date = new Date()): string {
+  return date.toISOString().slice(0, 10);
 }

@@ -9,7 +9,7 @@ import { HABITS_KEY } from "@/hooks/useHabits";
 import HabitsList from "@/components/features/HabitsList";
 import { CreateHabitButton } from "@/components/features/CreateHabitButton";
 import Banner from "@/components/features/Banner";
-import { getToday } from "../_lib/utils";
+import { formatDate } from "../_lib/utils";
 
 export const metadata = {
   title: "Dashboard",
@@ -18,7 +18,7 @@ export const metadata = {
 export default async function Dashboard() {
   const session = await auth();
   const userId = session?.user?.id;
-  const today = getToday();
+  const today = formatDate();
 
   if (!userId) throw new Error("Unauthorized");
 

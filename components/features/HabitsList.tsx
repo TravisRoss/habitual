@@ -2,10 +2,10 @@
 
 import { useHabitsForDate } from "@/hooks/useHabits";
 import HabitItem from "@/components/features/HabitItem";
-import { getToday } from "@/app/_lib/utils";
+import { formatDate } from "@/app/_lib/utils";
 
 export default function HabitsList() {
-  const today = getToday();
+  const today = formatDate();
   const { data: habits = [] } = useHabitsForDate(today);
 
   return (
