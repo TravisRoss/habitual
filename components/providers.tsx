@@ -16,7 +16,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
           gutter={8}
           containerStyle={{ zIndex: 1000 }}
           toastOptions={{
-            duration: 3000,
+            duration: 1000,
             style: { fontFamily: "var(--font-nunito)" },
           }}
         />

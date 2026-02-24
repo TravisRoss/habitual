@@ -19,7 +19,11 @@ import {
 import { MoreVertical, Pencil, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Habit } from "@/types";
-import { useDeleteHabit } from "@/hooks/useHabits";
+import {
+  useDeleteHabit,
+  useMarkHabitAsCompleted,
+  useUnmarkHabitAsCompleted,
+} from "@/hooks/useHabits";
 import { HabitDialog } from "./HabitDialog";
 
 type HabitItemProps = {
@@ -30,6 +34,17 @@ export default function HabitItem({ habit }: HabitItemProps) {
   const [completed, setCompleted] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const deleteMutation = useDeleteHabit();
+  const markCompleteMutation = useMarkHabitAsCompleted();
+  const unmarkCompleteMutation = useUnmarkHabitAsCompleted();
+
+  const handleCheckboxChange = (val: boolean, habit_id: string) => {
+    setCompleted(!!val);
+    if (val) {
+      markCompleteMutation.mutate({ habit_id, user_id: habit.user_id });
+    } else {
+      unmarkCompleteMutation.mutate({ habit_id, user_id: habit.user_id });
+    }
+  };
 
   return (
     <Item
@@ -37,7 +52,9 @@ export default function HabitItem({ habit }: HabitItemProps) {
         "relative overflow-hidden border-l-4 transition-colors duration-300",
         completed ? "bg-habit-done-bg" : "bg-card",
       )}
-      style={{ borderLeftColor: habit.color ?? "var(--color-habit-border-default)" }}
+      style={{
+        borderLeftColor: habit.color ?? "var(--color-habit-border-default)",
+      }}
     >
       <ItemContent>
         <ItemTitle
@@ -64,7 +81,9 @@ export default function HabitItem({ habit }: HabitItemProps) {
         >
           <Checkbox
             checked={completed}
-            onCheckedChange={(val) => setCompleted(!!val)}
+            onCheckedChange={(val) =>
+              handleCheckboxChange(Boolean(val), habit.id)
+            }
             className="h-5 w-5"
           />
         </div>

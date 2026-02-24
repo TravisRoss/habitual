@@ -9,6 +9,8 @@ import {
   updateHabit,
   deleteHabit,
   getHabitsByUserId,
+  markHabitAsCompleted,
+  unmarkHabitAsCompleted,
 } from "@/lib/data-service";
 import type { Habit } from "@/types";
 
@@ -125,6 +127,32 @@ export async function editHabitAction(data: {
 
   if (error) {
     return { error: "Failed to edit habit. Please try again." };
+  }
+
+  return {};
+}
+
+export async function markHabitAsCompletedAction(
+  habit_id: string,
+  user_id: string,
+): Promise<{ error?: string }> {
+  const { error } = await markHabitAsCompleted(habit_id, user_id);
+
+  if (error) {
+    return { error: "Failed to mark habit as complete. Please try again." };
+  }
+
+  return {};
+}
+
+export async function markHabitAsUncompletedAction(
+  habit_id: string,
+  user_id: string,
+): Promise<{ error?: string }> {
+  const { error } = await unmarkHabitAsCompleted(habit_id, user_id);
+
+  if (error) {
+    return { error: "Failed to unmark habit as complete. Please try again." };
   }
 
   return {};

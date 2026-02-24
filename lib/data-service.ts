@@ -146,3 +146,32 @@ export async function getHabitsByUserId(
 
   return data;
 }
+
+export async function markHabitAsCompleted(
+  habit_id: string,
+  user_id: string,
+): Promise<{ error: string | null }> {
+  const supabase = createAdminClient();
+  const { error } = await supabase.from("completions").insert({
+    id: crypto.randomUUID(),
+    habit_id,
+    user_id,
+    completed_on: new Date().toISOString().split("T")[0], // Store only the date part
+  });
+
+  return { error: error?.message ?? null };
+}
+
+export async function unmarkHabitAsCompleted(
+  habit_id: string,
+  date: string,
+): Promise<{ error: string | null }> {
+  const supabase = createAdminClient();
+  const { error } = await supabase
+    .from("completions")
+    .delete()
+    .eq("habit_id", habit_id)
+    .eq("completed_on", date);
+
+  return { error: error?.message ?? null };
+}
