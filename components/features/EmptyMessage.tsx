@@ -20,10 +20,10 @@ export default function EmptyMessage() {
         >
           <Sparkles className="h-7 w-7" />
         </EmptyMedia>
-        <EmptyTitle className="font-nunito font-bold text-xl text-[#0F172A]">
+        <EmptyTitle className="font-nunito font-bold text-xl text-foreground">
           No habits yet
         </EmptyTitle>
-        <EmptyDescription className="font-nunito text-[#94A3B8] max-w-60">
+        <EmptyDescription className="font-nunito text-muted-foreground max-w-60">
           Start building your routine by creating your first habit.
         </EmptyDescription>
       </EmptyHeader>

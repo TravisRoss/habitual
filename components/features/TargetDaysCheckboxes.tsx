@@ -18,7 +18,7 @@ export function TargetDaysCheckboxes({
       {DAYS.map(([dayIndex, dayLabel]) => (
         <Label
           key={dayIndex}
-          className="cursor-pointer font-nunito text-[#0F172A]"
+          className="cursor-pointer font-nunito text-foreground"
         >
           <Checkbox
             checked={selectedDays.includes(dayIndex)}
@@ -31,7 +31,7 @@ export function TargetDaysCheckboxes({
                     ),
               )
             }
-            className="border-[#E2E8F0] data-[state=checked]:bg-[#F59E0B] data-[state=checked]:border-[#F59E0B]"
+            className="border-border data-[state=checked]:bg-brand data-[state=checked]:border-brand"
           />
           {dayLabel}
         </Label>

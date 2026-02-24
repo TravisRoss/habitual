@@ -12,14 +12,14 @@ export default function OTPPage() {
   const [value, setValue] = useState("");
 
   return (
-    <main className="min-h-screen bg-[#FFFBEB] flex items-center justify-center px-6">
+    <main className="min-h-screen bg-page-bg flex items-center justify-center px-6">
       <div className="w-full max-w-[375px] flex flex-col gap-10 py-12">
 
         <div className="flex flex-col gap-3">
-          <h1 className="font-nunito font-bold text-[44px] leading-tight text-[#0F172A]">
+          <h1 className="font-nunito font-bold text-[44px] leading-tight text-foreground">
             Verify
           </h1>
-          <p className="font-nunito font-semibold text-sm text-[#64748B] max-w-[259px]">
+          <p className="font-nunito font-semibold text-sm text-muted-foreground max-w-[259px]">
             Enter the One Time Password (OTP) code we&apos;ve sent to your email
           </p>
         </div>
@@ -30,7 +30,7 @@ export default function OTPPage() {
               <InputOTPSlot
                 key={i}
                 index={i}
-                className="w-[49px] h-[48px] bg-white border-[#E2E8F0] rounded-[4px] font-nunito font-bold text-lg text-[#0F172A] focus:border-[#D97706] data-[active=true]:border-[#D97706] data-[active=true]:ring-[#D97706]"
+                className="w-[49px] h-[48px] bg-card border-border rounded-[4px] font-nunito font-bold text-lg text-foreground focus:border-brand-dim data-[active=true]:border-brand-dim data-[active=true]:ring-brand-dim"
               />
             ))}
           </InputOTPGroup>

@@ -20,9 +20,9 @@ export function ColorPicker({ value, onChange }: ColorPickerProps) {
           size="icon-sm"
           onClick={() => onChange(value === hex ? undefined : hex)}
           className={cn(
-            "rounded-full border-2 border-transparent p-0 hover:border-[#E2E8F0] cursor-pointer",
+            "rounded-full border-2 border-transparent p-0 hover:border-border cursor-pointer",
             value === hex &&
-              "border-[#0F172A] ring-2 ring-[#F59E0B] ring-offset-2",
+              "border-foreground ring-2 ring-brand ring-offset-2",
           )}
           style={{ backgroundColor: hex }}
           aria-pressed={value === hex}

@@ -1,5 +1,5 @@
 export const inputClass =
-  "bg-white border-[#E2E8F0] focus-visible:ring-[#F59E0B] focus-visible:border-[#F59E0B] text-[#0F172A] aria-invalid:border-red-400";
+  "bg-white border-border focus-visible:ring-brand focus-visible:border-brand text-foreground aria-invalid:border-red-400";
 
 export const COLORS = [
   "#F59E0B",

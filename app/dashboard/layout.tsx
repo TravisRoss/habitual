@@ -9,7 +9,7 @@ export default async function DashboardLayout({
 }) {
   const session = await auth();
   return (
-    <div className="min-h-screen bg-[#FFFBEB]">
+    <div className="min-h-screen bg-page-bg">
       <Navigation session={session} />
       <main className="container mx-auto px-4 py-8">{children}</main>
       <FooterNav />

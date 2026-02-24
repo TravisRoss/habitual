@@ -14,19 +14,20 @@ import SignOutDialog from "@/components/features/SignOutDialog";
 import { navLinks } from "@/app/_config/nav";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { DarkModeToggle } from "@/components/features/DarkModeToggle";
 
 const linkClass =
-  "font-nunito font-semibold text-[#64748B] hover:text-[#F59E0B] hover:bg-transparent focus:bg-transparent";
+  "font-nunito font-semibold text-muted-foreground hover:text-brand hover:bg-transparent focus:bg-transparent";
 
 export default function Navigation({ session }: { session: Session | null }) {
   const pathName = usePathname();
 
   return (
-    <nav className="hidden md:block bg-white border-b border-[#E2E8F0]">
+    <nav className="hidden md:block bg-card border-b border-border">
       <div className="max-w-7xl mx-auto px-6 h-14 flex items-center gap-2">
         <Link
           href={session ? "/dashboard" : "/"}
-          className="font-nunito font-extrabold text-lg text-[#F59E0B] mr-4 flex items-center gap-1 cursor-auto"
+          className="font-nunito font-extrabold text-lg text-brand mr-4 flex items-center gap-1 cursor-auto"
         >
           <img
             src="/logo.png"
@@ -48,13 +49,14 @@ export default function Navigation({ session }: { session: Session | null }) {
                     className={cn(
                       navigationMenuTriggerStyle(),
                       linkClass,
-                      link.href === pathName && "text-[#F59E0B]",
+                      link.href === pathName && "text-brand",
                     )}
                   >
                     <Link href={link.href}>{link.label}</Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
               ))}
+              <DarkModeToggle />
             </NavigationMenuList>
           </NavigationMenu>
         )}

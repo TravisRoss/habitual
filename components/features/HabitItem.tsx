@@ -35,9 +35,9 @@ export default function HabitItem({ habit }: HabitItemProps) {
     <Item
       className={cn(
         "relative overflow-hidden border-l-4 transition-colors duration-300",
-        completed ? "bg-green-50" : "bg-white",
+        completed ? "bg-habit-done-bg" : "bg-card",
       )}
-      style={{ borderLeftColor: habit.color ?? "#E5E7EB" }}
+      style={{ borderLeftColor: habit.color ?? "var(--color-habit-border-default)" }}
     >
       <ItemContent>
         <ItemTitle
@@ -70,7 +70,7 @@ export default function HabitItem({ habit }: HabitItemProps) {
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <button className="flex items-center p-1 text-gray-500 hover:text-gray-700">
+            <button className="flex items-center p-1 text-muted-foreground hover:text-foreground">
               <MoreVertical className="h-4 w-4" />
             </button>
           </DropdownMenuTrigger>

@@ -8,7 +8,7 @@ export default async function Home() {
   if (session) redirect("/dashboard");
 
   return (
-    <main className="min-h-screen bg-[#FFFBEB] flex items-center justify-center px-6">
+    <main className="min-h-screen bg-page-bg flex items-center justify-center px-6">
       <div className="w-full max-w-93.75 flex flex-col gap-8 py-12">
         {/* Logo mark */}
         <div className="w-14 h-14 rounded-2xl flex items-center justify-center btn-primary">
@@ -24,10 +24,10 @@ export default async function Home() {
 
         {/* Heading */}
         <div className="flex flex-col gap-3">
-          <h1 className="font-nunito font-bold text-[44px] leading-tight text-[#0F172A]">
+          <h1 className="font-nunito font-bold text-[44px] leading-tight text-foreground">
             Build better habits.
           </h1>
-          <p className="font-nunito font-semibold text-sm text-[#64748B] max-w-70">
+          <p className="font-nunito font-semibold text-sm text-muted-foreground max-w-70">
             Track your progress and stay consistent, one day at a time.
           </p>
         </div>
@@ -44,7 +44,7 @@ export default async function Home() {
           <Button
             asChild
             variant="outline"
-            className="w-full h-12.25 bg-white border-[#E2E8F0] font-nunito font-extrabold text-sm text-[#F59E0B]"
+            className="w-full h-12.25 bg-card border-border font-nunito font-extrabold text-sm text-brand"
             style={{ boxShadow: "1px 1px 14px 6px rgba(124,58,237,0.08)" }}
           >
             <Link href="/login">Log in</Link>
@@ -52,7 +52,7 @@ export default async function Home() {
         </div>
 
         {/* Footer note */}
-        <p className="font-nunito text-sm text-[#94A3B8] text-center">
+        <p className="font-nunito text-sm text-muted-foreground text-center">
           Free to use. No credit card required.
         </p>
       </div>

@@ -14,7 +14,7 @@ import { OAuthSection } from "./OAuthSection";
 import { signUpWithCredentials } from "@/app/_lib/actions";
 import { signUpSchema, type SignUpFormValues } from "@/lib/zod";
 
-const inputClass = "bg-white border-[#E2E8F0] focus-visible:ring-[#F59E0B] focus-visible:border-[#F59E0B] text-[#0F172A] aria-invalid:border-red-400";
+const inputClass = "bg-card border-border focus-visible:ring-brand focus-visible:border-brand text-foreground aria-invalid:border-red-400";
 
 export default function SignUpForm() {
   const {
@@ -121,9 +121,9 @@ export default function SignUpForm() {
 
           <OAuthSection verb="Sign up" />
 
-        <p className="font-nunito text-sm text-[#94A3B8] text-center">
+        <p className="font-nunito text-sm text-muted-foreground text-center">
           Already have an account?{" "}
-          <Link href="/login" className="font-extrabold text-[#F59E0B] underline hover:bg-blend-color-burn">
+          <Link href="/login" className="font-extrabold text-brand underline hover:bg-blend-color-burn">
             Sign In
           </Link>
         </p>

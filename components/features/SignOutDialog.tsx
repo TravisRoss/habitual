@@ -20,7 +20,7 @@ export default function SignOutDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="ghost" size="sm" className="font-nunito font-semibold text-[#64748B] hover:text-[#F59E0B] hover:bg-transparent gap-1.5">
+        <Button variant="ghost" size="sm" className="font-nunito font-semibold text-muted-foreground hover:text-brand hover:bg-transparent gap-1.5">
           <LogOut className="h-3.5 w-3.5" />
           Logout
         </Button>

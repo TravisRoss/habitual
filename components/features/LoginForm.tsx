@@ -16,7 +16,7 @@ import { PasswordInput } from "@/components/ui/PasswordInput";
 import { OAuthSection } from "@/components/features/OAuthSection";
 import { loginSchema, type LoginFormValues } from "@/lib/zod";
 
-const inputClass = "bg-white border-[#E2E8F0] focus-visible:ring-[#F59E0B] focus-visible:border-[#F59E0B] text-[#0F172A] aria-invalid:border-red-400";
+const inputClass = "bg-card border-border focus-visible:ring-brand focus-visible:border-brand text-foreground aria-invalid:border-red-400";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -88,15 +88,15 @@ export default function LoginForm() {
                       id="remember"
                       checked={field.value === true}
                       onCheckedChange={(checked) => field.onChange(checked === true)}
-                      className="border-[#E2E8F0] data-[state=checked]:bg-[#F59E0B] data-[state=checked]:border-[#F59E0B]"
+                      className="border-border data-[state=checked]:bg-brand data-[state=checked]:border-brand"
                     />
                   )}
                 />
-                <Label htmlFor="remember" className="font-nunito text-[#94A3B8] cursor-pointer">
+                <Label htmlFor="remember" className="font-nunito text-muted-foreground cursor-pointer">
                   Remember me
                 </Label>
               </div>
-              <Link href="/login/forgot-password" className="font-nunito font-semibold text-sm text-[#F59E0B] hover:text-[#D97706] hover:underline transition-colors">
+              <Link href="/login/forgot-password" className="font-nunito font-semibold text-sm text-brand hover:text-brand-dim hover:underline transition-colors">
                 Forgot Password?
               </Link>
             </div>
@@ -119,9 +119,9 @@ export default function LoginForm() {
 
         <OAuthSection verb="Log in" />
 
-        <p className="font-nunito text-sm text-[#94A3B8] text-center">
+        <p className="font-nunito text-sm text-muted-foreground text-center">
           Don&apos;t have an account?{" "}
-          <Link href="/signup" className="font-extrabold text-[#F59E0B] hover:text-[#D97706] hover:underline transition-colors">
+          <Link href="/signup" className="font-extrabold text-brand hover:text-brand-dim hover:underline transition-colors">
             Sign Up
           </Link>
         </p>

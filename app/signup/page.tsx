@@ -7,7 +7,7 @@ export default async function SignUpPage() {
   if (session) redirect("/dashboard");
 
   return (
-    <main className="min-h-screen bg-[#FFFBEB] flex items-center justify-center px-6 py-10">
+    <main className="min-h-screen bg-page-bg flex items-center justify-center px-6 py-10">
       <div className="w-full max-w-sm">
         <SignUpForm />
       </div>
