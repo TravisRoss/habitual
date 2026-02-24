@@ -1,10 +1,13 @@
 "use client";
 
-import { useHabits } from "@/hooks/useHabits";
+import { useHabitsForDate } from "@/hooks/useHabits";
 import HabitItem from "@/components/features/HabitItem";
+import { getToday } from "@/app/_lib/utils";
 
 export default function HabitsList() {
-  const { data: habits = [] } = useHabits();
+  const today = getToday();
+  const { data: habits = [] } = useHabitsForDate(today);
+
   return (
     <ul className="flex flex-col gap-2">
       {habits.map((habit) => (

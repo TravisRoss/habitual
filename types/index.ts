@@ -13,5 +13,5 @@ export type Habit = {
   description: string | null;
   color: string | null;
   weekly_target: number | null;
-  target_days: number[] | null;
+  target_days: number[];
 };

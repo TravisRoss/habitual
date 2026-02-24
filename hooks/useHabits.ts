@@ -4,6 +4,7 @@ import {
   deleteHabitAction,
   editHabitAction,
   fetchHabitsAction,
+  fetchHabitsForDateAction,
   markHabitAsCompletedAction,
 } from "@/app/_lib/actions";
 import type { HabitFormValues } from "@/lib/zod";
@@ -15,10 +16,18 @@ export function useHabits() {
   return useQuery({ queryKey: HABITS_KEY, queryFn: fetchHabitsAction });
 }
 
+export function useHabitsForDate(date: string) {
+  return useQuery({
+    queryKey: [...HABITS_KEY, date],
+    queryFn: () => fetchHabitsForDateAction(date),
+  });
+}
+
 export function useCreateHabit() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (data: HabitFormValues) => createHabit(data),
+    mutationFn: (data: HabitFormValues) =>
+      createHabit({ ...data, target_days: data.target_days || [] }),
     onSuccess: () => {
       toast.success("Habit created successfully!");
       queryClient.invalidateQueries({ queryKey: HABITS_KEY });
@@ -33,7 +42,7 @@ export function useEditHabit() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (data: { habit_id: string } & HabitFormValues) =>
-      editHabitAction(data),
+      editHabitAction({ ...data, target_days: data.target_days || [] }),
     onSuccess: () => {
       toast.success("Habit updated successfully!");
       queryClient.invalidateQueries({ queryKey: HABITS_KEY });

@@ -8,6 +8,6 @@ export function habitToFormValues(habit: Habit): HabitFormValues {
     description: habit.description ?? undefined,
     color: habit.color ?? undefined,
     weekly_target: habit.weekly_target ?? undefined,
-    target_days: habit.target_days ?? undefined,
+    target_days: habit.target_days,
   };
 }

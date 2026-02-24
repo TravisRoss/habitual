@@ -4,11 +4,12 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import { auth } from "../_lib/auth";
-import { getHabitsByUserId } from "@/lib/data-service";
+import { getHabitsByUserIdAndDate } from "@/lib/data-service";
 import { HABITS_KEY } from "@/hooks/useHabits";
 import HabitsList from "@/components/features/HabitsList";
 import { CreateHabitButton } from "@/components/features/CreateHabitButton";
 import Banner from "@/components/features/Banner";
+import { getToday } from "../_lib/utils";
 
 export const metadata = {
   title: "Dashboard",
@@ -17,13 +18,14 @@ export const metadata = {
 export default async function Dashboard() {
   const session = await auth();
   const userId = session?.user?.id;
+  const today = getToday();
 
   if (!userId) throw new Error("Unauthorized");
 
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
-    queryKey: HABITS_KEY,
-    queryFn: () => getHabitsByUserId(userId),
+    queryKey: [...HABITS_KEY, today],
+    queryFn: () => getHabitsByUserIdAndDate(userId, today) ?? [],
   });
 
   return (

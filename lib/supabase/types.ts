@@ -67,7 +67,7 @@ export type Database = {
           id: string;
           name: string;
           sort_order: number;
-          target_days: number[] | null;
+          target_days: number[];
           updated_at: string;
           user_id: string;
           weekly_target: number | null;
@@ -82,7 +82,7 @@ export type Database = {
           id?: string;
           name: string;
           sort_order?: number;
-          target_days?: number[] | null;
+          target_days?: number[];
           updated_at?: string;
           user_id: string;
           weekly_target?: number | null;
@@ -97,7 +97,7 @@ export type Database = {
           id?: string;
           name?: string;
           sort_order?: number;
-          target_days?: number[] | null;
+          target_days?: number[];
           updated_at?: string;
           user_id?: string;
           weekly_target?: number | null;

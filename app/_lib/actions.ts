@@ -11,6 +11,7 @@ import {
   getHabitsByUserId,
   markHabitAsCompleted,
   unmarkHabitAsCompleted,
+  getHabitsByUserIdAndDate,
 } from "@/lib/data-service";
 import type { Habit } from "@/types";
 
@@ -56,7 +57,7 @@ export async function createHabit(data: {
   frequency?: "daily" | "weekly" | "custom";
   color?: string;
   weekly_target?: number;
-  target_days?: number[];
+  target_days: number[];
 }): Promise<{ error?: string }> {
   const session = await auth();
   if (!session?.user?.id) {
@@ -71,8 +72,7 @@ export async function createHabit(data: {
     color: data.color,
     weekly_target:
       data.frequency === "weekly" ? (data.weekly_target ?? null) : null,
-    target_days:
-      data.frequency === "custom" ? (data.target_days ?? null) : null,
+    target_days: data.frequency === "custom" ? data.target_days : [],
   });
 
   if (error) {
@@ -86,6 +86,12 @@ export async function fetchHabitsAction(): Promise<Habit[]> {
   const session = await auth();
   if (!session?.user?.id) return [];
   return (await getHabitsByUserId(session.user.id)) ?? [];
+}
+
+export async function fetchHabitsForDateAction(date: string): Promise<Habit[]> {
+  const session = await auth();
+  if (!session?.user?.id) return [];
+  return (await getHabitsByUserIdAndDate(session.user.id, date)) ?? [];
 }
 
 export async function deleteHabitAction(
@@ -109,7 +115,7 @@ export async function editHabitAction(data: {
   frequency?: "daily" | "weekly" | "custom";
   color?: string;
   weekly_target?: number | null;
-  target_days?: number[] | null;
+  target_days?: number[];
 }): Promise<{ error?: string }> {
   const session = await auth();
   if (!session?.user?.id) {
@@ -122,7 +128,7 @@ export async function editHabitAction(data: {
     frequency: data.frequency,
     color: data.color,
     weekly_target: data.weekly_target ?? null,
-    target_days: data.target_days ?? null,
+    target_days: data.target_days,
   });
 
   if (error) {

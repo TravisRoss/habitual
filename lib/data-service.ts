@@ -1,7 +1,4 @@
-/**
- * Data service for profile-related database operations.
- * Centralises all Supabase access so auth and server actions stay decoupled from the DB.
- */
+import { dateToDayNumber } from "@/app/_lib/utils";
 import { createAdminClient } from "@/lib/supabase/server";
 import { Habit, ProfileForCredentials } from "@/types";
 
@@ -63,7 +60,7 @@ export async function insertHabit(data: {
   description?: string | null;
   color?: string;
   weekly_target?: number | null;
-  target_days?: number[] | null;
+  target_days: number[];
 }): Promise<{ error: string | null }> {
   const supabase = createAdminClient();
   const { error } = await supabase.from("habits").insert({
@@ -73,7 +70,7 @@ export async function insertHabit(data: {
     description: data.description ?? null,
     color: data.color ?? undefined,
     weekly_target: data.weekly_target ?? null,
-    target_days: data.target_days ?? null,
+    target_days: data.target_days,
   });
 
   return { error: error?.message ?? null };
@@ -87,7 +84,7 @@ export async function updateHabit(
     description?: string | null;
     color?: string;
     weekly_target?: number | null;
-    target_days?: number[] | null;
+    target_days?: number[];
   },
 ): Promise<{ error: string | null }> {
   const supabase = createAdminClient();
@@ -135,9 +132,32 @@ export async function getHabitsByUserId(
   const { data, error } = await supabase
     .from("habits")
     .select(
-      "id, name, frequency, description, color, weekly_target, target_days",
+      "id, user_id, name, frequency, description, color, weekly_target, target_days",
     )
     .eq("user_id", user_id);
+
+  if (error) {
+    console.error("Error fetching habits:", error);
+    return null;
+  }
+
+  return data;
+}
+
+export async function getHabitsByUserIdAndDate(
+  user_id: string,
+  date: string,
+): Promise<Habit[] | null> {
+  const supabase = createAdminClient();
+  const dayNumber = dateToDayNumber(date);
+
+  const { data, error } = await supabase
+    .from("habits")
+    .select(
+      "id, user_id, name, frequency, description, color, weekly_target, target_days",
+    )
+    .eq("user_id", user_id)
+    .contains("target_days", [dayNumber]);
 
   if (error) {
     console.error("Error fetching habits:", error);
