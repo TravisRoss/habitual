@@ -9,11 +9,12 @@ import {
   updateHabit,
   deleteHabit,
   getHabitsByUserId,
-  markHabitAsCompleted,
-  unmarkHabitAsCompleted,
   getHabitsByUserIdAndDate,
+  getCompletionsByUserIdAndDate,
+  deleteCompletion,
+  insertCompletion,
 } from "@/lib/data-service";
-import type { Habit } from "@/types";
+import type { Completion, Habit } from "@/types";
 
 export async function signInWithGoogle() {
   await signIn("google", { redirectTo: "/dashboard" });
@@ -94,6 +95,14 @@ export async function fetchHabitsForDateAction(date: string): Promise<Habit[]> {
   return (await getHabitsByUserIdAndDate(session.user.id, date)) ?? [];
 }
 
+export async function fetchCompletionsForDateAction(
+  date: string,
+): Promise<Completion[]> {
+  const session = await auth();
+  if (!session?.user?.id) return [];
+  return (await getCompletionsByUserIdAndDate(session.user.id, date)) ?? [];
+}
+
 export async function deleteHabitAction(
   habit_id: string,
 ): Promise<{ error?: string }> {
@@ -138,11 +147,11 @@ export async function editHabitAction(data: {
   return {};
 }
 
-export async function markHabitAsCompletedAction(
+export async function createCompletionAction(
   habit_id: string,
   user_id: string,
 ): Promise<{ error?: string }> {
-  const { error } = await markHabitAsCompleted(habit_id, user_id);
+  const { error } = await insertCompletion(habit_id, user_id);
 
   if (error) {
     return { error: "Failed to mark habit as complete. Please try again." };
@@ -151,11 +160,11 @@ export async function markHabitAsCompletedAction(
   return {};
 }
 
-export async function markHabitAsUncompletedAction(
+export async function deleteCompletionAction(
   habit_id: string,
   user_id: string,
 ): Promise<{ error?: string }> {
-  const { error } = await unmarkHabitAsCompleted(habit_id, user_id);
+  const { error } = await deleteCompletion(habit_id, user_id);
 
   if (error) {
     return { error: "Failed to unmark habit as complete. Please try again." };

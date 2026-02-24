@@ -15,3 +15,10 @@ export type Habit = {
   weekly_target: number | null;
   target_days: number[];
 };
+
+export type Completion = {
+  id: string;
+  habit_id: string;
+  user_id: string;
+  completed_on: string;
+};

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -21,28 +21,32 @@ import { cn } from "@/lib/utils";
 import type { Habit } from "@/types";
 import {
   useDeleteHabit,
-  useMarkHabitAsCompleted,
-  useUnmarkHabitAsCompleted,
 } from "@/hooks/useHabits";
 import { HabitDialog } from "./HabitDialog";
+import { useCreateCompletion, useDeleteCompletion } from "@/hooks/useCompletions";
 
 type HabitItemProps = {
   habit: Habit;
+  isCompleted: boolean;
 };
 
-export default function HabitItem({ habit }: HabitItemProps) {
-  const [completed, setCompleted] = useState(false);
+export default function HabitItem({ habit, isCompleted }: HabitItemProps) {
+  const [completed, setCompleted] = useState(isCompleted);
   const [editOpen, setEditOpen] = useState(false);
   const deleteMutation = useDeleteHabit();
-  const markCompleteMutation = useMarkHabitAsCompleted();
-  const unmarkCompleteMutation = useUnmarkHabitAsCompleted();
+  const createCompletionMutation = useCreateCompletion();
+  const deleteCompletionMutation = useDeleteCompletion();
+
+  useEffect(() => {
+    setCompleted(isCompleted);
+  }, [isCompleted]);
 
   const handleCheckboxChange = (val: boolean, habit_id: string) => {
     setCompleted(!!val);
-    if (val) {
-      markCompleteMutation.mutate({ habit_id, user_id: habit.user_id });
+    if (val === true) {
+      createCompletionMutation.mutate({ habit_id, user_id: habit.user_id });
     } else {
-      unmarkCompleteMutation.mutate({ habit_id, user_id: habit.user_id });
+      deleteCompletionMutation.mutate({ habit_id, user_id: habit.user_id });
     }
   };
 

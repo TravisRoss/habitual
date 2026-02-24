@@ -1,6 +1,6 @@
-import { dateToDayNumber } from "@/app/_lib/utils";
+import { dateToDayNumber, formatDate } from "@/app/_lib/utils";
 import { createAdminClient } from "@/lib/supabase/server";
-import { Habit, ProfileForCredentials } from "@/types";
+import { Completion, Habit, ProfileForCredentials } from "@/types";
 
 export async function getProfileForCredentials(
   email: string,
@@ -167,7 +167,27 @@ export async function getHabitsByUserIdAndDate(
   return data;
 }
 
-export async function markHabitAsCompleted(
+export async function getCompletionsByUserIdAndDate(
+  user_id: string,
+  date: string,
+): Promise<Completion[] | null> {
+  const supabase = createAdminClient();
+
+  const { data, error } = await supabase
+    .from("completions")
+    .select("id, user_id, habit_id, completed_on")
+    .eq("user_id", user_id)
+    .eq("completed_on", date);
+
+  if (error) {
+    console.error("Error fetching completions:", error);
+    return null;
+  }
+
+  return data;
+}
+
+export async function insertCompletion(
   habit_id: string,
   user_id: string,
 ): Promise<{ error: string | null }> {
@@ -176,22 +196,22 @@ export async function markHabitAsCompleted(
     id: crypto.randomUUID(),
     habit_id,
     user_id,
-    completed_on: new Date().toISOString().split("T")[0], // Store only the date part
+    completed_on: formatDate(new Date()),
   });
 
   return { error: error?.message ?? null };
 }
 
-export async function unmarkHabitAsCompleted(
+export async function deleteCompletion(
   habit_id: string,
-  date: string,
+  user_id: string,
 ): Promise<{ error: string | null }> {
   const supabase = createAdminClient();
   const { error } = await supabase
     .from("completions")
     .delete()
     .eq("habit_id", habit_id)
-    .eq("completed_on", date);
+    .eq("user_id", user_id);
 
   return { error: error?.message ?? null };
 }

@@ -1,18 +1,24 @@
 "use client";
 
-import { useHabitsForDate } from "@/hooks/useHabits";
 import HabitItem from "@/components/features/HabitItem";
-import { formatDate } from "@/app/_lib/utils";
+import { Completion, Habit } from "@/types";
 
-export default function HabitsList() {
-  const today = formatDate();
-  const { data: habits = [] } = useHabitsForDate(today);
-
+export default function HabitsList({
+  habits,
+  completions,
+}: {
+  habits: Habit[];
+  completions: Completion[];
+}) {
   return (
     <ul className="flex flex-col gap-2">
-      {habits.map((habit) => (
-        <HabitItem key={habit.id} habit={habit} />
-      ))}
+      {habits.map((habit) => {
+        const completedHabitIds = new Set(completions.map((c) => c.habit_id));
+        const isCompleted = completedHabitIds.has(habit.id);
+        return (
+          <HabitItem key={habit.id} habit={habit} isCompleted={isCompleted} />
+        );
+      })}
     </ul>
   );
 }
