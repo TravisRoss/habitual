@@ -8,6 +8,7 @@ import { getHabitsByUserId } from "@/lib/data-service";
 import { HABITS_KEY } from "@/hooks/useHabits";
 import HabitsList from "@/components/features/HabitsList";
 import { CreateHabitButton } from "@/components/features/CreateHabitButton";
+import Banner from "@/components/features/Banner";
 
 export const metadata = {
   title: "Dashboard",
@@ -30,7 +31,8 @@ export default async function Dashboard() {
       <p className="text-2xl font-bold mb-1">
         Hello, {session?.user?.name ?? "Guest"}!
       </p>
-      <p className="text-lg font-semibold mb-4">Today's Habits</p>
+      <Banner completed={3} total={5} />
+      <p className="text-lg font-semibold mb-4 mt-4">Today's Habits</p>
       <HydrationBoundary state={dehydrate(queryClient)}>
         <HabitsList />
       </HydrationBoundary>
