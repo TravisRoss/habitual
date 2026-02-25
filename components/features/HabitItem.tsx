@@ -10,17 +10,11 @@ import {
   ItemDescription,
   ItemActions,
 } from "@/components/ui/item";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { MoreVertical, Pencil, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Habit } from "@/types";
 import type { HabitFormValues } from "@/lib/zod";
 import { HabitDialog } from "./HabitDialog";
+import BurgerMenu from "./BurgerMenu";
 
 type HabitItemProps = {
   habit: Habit;
@@ -88,38 +82,14 @@ export default function HabitItem({
             className="h-5 w-5"
           />
         </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <button className="flex items-center p-1 text-muted-foreground hover:text-foreground">
-              <MoreVertical className="h-4 w-4" />
-            </button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem
-              onSelect={(e) => {
-                e.preventDefault();
-                setEditOpen(true);
-              }}
-            >
-              <Pencil className="h-4 w-4 mr-2" />
-              <span aria-label="Edit habit">Edit</span>
-            </DropdownMenuItem>
-            <HabitDialog
-              habit={habit}
-              action="edit"
-              open={editOpen}
-              onOpenChange={setEditOpen}
-              onSubmit={onEdit}
-            />
-            <DropdownMenuItem
-              className="text-destructive"
-              onSelect={onDelete}
-            >
-              <Trash2 className="h-4 w-4 mr-2" />
-              <span aria-label="Delete habit">Delete</span>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <BurgerMenu onEdit={() => setEditOpen(true)} onDelete={onDelete} />
+        <HabitDialog
+          habit={habit}
+          action="edit"
+          open={editOpen}
+          onOpenChange={setEditOpen}
+          onSubmit={onEdit}
+        />
       </ItemActions>
     </Item>
   );
