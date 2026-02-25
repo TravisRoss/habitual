@@ -12,7 +12,8 @@
     "test:storybook": "vitest --project=storybook",
     "test:e2e": "playwright test",
     "test:e2e:ci": "CI=1 playwright test",
-    "chromatic": "chromatic --project-token=$CHROMATIC_PROJECT_TOKEN --exit-zero-on-changes"
+    "chromatic": "chromatic --project-token=$CHROMATIC_PROJECT_TOKEN --exit-zero-on-changes",
+    "gen:types": "dotenv -e .env.local -- supabase gen types typescript --project-id paownqhhpwcoykdynvti > lib/supabase/types.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -56,6 +57,7 @@
     "@types/react-dom": "^19",
     "@vitest/browser-playwright": "^4.0.18",
     "@vitest/coverage-v8": "^4.0.18",
+    "dotenv-cli": "^11.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "playwright": "^1.58.2",
