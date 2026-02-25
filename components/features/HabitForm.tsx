@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/select";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
-import { HabitSchema, type HabitFormValues } from "@/lib/zod";
+import { habitSchema, type HabitFormValues } from "@/lib/zod";
 import { cn } from "@/lib/utils";
 import { ColorPicker } from "./ColorPicker";
 import { TargetDaysCheckboxes } from "./TargetDaysCheckboxes";
@@ -51,7 +51,7 @@ export function HabitForm({
     setError,
     formState: { errors, isSubmitting },
   } = useForm<HabitFormValues>({
-    resolver: zodResolver(HabitSchema),
+    resolver: zodResolver(habitSchema),
     defaultValues: {
       frequency: "daily",
       weekly_target: 1,

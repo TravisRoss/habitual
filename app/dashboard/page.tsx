@@ -11,7 +11,7 @@ import {
 import { HABITS_KEY } from "@/hooks/useHabits";
 import HabitsList from "@/components/features/HabitsList";
 import { CreateHabitButton } from "@/components/features/CreateHabitButton";
-import Banner from "@/components/features/Banner";
+import { Banner } from "@/components/features/Banner";
 import { formatDate } from "../_lib/utils";
 
 export const metadata = {

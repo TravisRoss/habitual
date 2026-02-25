@@ -9,27 +9,21 @@ import {
 import type { Habit } from "@/types";
 import type { HabitFormValues } from "@/lib/zod";
 import { habitToFormValues } from "@/app/_lib/mappers";
-import { useCreateHabit, useEditHabit } from "@/hooks/useHabits";
 import { HabitForm } from "./HabitForm";
 
-type HabitDialogProps =
-  | { action: "edit"; habit: Habit; open: boolean; onOpenChange: (open: boolean) => void }
-  | { action: "create"; habit?: never; open: boolean; onOpenChange: (open: boolean) => void };
+type HabitDialogProps = {
+  action: "create" | "edit";
+  habit?: Habit;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onSubmit: (data: HabitFormValues) => Promise<{ error?: string }>;
+};
 
-export function HabitDialog({ habit, action, open, onOpenChange }: HabitDialogProps) {
-  const editMutation = useEditHabit();
-  const createMutation = useCreateHabit();
-
+export function HabitDialog({ habit, action, open, onOpenChange, onSubmit }: HabitDialogProps) {
   async function handleOnSubmit(data: HabitFormValues) {
-    if (action === "edit") {
-      const result = await editMutation.mutateAsync({ habit_id: habit.id, ...data });
-      if (!result.error) onOpenChange(false);
-      return result;
-    } else {
-      const result = await createMutation.mutateAsync(data);
-      if (!result.error) onOpenChange(false);
-      return result;
-    }
+    const result = await onSubmit(data);
+    if (!result.error) onOpenChange(false);
+    return result;
   }
 
   return (

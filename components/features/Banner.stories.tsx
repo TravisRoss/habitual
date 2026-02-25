@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import Banner from "./Banner";
+import BannerUI from "./BannerUI";
 
 const meta = {
-  component: Banner,
+  component: BannerUI,
   args: {
-    completed: 3,
-    total: 5,
+    completionsCount: 3,
+    habitsCount: 5,
   },
-} satisfies Meta<typeof Banner>;
+} satisfies Meta<typeof BannerUI>;
 
 export default meta;
 
@@ -16,17 +16,17 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 
 export const AllComplete: Story = {
-  args: { completed: 5, total: 5 },
+  args: { completionsCount: 5, habitsCount: 5 },
 };
 
 export const NoneComplete: Story = {
-  args: { completed: 0, total: 5 },
+  args: { completionsCount: 0, habitsCount: 5 },
 };
 
 export const SingleHabit: Story = {
-  args: { completed: 1, total: 1 },
+  args: { completionsCount: 1, habitsCount: 1 },
 };
 
 export const ManyHabits: Story = {
-  args: { completed: 7, total: 12 },
+  args: { completionsCount: 7, habitsCount: 12 },
 };

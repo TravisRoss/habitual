@@ -19,35 +19,34 @@ import {
 import { MoreVertical, Pencil, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Habit } from "@/types";
-import {
-  useDeleteHabit,
-} from "@/hooks/useHabits";
+import type { HabitFormValues } from "@/lib/zod";
 import { HabitDialog } from "./HabitDialog";
-import { useCreateCompletion, useDeleteCompletion } from "@/hooks/useCompletions";
 
 type HabitItemProps = {
   habit: Habit;
   isCompleted: boolean;
+  onToggleComplete: (completed: boolean) => void;
+  onEdit: (data: HabitFormValues) => Promise<{ error?: string }>;
+  onDelete: () => void;
 };
 
-export default function HabitItem({ habit, isCompleted }: HabitItemProps) {
+export default function HabitItem({
+  habit,
+  isCompleted,
+  onToggleComplete,
+  onEdit,
+  onDelete,
+}: HabitItemProps) {
   const [completed, setCompleted] = useState(isCompleted);
   const [editOpen, setEditOpen] = useState(false);
-  const deleteMutation = useDeleteHabit();
-  const createCompletionMutation = useCreateCompletion();
-  const deleteCompletionMutation = useDeleteCompletion();
 
   useEffect(() => {
     setCompleted(isCompleted);
   }, [isCompleted]);
 
-  const handleCheckboxChange = (val: boolean, habit_id: string) => {
-    setCompleted(!!val);
-    if (val === true) {
-      createCompletionMutation.mutate({ habit_id, user_id: habit.user_id });
-    } else {
-      deleteCompletionMutation.mutate({ habit_id, user_id: habit.user_id });
-    }
+  const handleCheckboxChange = (val: boolean) => {
+    setCompleted(val);
+    onToggleComplete(val);
   };
 
   return (
@@ -85,9 +84,7 @@ export default function HabitItem({ habit, isCompleted }: HabitItemProps) {
         >
           <Checkbox
             checked={completed}
-            onCheckedChange={(val) =>
-              handleCheckboxChange(Boolean(val), habit.id)
-            }
+            onCheckedChange={(val) => handleCheckboxChange(Boolean(val))}
             className="h-5 w-5"
           />
         </div>
@@ -112,10 +109,11 @@ export default function HabitItem({ habit, isCompleted }: HabitItemProps) {
               action="edit"
               open={editOpen}
               onOpenChange={setEditOpen}
+              onSubmit={onEdit}
             />
             <DropdownMenuItem
               className="text-destructive"
-              onSelect={() => deleteMutation.mutate(habit.id)}
+              onSelect={onDelete}
             >
               <Trash2 className="h-4 w-4 mr-2" />
               <span aria-label="Delete habit">Delete</span>
