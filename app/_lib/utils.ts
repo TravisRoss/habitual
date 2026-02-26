@@ -1,3 +1,5 @@
+import { Period } from "@/types";
+
 /** Converts a date string (e.g. "2026-02-24") to a day number (0 = Sunday, 6 = Saturday) */
 export function dateToDayNumber(date: string): number {
   const d = new Date(date);
@@ -7,4 +9,11 @@ export function dateToDayNumber(date: string): number {
 /** Returns a date as a string in YYYY-MM-DD format (e.g. "2026-02-24") */
 export function formatDate(date: Date = new Date()): string {
   return date.toISOString().slice(0, 10);
+}
+
+/* Calculates the end date based on the start date and the period (in days) */
+export function calcEndDate(start_date: string, period: Period): string {
+  const start = new Date(start_date);
+  const end = start.getTime() + parseInt(period) * 24 * 60 * 60 * 1000; // period is in days, convert to milliseconds
+  return formatDate(new Date(end));
 }

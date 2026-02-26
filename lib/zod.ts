@@ -26,7 +26,7 @@ export const signUpSchema = z
     "Password must be at least 8 characters",
   );
 
-export const HabitSchema = z
+export const habitSchema = z
   .object({
     name: z
       .string()
@@ -64,6 +64,43 @@ export const HabitSchema = z
     { message: "Select at least one day", path: ["target_days"] },
   );
 
+export const goalSchema = z.object({
+  name: z
+    .string()
+    .min(1, "Goal name is required")
+    .max(50, "Name must be less than 50 characters"),
+  habit: z.discriminatedUnion("type", [
+    z.object({
+      type: z.literal("existing"),
+      id: z.string().min(1, "Please select a habit"),
+    }),
+    z.object({
+      type: z.literal("new"),
+      name: z.string().min(1, "Habit name is required"),
+      description: z.string().optional(),
+      frequency: z.enum(["daily", "weekly", "custom"]).optional(),
+      color: z.string().optional(),
+      weekly_target: z.number().optional(),
+      target_days: z.array(z.number()).optional(),
+    }),
+  ]),
+  period: z.enum(["7", "14", "30", "90", "180", "365"]),
+  start_date: z.string().refine(
+    (date) => {
+      const today = new Date();
+      const inputDate = new Date(date);
+      return (
+        inputDate >=
+        new Date(today.getFullYear(), today.getMonth(), today.getDate())
+      );
+    },
+    { message: "Start date cannot be in the past", path: ["start_date"] },
+  ),
+  target: z.number().min(1, "Target must be at least 1"),
+  unit: z.enum(["times", "hours", "minutes", "pages", "kg", "custom"]),
+});
+
 export type LoginFormValues = z.infer<typeof loginSchema>;
 export type SignUpFormValues = z.infer<typeof signUpSchema>;
-export type HabitFormValues = z.infer<typeof HabitSchema>;
+export type HabitFormValues = z.infer<typeof habitSchema>;
+export type GoalFormValues = z.infer<typeof goalSchema>;

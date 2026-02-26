@@ -13,8 +13,14 @@ import {
   getCompletionsByUserIdAndDate,
   deleteCompletion,
   insertCompletion,
+  updateGoal,
+  getGoalsByUserId,
+  insertGoal,
+  deleteGoal,
 } from "@/lib/data-service";
-import type { Completion, Habit } from "@/types";
+import type { Completion, Habit, UpdateGoalInput } from "@/types";
+import { revalidatePath } from "next/cache";
+import { GoalFormValues } from "@/lib/zod";
 
 export async function signInWithGoogle() {
   await signIn("google", { redirectTo: "/dashboard" });
@@ -59,13 +65,13 @@ export async function createHabit(data: {
   color?: string;
   weekly_target?: number;
   target_days: number[];
-}): Promise<{ error?: string }> {
+}): Promise<{ error?: string | null; id?: string | null }> {
   const session = await auth();
   if (!session?.user?.id) {
     return { error: "You must be logged in to create a habit." };
   }
 
-  const { error } = await insertHabit({
+  const { error, id } = await insertHabit({
     user_id: session.user.id,
     name: data.name,
     description: data.description || null,
@@ -76,11 +82,16 @@ export async function createHabit(data: {
     target_days: data.frequency === "custom" ? data.target_days : [],
   });
 
-  if (error) {
-    return { error: "Failed to create habit. Please try again." };
+  if (error || !id) {
+    return {
+      error: "Failed to create habit. Please try again.",
+      id: null,
+    };
   }
 
-  return {};
+  revalidatePath("/dashboard");
+
+  return { error, id };
 }
 
 export async function fetchHabitsAction(): Promise<Habit[]> {
@@ -171,4 +182,79 @@ export async function deleteCompletionAction(
   }
 
   return {};
+}
+
+export async function fetchGoalsAction() {
+  const session = await auth();
+  if (!session?.user?.id) return [];
+  return (await getGoalsByUserId(session.user.id)) ?? [];
+}
+
+export async function createGoalAction(
+  data: GoalFormValues,
+): Promise<{ error?: string }> {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return { error: "You must be logged in to create a goal." };
+  }
+
+  let habitId: string;
+
+  if (data.habit.type === "existing") {
+    habitId = data.habit.id;
+  } else {
+    const { ...habitData } = data.habit;
+    const result = await createHabit({
+      ...habitData,
+      target_days: habitData.target_days ?? [],
+    });
+    if (result.error || !result.id) {
+      return { error: result.error ?? "Failed to create habit." };
+    }
+    habitId = result.id;
+  }
+
+  const { error } = await insertGoal({
+    user_id: session.user.id,
+    habit_id: habitId,
+    name: data.name,
+    target: data.target,
+    period: data.period,
+    start_date: data.start_date,
+  });
+
+  return error ? { error: "Failed to create goal. Please try again." } : {};
+}
+
+export async function deleteGoalAction(
+  goal_id: string,
+): Promise<{ error?: string }> {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return { error: "You must be logged in to delete a goal." };
+  }
+
+  const { error } = await deleteGoal(goal_id);
+  return error ? { error: "Failed to delete goal. Please try again." } : {};
+}
+
+export async function updateGoalAction(
+  goal_id: string,
+  data: UpdateGoalInput,
+): Promise<{ error?: string }> {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return { error: "You must be logged in to edit a goal." };
+  }
+
+  const { error } = await updateGoal({
+    goal_id,
+    name: data.name,
+    target: data.target,
+    period: data.period,
+    start_date: data.start_date,
+    unit: data.unit,
+  });
+
+  return error ? { error: "Failed to edit goal. Please try again." } : {};
 }

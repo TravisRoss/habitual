@@ -65,6 +65,7 @@ export type Database = {
           habit_id: string | null
           id: string
           name: string
+          period: string
           start_date: string
           target: number
           unit: string
@@ -79,6 +80,7 @@ export type Database = {
           habit_id?: string | null
           id?: string
           name: string
+          period?: string
           start_date: string
           target: number
           unit?: string
@@ -93,6 +95,7 @@ export type Database = {
           habit_id?: string | null
           id?: string
           name?: string
+          period?: string
           start_date?: string
           target?: number
           unit?: string

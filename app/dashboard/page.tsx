@@ -6,6 +6,7 @@ import {
 import { auth } from "../_lib/auth";
 import {
   getCompletionsByUserIdAndDate,
+  getGoalsByUserId,
   getHabitsByUserIdAndDate,
 } from "@/lib/data-service";
 import { HABITS_KEY } from "@/hooks/useHabits";
@@ -13,6 +14,7 @@ import HabitsList from "@/components/features/HabitsList";
 import { CreateHabitButton } from "@/components/features/CreateHabitButton";
 import { Banner } from "@/components/features/Banner";
 import { formatDate } from "../_lib/utils";
+import GoalsList from "@/components/features/GoalsList";
 
 export const metadata = {
   title: "Dashboard",
@@ -36,18 +38,26 @@ export default async function Dashboard() {
     queryFn: () => getCompletionsByUserIdAndDate(userId, today) ?? [],
   });
 
+  const goals = await queryClient.fetchQuery({
+    queryKey: ["goals"],
+    queryFn: () => getGoalsByUserId(userId),
+  });
+
+  console.log("goals: ", goals);
+
   return (
     <div className="max-w-lg mx-auto px-4 py-6">
       <p className="text-2xl font-bold mb-1">
         Hello, {session?.user?.name ?? "Guest"}!
       </p>
       <Banner />
-      <p className="text-lg font-semibold mb-4 mt-4">Today's Habits</p>
+      <p className="text-lg font-semibold mb-4 mt-4">Today&apos;s Habits</p>
       <HydrationBoundary state={dehydrate(queryClient)}>
         <HabitsList
           habits={todaysHabits || []}
           completions={completions || []}
         />
+        <GoalsList goals={goals || []} />
       </HydrationBoundary>
       <CreateHabitButton />
     </div>

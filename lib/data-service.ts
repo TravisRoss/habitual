@@ -1,6 +1,13 @@
-import { dateToDayNumber, formatDate } from "@/app/_lib/utils";
+import { calcEndDate, dateToDayNumber, formatDate } from "@/app/_lib/utils";
 import { createAdminClient } from "@/lib/supabase/server";
-import { Completion, Habit, ProfileForCredentials } from "@/types";
+import {
+  Completion,
+  Goal,
+  Habit,
+  Period,
+  ProfileForCredentials,
+  Unit,
+} from "@/types";
 
 export async function getProfileForCredentials(
   email: string,
@@ -61,19 +68,24 @@ export async function insertHabit(data: {
   color?: string;
   weekly_target?: number | null;
   target_days: number[];
-}): Promise<{ error: string | null }> {
+}): Promise<{ error: string | null; id: string | null }> {
   const supabase = createAdminClient();
-  const { error } = await supabase.from("habits").insert({
-    user_id: data.user_id,
-    name: data.name,
-    frequency: data.frequency ?? "daily",
-    description: data.description ?? null,
-    color: data.color ?? undefined,
-    weekly_target: data.weekly_target ?? null,
-    target_days: data.target_days,
-  });
 
-  return { error: error?.message ?? null };
+  const { data: row, error } = await supabase
+    .from("habits")
+    .insert({
+      user_id: data.user_id,
+      name: data.name,
+      frequency: data.frequency ?? "daily",
+      description: data.description,
+      color: data.color,
+      weekly_target: data.weekly_target,
+      target_days: data.target_days,
+    })
+    .select("id")
+    .single();
+
+  return { id: row?.id ?? null, error: error?.message ?? null };
 }
 
 export async function updateHabit(
@@ -187,6 +199,26 @@ export async function getCompletionsByUserIdAndDate(
   return data;
 }
 
+export async function getCompletionsByUserIdAndHabitId(
+  user_id: string,
+  habit_id: string,
+): Promise<Completion[] | null> {
+  const supabase = createAdminClient();
+
+  const { data, error } = await supabase
+    .from("completions")
+    .select("id, user_id, habit_id, completed_on")
+    .eq("user_id", user_id)
+    .eq("habit_id", habit_id);
+
+  if (error) {
+    console.error("Error fetching completions:", error);
+    return null;
+  }
+
+  return data;
+}
+
 export async function insertCompletion(
   habit_id: string,
   user_id: string,
@@ -212,6 +244,82 @@ export async function deleteCompletion(
     .delete()
     .eq("habit_id", habit_id)
     .eq("user_id", user_id);
+
+  return { error: error?.message ?? null };
+}
+
+export async function getGoalsByUserId(
+  user_id: string,
+): Promise<Goal[] | null> {
+  const supabase = createAdminClient();
+  const { data, error } = await supabase
+    .from("goals")
+    .select(
+      "id, user_id, habit_id, name, target, period, start_date, unit, color",
+    )
+    .eq("user_id", user_id);
+
+  if (error) {
+    console.error("Error fetching goals:", error);
+    return null;
+  }
+
+  return data as Goal[];
+}
+
+export async function insertGoal(data: {
+  user_id: string;
+  name: string;
+  habit_id: string;
+  target: number;
+  period: Period;
+  start_date: string;
+}): Promise<{ error: string | null }> {
+  const supabase = createAdminClient();
+  const { error } = await supabase.from("goals").insert({
+    id: crypto.randomUUID(),
+    user_id: data.user_id,
+    name: data.name,
+    habit_id: data.habit_id,
+    target: data.target,
+    period: data.period,
+    start_date: data.start_date,
+    end_date: calcEndDate(data.start_date, data.period),
+  });
+
+  return { error: error?.message ?? null };
+}
+
+export async function deleteGoal(
+  goal_id: string,
+): Promise<{ error: string | null }> {
+  const supabase = createAdminClient();
+  const { error } = await supabase.from("goals").delete().eq("id", goal_id);
+
+  return { error: error?.message ?? null };
+}
+
+export async function updateGoal(data: {
+  goal_id: string;
+  name?: string;
+  habit_id?: string;
+  target?: number;
+  unit: Unit;
+  period?: Period;
+  start_date?: string;
+}): Promise<{ error: string | null }> {
+  const supabase = createAdminClient();
+  const { error } = await supabase
+    .from("goals")
+    .update({
+      name: data.name,
+      habit_id: data.habit_id,
+      target: data.target,
+      period: data.period,
+      start_date: data.start_date,
+      end_date: calcEndDate(data.start_date!, data.period!),
+    })
+    .eq("id", data.goal_id);
 
   return { error: error?.message ?? null };
 }

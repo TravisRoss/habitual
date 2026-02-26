@@ -110,7 +110,7 @@ export default function LoginForm() {
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="w-full h-[49px] font-nunito font-extrabold text-sm text-white border-0 btn-primary"
+              className="w-full h-49px font-nunito font-extrabold text-sm text-white border-0 btn-primary"
             >
               {isSubmitting ? <Spinner className="size-4" /> : "Log In"}
             </Button>

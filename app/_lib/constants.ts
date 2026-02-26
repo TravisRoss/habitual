@@ -1,3 +1,5 @@
+import { Period } from "@/types";
+
 export const inputClass =
   "bg-white border-border focus-visible:ring-brand focus-visible:border-brand text-foreground aria-invalid:border-red-400";
 
@@ -19,3 +21,12 @@ export const DAYS = [
   [5, "Fri"],
   [6, "Sat"],
 ] as const;
+
+export const PERIODS = [
+  { label: "1 week", days: 7 },
+  { label: "2 weeks", days: 14 },
+  { label: "1 month", days: 30 },
+  { label: "3 months", days: 90 },
+  { label: "6 months", days: 180 },
+  { label: "1 year", days: 365 },
+] as const satisfies Period[];
