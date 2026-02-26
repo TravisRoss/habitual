@@ -1,14 +1,10 @@
 "use client";
 
-import { Goal } from "@/types";
 import GoalItem from "./GoalItem";
-import { useDeleteGoal, useEditGoal } from "@/hooks/useGoals";
+import { useDeleteGoal, useEditGoal, useGoals } from "@/hooks/useGoals";
 
-type GoalsListProps = {
-  goals: Goal[];
-};
-
-export default function GoalsList({ goals }: GoalsListProps) {
+export default function GoalsList() {
+  const { data: goals = [] } = useGoals();
   const editMutation = useEditGoal();
   const deleteMutation = useDeleteGoal();
 

@@ -10,11 +10,13 @@ import {
   getHabitsByUserIdAndDate,
 } from "@/lib/data-service";
 import { HABITS_KEY } from "@/hooks/useHabits";
+import { GOALS_KEY } from "@/hooks/useGoals";
 import HabitsList from "@/components/features/HabitsList";
 import { CreateHabitButton } from "@/components/features/CreateHabitButton";
 import { Banner } from "@/components/features/Banner";
 import { formatDate } from "../_lib/utils";
 import GoalsList from "@/components/features/GoalsList";
+import { COMPLETIONS_KEY } from "@/hooks/useCompletions";
 
 export const metadata = {
   title: "Dashboard",
@@ -28,22 +30,21 @@ export default async function Dashboard() {
   if (!userId) throw new Error("Unauthorized");
 
   const queryClient = new QueryClient();
-  const todaysHabits = await queryClient.fetchQuery({
-    queryKey: [...HABITS_KEY, today],
-    queryFn: () => getHabitsByUserIdAndDate(userId, today) ?? [],
-  });
 
-  const completions = await queryClient.fetchQuery({
-    queryKey: ["completions", today],
-    queryFn: () => getCompletionsByUserIdAndDate(userId, today) ?? [],
-  });
-
-  const goals = await queryClient.fetchQuery({
-    queryKey: ["goals"],
-    queryFn: () => getGoalsByUserId(userId),
-  });
-
-  console.log("goals: ", goals);
+  await Promise.all([
+    queryClient.prefetchQuery({
+      queryKey: [...HABITS_KEY, today],
+      queryFn: () => getHabitsByUserIdAndDate(userId, today) ?? [],
+    }),
+    queryClient.prefetchQuery({
+      queryKey: [...COMPLETIONS_KEY, today],
+      queryFn: () => getCompletionsByUserIdAndDate(userId, today) ?? [],
+    }),
+    queryClient.prefetchQuery({
+      queryKey: GOALS_KEY,
+      queryFn: () => getGoalsByUserId(userId) ?? [],
+    }),
+  ]);
 
   return (
     <div className="max-w-lg mx-auto px-4 py-6">
@@ -53,11 +54,8 @@ export default async function Dashboard() {
       <Banner />
       <p className="text-lg font-semibold mb-4 mt-4">Today&apos;s Habits</p>
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <HabitsList
-          habits={todaysHabits || []}
-          completions={completions || []}
-        />
-        <GoalsList goals={goals || []} />
+        <HabitsList date={today} />
+        <GoalsList />
       </HydrationBoundary>
       <CreateHabitButton />
     </div>

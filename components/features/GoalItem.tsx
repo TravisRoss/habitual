@@ -40,9 +40,9 @@ export default function GoalItem({
         <ItemTitle>{goal.name}</ItemTitle>
         <Progress value={7} max={10} className="mt-1" />
         <ItemDescription>
-          <p>
+          <span>
             5 of {goal.target} {goal.unit} target
-          </p>
+          </span>
         </ItemDescription>
       </ItemContent>
       <ItemActions>

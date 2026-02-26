@@ -6,7 +6,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
-const COMPLETIONS_KEY = ["completions"];
+export const COMPLETIONS_KEY = ["completions"];
 
 export function useCompletionsForDate(date: string) {
   return useQuery({

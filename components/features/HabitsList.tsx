@@ -1,19 +1,25 @@
 "use client";
 
 import HabitItem from "@/components/features/HabitItem";
-import { useDeleteHabit, useEditHabit } from "@/hooks/useHabits";
+import {
+  useDeleteHabit,
+  useEditHabit,
+  useHabitsForDate,
+} from "@/hooks/useHabits";
 import {
   useCreateCompletion,
   useDeleteCompletion,
 } from "@/hooks/useCompletions";
-import { Completion, Habit } from "@/types";
+import { useCompletionsForDate } from "@/hooks/useCompletions";
 
 type HabitsListProps = {
-  habits: Habit[];
-  completions: Completion[];
+  date: string;
 };
 
-export default function HabitsList({ habits, completions }: HabitsListProps) {
+export default function HabitsList({ date }: HabitsListProps) {
+  const { data: habits = [] } = useHabitsForDate(date);
+  const { data: completions = [] } = useCompletionsForDate(date);
+
   const editMutation = useEditHabit();
   const deleteMutation = useDeleteHabit();
   const createCompletionMutation = useCreateCompletion();
