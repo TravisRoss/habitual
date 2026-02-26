@@ -52,10 +52,19 @@ export default async function Dashboard() {
         Hello, {session?.user?.name ?? "Guest"}!
       </p>
       <Banner />
-      <p className="text-lg font-semibold mb-4 mt-4">Today&apos;s Habits</p>
+
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <HabitsList date={today} />
-        <GoalsList />
+        <div className="space-y-4 mt-4">
+          <div className="bg-muted/50 rounded-2xl p-5 shadow-sm">
+            <p className="text-lg font-semibold mb-3">Today&apos;s Habits</p>
+            <HabitsList date={today} />
+          </div>
+
+          <div className="bg-muted/50 rounded-2xl p-5 shadow-sm">
+            <p className="text-lg font-semibold mb-3">Your Goals</p>
+            <GoalsList />
+          </div>
+        </div>
       </HydrationBoundary>
       <CreateHabitButton />
     </div>

@@ -13,6 +13,7 @@ import BurgerMenu from "./BurgerMenu";
 import { Progress } from "../ui/progress";
 import { useState } from "react";
 import { GoalDialog } from "./GoalDialog";
+import { cn } from "@/lib/utils";
 
 type GoalItemProps = {
   goal: Goal;
@@ -31,7 +32,10 @@ export default function GoalItem({
 
   return (
     <Item
-      className="relative overflow-hidden border-l-4 transition-colors duration-300"
+      className={cn(
+        "relative overflow-hidden border-l-4 transition-colors duration-300",
+        "bg-card",
+      )}
       style={{
         borderLeftColor: goal.color ?? "var(--color-habit-border-default)",
       }}
