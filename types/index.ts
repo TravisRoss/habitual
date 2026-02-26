@@ -35,6 +35,15 @@ export type Completion = {
   completed_on: string;
 };
 
+export type Streak = {
+  habit_id: string;
+  user_id: string;
+  streak_length: number;
+  streak_start: string;
+  streak_end: string;
+  is_active: boolean;
+};
+
 export type Unit = "times" | "hours" | "minutes" | "pages" | "kg" | "custom";
 
 export type Period = "7" | "14" | "30" | "90" | "180" | "365";

@@ -11,6 +11,7 @@ import {
   useDeleteCompletion,
 } from "@/hooks/useCompletions";
 import { useCompletionsForDate } from "@/hooks/useCompletions";
+import { useStreakMap } from "@/hooks/useStreaks";
 
 type HabitsListProps = {
   date: string;
@@ -26,6 +27,7 @@ export default function HabitsList({ date }: HabitsListProps) {
   const deleteCompletionMutation = useDeleteCompletion();
 
   const completedHabitIds = new Set(completions.map((c) => c.habit_id));
+  const streakMap = useStreakMap();
 
   return (
     <ul className="flex flex-col gap-2">
@@ -34,6 +36,7 @@ export default function HabitsList({ date }: HabitsListProps) {
           key={habit.id}
           habit={habit}
           isCompleted={completedHabitIds.has(habit.id)}
+          streak={streakMap.get(habit.id)}
           onToggleComplete={(done) => {
             if (done) {
               createCompletionMutation.mutate({

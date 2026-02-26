@@ -8,9 +8,11 @@ import {
   getCompletionsByUserIdAndDate,
   getGoalsByUserId,
   getHabitsByUserIdAndDate,
+  getActiveStreaksByUserId,
 } from "@/lib/data-service";
 import { HABITS_KEY } from "@/hooks/useHabits";
 import { GOALS_KEY } from "@/hooks/useGoals";
+import { STREAKS_KEY } from "@/hooks/useStreaks";
 import HabitsList from "@/components/features/HabitsList";
 import { CreateHabitButton } from "@/components/features/CreateHabitButton";
 import { Banner } from "@/components/features/Banner";
@@ -43,6 +45,10 @@ export default async function Dashboard() {
     queryClient.prefetchQuery({
       queryKey: GOALS_KEY,
       queryFn: () => getGoalsByUserId(userId) ?? [],
+    }),
+    queryClient.prefetchQuery({
+      queryKey: STREAKS_KEY,
+      queryFn: () => getActiveStreaksByUserId(userId) ?? [],
     }),
   ]);
 

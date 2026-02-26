@@ -18,8 +18,9 @@ import {
   insertGoal,
   deleteGoal,
   getCompletionsByUserIdAndHabitId,
+  getActiveStreaksByUserId,
 } from "@/lib/data-service";
-import type { Completion, Habit, UpdateGoalInput } from "@/types";
+import type { Completion, Habit, Streak, UpdateGoalInput } from "@/types";
 import { revalidatePath } from "next/cache";
 import { GoalFormValues } from "@/lib/zod";
 
@@ -193,6 +194,12 @@ export async function deleteCompletionAction(
   }
 
   return {};
+}
+
+export async function fetchStreaksAction(): Promise<Streak[]> {
+  const session = await auth();
+  if (!session?.user?.id) return [];
+  return (await getActiveStreaksByUserId(session.user.id)) ?? [];
 }
 
 export async function fetchGoalsAction() {

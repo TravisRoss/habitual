@@ -11,7 +11,7 @@ import {
   ItemActions,
 } from "@/components/ui/item";
 import { cn } from "@/lib/utils";
-import type { Habit } from "@/types";
+import type { Habit, Streak } from "@/types";
 import type { HabitFormValues } from "@/lib/zod";
 import { HabitDialog } from "./HabitDialog";
 import BurgerMenu from "./BurgerMenu";
@@ -19,6 +19,7 @@ import BurgerMenu from "./BurgerMenu";
 type HabitItemProps = {
   habit: Habit;
   isCompleted: boolean;
+  streak?: Streak;
   onToggleComplete: (completed: boolean) => void;
   onEdit: (data: HabitFormValues) => Promise<{ error?: string }>;
   onDelete: () => void;
@@ -27,6 +28,7 @@ type HabitItemProps = {
 export default function HabitItem({
   habit,
   isCompleted,
+  streak,
   onToggleComplete,
   onEdit,
   onDelete,
@@ -62,10 +64,15 @@ export default function HabitItem({
         >
           {habit.name}
         </ItemTitle>
-        <ItemDescription>
+        <ItemDescription className="flex items-center gap-1.5">
           <Badge variant="outline" className="text-xs">
             {habit.frequency}
           </Badge>
+          {streak && streak.streak_length >= 2 && (
+            <span className="text-xs text-muted-foreground">
+              🔥 {streak.streak_length}
+            </span>
+          )}
         </ItemDescription>
       </ItemContent>
 

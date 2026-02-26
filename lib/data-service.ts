@@ -6,6 +6,7 @@ import {
   Habit,
   Period,
   ProfileForCredentials,
+  Streak,
   Unit,
 } from "@/types";
 
@@ -297,6 +298,24 @@ export async function deleteGoal(
   const { error } = await supabase.from("goals").delete().eq("id", goal_id);
 
   return { error: error?.message ?? null };
+}
+
+export async function getActiveStreaksByUserId(
+  user_id: string,
+): Promise<Streak[] | null> {
+  const supabase = createAdminClient();
+  const { data, error } = await supabase
+    .from("habit_streaks")
+    .select("habit_id, user_id, streak_length, streak_start, streak_end, is_active")
+    .eq("user_id", user_id)
+    .eq("is_active", true);
+
+  if (error) {
+    console.error("Error fetching streaks:", error);
+    return null;
+  }
+
+  return data as Streak[];
 }
 
 export async function updateGoal(data: {
