@@ -14,6 +14,8 @@ import { Progress } from "../ui/progress";
 import { useState } from "react";
 import { GoalDialog } from "./GoalDialog";
 import { cn } from "@/lib/utils";
+import { useCompletionsForHabit } from "@/hooks/useCompletions";
+import { calcPercentage } from "@/app/_lib/utils";
 
 type GoalItemProps = {
   goal: Goal;
@@ -30,6 +32,10 @@ export default function GoalItem({
 }: GoalItemProps) {
   const [editOpen, setEditOpen] = useState(false);
 
+  const habitCompletions = useCompletionsForHabit(goal.habit_id);
+  const completionCount = habitCompletions.data?.length ?? 0;
+  const completionPercentage = calcPercentage(completionCount, goal.target);
+
   return (
     <Item
       className={cn(
@@ -42,10 +48,10 @@ export default function GoalItem({
     >
       <ItemContent>
         <ItemTitle>{goal.name}</ItemTitle>
-        <Progress value={7} max={10} className="mt-1" />
+        <Progress value={completionPercentage} />
         <ItemDescription>
           <span>
-            5 of {goal.target} {goal.unit} target
+            {completionCount} of {goal.target} {goal.unit} target
           </span>
         </ItemDescription>
       </ItemContent>

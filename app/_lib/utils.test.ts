@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { dateToDayNumber, formatDate } from "./utils";
+import { calcPercentage, dateToDayNumber, formatDate } from "./utils";
 
 describe("dateToDayNumber", () => {
   it("returns 0 for Sunday", () => {
@@ -46,5 +46,31 @@ describe("formatDate", () => {
 
   it("defaults to today when no date is provided", () => {
     expect(formatDate()).toEqual(new Date().toISOString().slice(0, 10));
+  });
+});
+
+describe("calcPercentage", () => {
+  it("returns 0 when total is 0", () => {
+    expect(calcPercentage(0, 0)).toBe(0);
+  });
+
+  it("returns 0 when value is 0", () => {
+    expect(calcPercentage(0, 10)).toBe(0);
+  });
+
+  it("calculates a standard percentage", () => {
+    expect(calcPercentage(3, 8)).toBeCloseTo(37.5);
+  });
+
+  it("returns 100 when value equals total", () => {
+    expect(calcPercentage(8, 8)).toBe(100);
+  });
+
+  it("caps at 100 when value exceeds total", () => {
+    expect(calcPercentage(10, 8)).toBe(100);
+  });
+
+  it("handles decimal values", () => {
+    expect(calcPercentage(1, 3)).toBeCloseTo(33.33);
   });
 });

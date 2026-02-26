@@ -2,6 +2,7 @@ import {
   createCompletionAction,
   deleteCompletionAction,
   fetchCompletionsForDateAction,
+  fetchCompletionsForHabitAction,
 } from "@/app/_lib/actions";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
@@ -12,6 +13,13 @@ export function useCompletionsForDate(date: string) {
   return useQuery({
     queryKey: [...COMPLETIONS_KEY, date],
     queryFn: () => fetchCompletionsForDateAction(date),
+  });
+}
+
+export function useCompletionsForHabit(habit_id: string) {
+  return useQuery({
+    queryKey: [...COMPLETIONS_KEY, habit_id],
+    queryFn: () => fetchCompletionsForHabitAction(habit_id),
   });
 }
 

@@ -11,9 +11,15 @@ export function formatDate(date: Date = new Date()): string {
   return date.toISOString().slice(0, 10);
 }
 
-/* Calculates the end date based on the start date and the period (in days) */
+/** Calculates the end date based on the start date and the period (in days) */
 export function calcEndDate(start_date: string, period: Period): string {
   const start = new Date(start_date);
   const end = start.getTime() + parseInt(period) * 24 * 60 * 60 * 1000; // period is in days, convert to milliseconds
   return formatDate(new Date(end));
+}
+
+/** Calculates the percentage of a value relative to a total, capped at 100% */
+export function calcPercentage(value: number, total: number): number {
+  if (total === 0) return 0;
+  return Math.min((value / total) * 100, 100);
 }

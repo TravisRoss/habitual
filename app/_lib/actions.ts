@@ -17,6 +17,7 @@ import {
   getGoalsByUserId,
   insertGoal,
   deleteGoal,
+  getCompletionsByUserIdAndHabitId,
 } from "@/lib/data-service";
 import type { Completion, Habit, UpdateGoalInput } from "@/types";
 import { revalidatePath } from "next/cache";
@@ -104,6 +105,16 @@ export async function fetchHabitsForDateAction(date: string): Promise<Habit[]> {
   const session = await auth();
   if (!session?.user?.id) return [];
   return (await getHabitsByUserIdAndDate(session.user.id, date)) ?? [];
+}
+
+export async function fetchCompletionsForHabitAction(
+  habit_id: string,
+): Promise<Completion[]> {
+  const session = await auth();
+  if (!session?.user?.id) return [];
+  return (
+    (await getCompletionsByUserIdAndHabitId(session.user.id, habit_id)) ?? []
+  );
 }
 
 export async function fetchCompletionsForDateAction(
