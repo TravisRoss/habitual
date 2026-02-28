@@ -291,6 +291,11 @@ export async function deleteGoal(
   const supabase = createAdminClient();
   const { error } = await supabase.from("goals").delete().eq("id", goal_id);
 
+  // delete the associated habit as well to keep data consistent, since a goal must have a habit
+  if (!error) {
+    await supabase.from("habits").delete().eq("id", goal_id);
+  }
+
   return { error: error?.message ?? null };
 }
 
@@ -300,7 +305,9 @@ export async function getActiveStreaksByUserId(
   const supabase = createAdminClient();
   const { data, error } = await supabase
     .from("habit_streaks")
-    .select("habit_id, user_id, streak_length, streak_start, streak_end, is_active")
+    .select(
+      "habit_id, user_id, streak_length, streak_start, streak_end, is_active",
+    )
     .eq("user_id", user_id)
     .eq("is_active", true);
 
