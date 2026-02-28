@@ -5,9 +5,9 @@ import {
   updateGoalAction,
 } from "@/app/_lib/actions";
 import { GoalFormValues } from "@/lib/zod";
-import type { ExistingHabitInput } from "@/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import { HABITS_KEY } from "./useHabits";
 
 export const GOALS_KEY = ["goals"];
 
@@ -23,6 +23,7 @@ export function useCreateGoal() {
     onSuccess: () => {
       toast.success("Goal created successfully!");
       queryClient.invalidateQueries({ queryKey: GOALS_KEY });
+      queryClient.invalidateQueries({ queryKey: HABITS_KEY });
     },
     onError: () => {
       toast.error("Failed to create goal. Please try again.");
@@ -49,11 +50,17 @@ export function useEditGoal() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ goal_id, name, target, period, start_date, unit, habit }: { goal_id: string } & GoalFormValues) =>
-      updateGoalAction(goal_id, { name, target, period, start_date, unit, habit: habit as ExistingHabitInput }),
+    mutationFn: ({
+      goal_id,
+      habit_id,
+      start_date,
+      ...data
+    }: { goal_id: string; habit_id: string; start_date: string } & GoalFormValues) =>
+      updateGoalAction(goal_id, habit_id, start_date, data),
     onSuccess: () => {
       toast.success("Goal updated successfully!");
       queryClient.invalidateQueries({ queryKey: GOALS_KEY });
+      queryClient.invalidateQueries({ queryKey: HABITS_KEY });
     },
     onError: () => {
       toast.error("Failed to update goal. Please try again.");

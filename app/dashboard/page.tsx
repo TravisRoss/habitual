@@ -14,11 +14,11 @@ import { HABITS_KEY } from "@/hooks/useHabits";
 import { GOALS_KEY } from "@/hooks/useGoals";
 import { STREAKS_KEY } from "@/hooks/useStreaks";
 import HabitsList from "@/components/features/HabitsList";
-import { CreateHabitButton } from "@/components/features/CreateHabitButton";
 import { Banner } from "@/components/features/Banner";
 import { formatDate } from "../_lib/utils";
 import GoalsList from "@/components/features/GoalsList";
 import { COMPLETIONS_KEY } from "@/hooks/useCompletions";
+import { CreateGoalButton } from "@/components/features/CreateGoalButton";
 
 export const metadata = {
   title: "Dashboard",
@@ -72,7 +72,7 @@ export default async function Dashboard() {
           </div>
         </div>
       </HydrationBoundary>
-      <CreateHabitButton />
+      <CreateGoalButton />
     </div>
   );
 }

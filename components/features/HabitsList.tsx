@@ -31,6 +31,11 @@ export default function HabitsList({ date }: HabitsListProps) {
 
   return (
     <ul className="flex flex-col gap-2">
+      {habits.length === 0 && (
+        <p className="text-sm text-muted-foreground">
+          No habits yet for today. Create some to track your progress!
+        </p>
+      )}
       {habits.map((habit) => (
         <HabitItem
           key={habit.id}

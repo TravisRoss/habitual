@@ -2,16 +2,18 @@
 
 import { useState } from "react";
 import { CirclePlus } from "lucide-react";
-import { useCreateHabit } from "@/hooks/useHabits";
-import { HabitDialog } from "./HabitDialog";
-import { HabitFormValues } from "@/lib/zod";
+import { useHabits } from "@/hooks/useHabits";
+import { GoalFormValues } from "@/lib/zod";
+import { useCreateGoal } from "@/hooks/useGoals";
+import { GoalDialog } from "./GoalDialog";
 
-export function CreateHabitButton() {
+export function CreateGoalButton() {
   const [open, setOpen] = useState(false);
-  const createMutation = useCreateHabit();
+  const createGoalMutation = useCreateGoal();
+  const { data: habits } = useHabits();
 
-  function handleOnSubmit(data: HabitFormValues) {
-    return createMutation.mutateAsync(data).then((result) => ({
+  function handleOnSubmit(data: GoalFormValues) {
+    return createGoalMutation.mutateAsync(data).then((result) => ({
       error: result.error ?? undefined,
     }));
   }
@@ -22,11 +24,12 @@ export function CreateHabitButton() {
         className="fixed bottom-20 right-6 md:bottom-6 h-12 w-12 rounded-full bg-brand text-white p-3 shadow-lg cursor-pointer hover:bg-brand-dim transition-colors duration-300"
         onClick={() => setOpen(true)}
       />
-      <HabitDialog
+      <GoalDialog
         action="create"
         open={open}
         onOpenChange={setOpen}
         onSubmit={handleOnSubmit}
+        habits={habits ?? []}
       />
     </>
   );

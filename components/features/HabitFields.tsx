@@ -6,7 +6,6 @@ import type {
   FieldErrors,
   UseFormSetValue,
   UseFormWatch,
-  FieldValues,
 } from "react-hook-form";
 import {
   Field,
@@ -30,39 +29,26 @@ import { WeeklyTargetSelect } from "./WeeklyTargetSelect";
 import { inputClass } from "@/app/_lib/constants";
 import type { HabitFormValues } from "@/lib/zod";
 
-// Supports both flat (HabitForm) and nested (GoalForm: "habit") field paths
-type HabitFieldsProps<T extends FieldValues> = {
-  control: Control<T>;
+type HabitFieldsProps = {
+  control: Control<HabitFormValues>;
   errors: FieldErrors<HabitFormValues>;
-  watch: UseFormWatch<T>;
-  setValue: UseFormSetValue<T>;
-  prefix?: string; // e.g. "habit" for GoalForm, undefined for HabitForm
+  watch: UseFormWatch<HabitFormValues>;
+  setValue: UseFormSetValue<HabitFormValues>;
 };
 
-function field(name: string, prefix?: string) {
-  return (prefix ? `${prefix}.${name}` : name) as never;
-}
-
-export function HabitFields<T extends FieldValues>({
-  control,
-  errors,
-  watch,
-  setValue,
-  prefix,
-}: HabitFieldsProps<T>) {
-  const frequencyPath = field("frequency", prefix);
-  const frequency = watch(frequencyPath) as unknown as string;
+export function HabitFields({ control, errors, watch, setValue }: HabitFieldsProps) {
+  const frequency = watch("frequency");
 
   return (
     <FieldGroup>
       <Field>
-        <FieldLabel htmlFor={field("name", prefix)}>Name</FieldLabel>
+        <FieldLabel htmlFor="name">Name</FieldLabel>
         <Controller
-          name={field("name", prefix)}
+          name="name"
           control={control}
           render={({ field: f }) => (
             <Input
-              id={field("name", prefix)}
+              id="name"
               type="text"
               placeholder="e.g. Morning run"
               aria-invalid={!!errors.name}
@@ -75,15 +61,13 @@ export function HabitFields<T extends FieldValues>({
       </Field>
 
       <Field>
-        <FieldLabel htmlFor={field("description", prefix)}>
-          Description (optional)
-        </FieldLabel>
+        <FieldLabel htmlFor="description">Description (optional)</FieldLabel>
         <Controller
-          name={field("description", prefix)}
+          name="description"
           control={control}
           render={({ field: f }) => (
             <Textarea
-              id={field("description", prefix)}
+              id="description"
               placeholder="Add notes or motivation..."
               aria-invalid={!!errors.description}
               className={cn(inputClass, "resize-none")}
@@ -95,25 +79,20 @@ export function HabitFields<T extends FieldValues>({
       </Field>
 
       <Field>
-        <FieldLabel htmlFor={field("frequency", prefix)}>Frequency</FieldLabel>
+        <FieldLabel htmlFor="frequency">Frequency</FieldLabel>
         <Controller
-          name={frequencyPath}
+          name="frequency"
           control={control}
           render={({ field: f }) => (
             <Select
               value={f.value}
               onValueChange={(v) => {
                 f.onChange(v);
-                if (v === "weekly")
-                  setValue(field("weekly_target", prefix), 1 as never);
-                if (v === "custom")
-                  setValue(field("target_days", prefix), [] as never);
+                if (v === "weekly") setValue("weekly_target", 1);
+                if (v === "custom") setValue("target_days", []);
               }}
             >
-              <SelectTrigger
-                id={field("frequency", prefix)}
-                className={inputClass}
-              >
+              <SelectTrigger id="frequency" className={inputClass}>
                 <SelectValue placeholder="Select frequency" />
               </SelectTrigger>
               <SelectContent>
@@ -129,11 +108,9 @@ export function HabitFields<T extends FieldValues>({
 
       {frequency === "weekly" && (
         <Field>
-          <FieldLabel htmlFor={field("weekly_target", prefix)}>
-            Times per week
-          </FieldLabel>
+          <FieldLabel htmlFor="weekly_target">Times per week</FieldLabel>
           <Controller
-            name={field("weekly_target", prefix)}
+            name="weekly_target"
             control={control}
             render={({ field: f }) => (
               <WeeklyTargetSelect value={f.value} onChange={f.onChange} />
@@ -147,7 +124,7 @@ export function HabitFields<T extends FieldValues>({
         <Field>
           <FieldLabel>Days of the week</FieldLabel>
           <Controller
-            name={field("target_days", prefix)}
+            name="target_days"
             control={control}
             render={({ field: f }) => (
               <TargetDaysCheckboxes
@@ -163,7 +140,7 @@ export function HabitFields<T extends FieldValues>({
       <Field>
         <FieldLabel>Color (optional)</FieldLabel>
         <Controller
-          name={field("color", prefix)}
+          name="color"
           control={control}
           render={({ field: f }) => (
             <ColorPicker value={f.value} onChange={f.onChange} />

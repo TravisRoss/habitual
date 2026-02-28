@@ -39,13 +39,13 @@ export function GoalDialog({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            {action === "edit" ? "Edit Goal" : "Add Goal"}
+            {action === "edit" ? "Edit Goal" : "Create New Habit Goal"}
           </DialogTitle>
         </DialogHeader>
         <GoalForm
-          defaultValues={goal ? goalToFormValues(goal) : undefined}
-          existingHabits={habits}
+          defaultValues={goal ? goalToFormValues(goal, habits?.find((h) => h.id === goal.habit_id)) : undefined}
           onSubmit={handleOnSubmit}
+          submitLabel={action === "create" ? "Create New" : "Save"}
           onCancel={() => onOpenChange(false)}
         />
       </DialogContent>

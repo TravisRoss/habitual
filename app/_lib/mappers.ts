@@ -13,22 +13,17 @@ export function habitToFormValues(habit: Habit): HabitFormValues {
   };
 }
 
-/**
- * Maps a stored Goal to its edit form representation.
- * The habit is always mapped as "existing" since a persisted goal
- * always has a saved habit — the "new" branch only exists during creation.
- * The period is derived by diffing start/end dates back into days.
- */
-export function goalToFormValues(goal: Goal): GoalFormValues {
+/** Maps a stored Goal (and its associated Habit) to the edit form representation. */
+export function goalToFormValues(goal: Goal, habit?: Habit): GoalFormValues {
+  const frequency = habit?.frequency ?? "daily";
+  const targetDays = habit?.target_days ?? [];
+
   return {
     name: goal.name,
-    habit: {
-      type: "existing",
-      id: goal.habit_id,
-    },
+    habit_name: habit?.name ?? "",
     period: goal.period,
-    target: goal.target,
-    unit: goal.unit,
-    start_date: goal.start_date,
+    habit_frequency: frequency,
+    habit_target_days:
+      frequency === "weekly" || frequency === "custom" ? targetDays : undefined,
   };
 }

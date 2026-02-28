@@ -64,41 +64,42 @@ export const habitSchema = z
     { message: "Select at least one day", path: ["target_days"] },
   );
 
-export const goalSchema = z.object({
-  name: z
-    .string()
-    .min(1, "Goal name is required")
-    .max(50, "Name must be less than 50 characters"),
-  habit: z.discriminatedUnion("type", [
-    z.object({
-      type: z.literal("existing"),
-      id: z.string().min(1, "Please select a habit"),
-    }),
-    z.object({
-      type: z.literal("new"),
-      name: z.string().min(1, "Habit name is required"),
-      description: z.string().optional(),
-      frequency: z.enum(["daily", "weekly", "custom"]).optional(),
-      color: z.string().optional(),
-      weekly_target: z.number().optional(),
-      target_days: z.array(z.number()).optional(),
-    }),
-  ]),
-  period: z.enum(["7", "14", "30", "90", "180", "365"]),
-  start_date: z.string().refine(
-    (date) => {
-      const today = new Date();
-      const inputDate = new Date(date);
+export const goalSchema = z
+  .object({
+    name: z
+      .string()
+      .min(1, "Goal name is required")
+      .max(50, "Name must be less than 50 characters"),
+    habit_name: z
+      .string()
+      .min(1, "Habit name is required")
+      .max(50, "Habit name must be less than 50 characters"),
+    period: z.enum(["7", "14", "30", "90", "180", "365"]),
+    habit_frequency: z.enum(["daily", "weekly", "custom"]),
+    habit_target_days: z
+      .array(z.number().int().min(0).max(6))
+      .optional(),
+  })
+  .refine(
+    (data) => {
+      if (data.habit_frequency !== "weekly") return true;
       return (
-        inputDate >=
-        new Date(today.getFullYear(), today.getMonth(), today.getDate())
+        Array.isArray(data.habit_target_days) &&
+        data.habit_target_days.length === 1
       );
     },
-    { message: "Start date cannot be in the past", path: ["start_date"] },
-  ),
-  target: z.number().min(1, "Target must be at least 1"),
-  unit: z.enum(["times", "hours", "minutes", "pages", "kg", "custom"]),
-});
+    { message: "Select a day of the week", path: ["habit_target_days"] },
+  )
+  .refine(
+    (data) => {
+      if (data.habit_frequency !== "custom") return true;
+      return (
+        Array.isArray(data.habit_target_days) &&
+        data.habit_target_days.length > 0
+      );
+    },
+    { message: "Select at least one day", path: ["habit_target_days"] },
+  );
 
 export type LoginFormValues = z.infer<typeof loginSchema>;
 export type SignUpFormValues = z.infer<typeof signUpSchema>;
