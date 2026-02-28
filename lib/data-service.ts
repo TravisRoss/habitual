@@ -217,13 +217,14 @@ export async function getCompletionsByUserIdAndHabitId(
 export async function insertCompletion(
   habit_id: string,
   user_id: string,
+  date: string,
 ): Promise<{ error: string | null }> {
   const supabase = createAdminClient();
   const { error } = await supabase.from("completions").insert({
     id: crypto.randomUUID(),
     habit_id,
     user_id,
-    completed_on: formatDate(new Date()),
+    completed_on: date,
   });
 
   return { error: error?.message ?? null };
@@ -232,13 +233,15 @@ export async function insertCompletion(
 export async function deleteCompletion(
   habit_id: string,
   user_id: string,
+  date: string,
 ): Promise<{ error: string | null }> {
   const supabase = createAdminClient();
   const { error } = await supabase
     .from("completions")
     .delete()
     .eq("habit_id", habit_id)
-    .eq("user_id", user_id);
+    .eq("user_id", user_id)
+    .eq("completed_on", date);
 
   return { error: error?.message ?? null };
 }

@@ -47,11 +47,13 @@ export default function HabitsList({ date }: HabitsListProps) {
               createCompletionMutation.mutate({
                 habit_id: habit.id,
                 user_id: habit.user_id,
+                date
               });
             } else {
               deleteCompletionMutation.mutate({
                 habit_id: habit.id,
                 user_id: habit.user_id,
+                date,
               });
             }
           }}

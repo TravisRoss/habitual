@@ -174,8 +174,9 @@ export async function editHabitAction(data: {
 export async function createCompletionAction(
   habit_id: string,
   user_id: string,
+  date: string,
 ): Promise<{ error?: string }> {
-  const { error } = await insertCompletion(habit_id, user_id);
+  const { error } = await insertCompletion(habit_id, user_id, date);
 
   if (error) {
     return { error: "Failed to mark habit as complete. Please try again." };
@@ -187,8 +188,9 @@ export async function createCompletionAction(
 export async function deleteCompletionAction(
   habit_id: string,
   user_id: string,
+  date: string,
 ): Promise<{ error?: string }> {
-  const { error } = await deleteCompletion(habit_id, user_id);
+  const { error } = await deleteCompletion(habit_id, user_id, date);
 
   if (error) {
     return { error: "Failed to unmark habit as complete. Please try again." };

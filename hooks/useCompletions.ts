@@ -29,10 +29,12 @@ export function useCreateCompletion() {
     mutationFn: ({
       habit_id,
       user_id,
+      date,
     }: {
       habit_id: string;
       user_id: string;
-    }) => createCompletionAction(habit_id, user_id),
+      date: string;
+    }) => createCompletionAction(habit_id, user_id, date),
     onSuccess: () => {
       toast.success("Habit marked as complete!");
       queryClient.invalidateQueries({ queryKey: COMPLETIONS_KEY });
@@ -49,10 +51,12 @@ export function useDeleteCompletion() {
     mutationFn: ({
       habit_id,
       user_id,
+      date,
     }: {
       habit_id: string;
       user_id: string;
-    }) => deleteCompletionAction(habit_id, user_id),
+      date: string;
+    }) => deleteCompletionAction(habit_id, user_id, date),
     onSuccess: () => {
       toast.success("Habit marked as incomplete!");
       queryClient.invalidateQueries({ queryKey: COMPLETIONS_KEY });
