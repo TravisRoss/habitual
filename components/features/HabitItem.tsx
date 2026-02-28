@@ -15,6 +15,7 @@ import type { Habit, Streak } from "@/types";
 import type { HabitFormValues } from "@/lib/zod";
 import { HabitDialog } from "./HabitDialog";
 import BurgerMenu from "./BurgerMenu";
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 
 type HabitItemProps = {
   habit: Habit;
@@ -35,6 +36,7 @@ export default function HabitItem({
 }: HabitItemProps) {
   const [completed, setCompleted] = useState(isCompleted);
   const [editOpen, setEditOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
 
   useEffect(() => {
     setCompleted(isCompleted);
@@ -89,7 +91,15 @@ export default function HabitItem({
             className="h-5 w-5"
           />
         </div>
-        <BurgerMenu onEdit={() => setEditOpen(true)} onDelete={onDelete} />
+        <BurgerMenu onEdit={() => setEditOpen(true)} onDelete={() => setDeleteOpen(true)} />
+        <ConfirmDialog
+          open={deleteOpen}
+          onOpenChange={setDeleteOpen}
+          title="Delete habit?"
+          description="This will permanently delete the habit and all its completion history. This action cannot be undone."
+          confirmLabel="Delete"
+          onConfirm={onDelete}
+        />
         <HabitDialog
           habit={habit}
           action="edit"

@@ -16,6 +16,7 @@ import { GoalDialog } from "./GoalDialog";
 import { cn } from "@/lib/utils";
 import { useCompletionsForHabit } from "@/hooks/useCompletions";
 import { calcPercentage } from "@/app/_lib/utils";
+import { ConfirmDialog } from "../ui/confirm-dialog";
 
 type GoalItemProps = {
   goal: Goal;
@@ -31,6 +32,7 @@ export default function GoalItem({
   onDelete,
 }: GoalItemProps) {
   const [editOpen, setEditOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
 
   const habitCompletions = useCompletionsForHabit(goal.habit_id);
   const completionCount = habitCompletions.data?.length ?? 0;
@@ -59,7 +61,15 @@ export default function GoalItem({
         </ItemDescription>
       </ItemContent>
       <ItemActions>
-        <BurgerMenu onEdit={() => setEditOpen(true)} onDelete={onDelete} />
+        <BurgerMenu onEdit={() => setEditOpen(true)} onDelete={() => setDeleteOpen(true)} />
+        <ConfirmDialog
+          open={deleteOpen}
+          onOpenChange={setDeleteOpen}
+          title="Delete goal?"
+          description="This will permanently delete the goal and its associated habit. This action cannot be undone."
+          confirmLabel="Delete"
+          onConfirm={onDelete}
+        />
         <GoalDialog
           goal={goal}
           habits={habits}
