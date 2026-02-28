@@ -36,7 +36,12 @@ type HabitFieldsProps = {
   setValue: UseFormSetValue<HabitFormValues>;
 };
 
-export function HabitFields({ control, errors, watch, setValue }: HabitFieldsProps) {
+export function HabitFields({
+  control,
+  errors,
+  watch,
+  setValue,
+}: HabitFieldsProps) {
   const frequency = watch("frequency");
 
   return (
@@ -58,24 +63,6 @@ export function HabitFields({ control, errors, watch, setValue }: HabitFieldsPro
           )}
         />
         <FieldError errors={[errors.name]} />
-      </Field>
-
-      <Field>
-        <FieldLabel htmlFor="description">Description (optional)</FieldLabel>
-        <Controller
-          name="description"
-          control={control}
-          render={({ field: f }) => (
-            <Textarea
-              id="description"
-              placeholder="Add notes or motivation..."
-              aria-invalid={!!errors.description}
-              className={cn(inputClass, "resize-none")}
-              {...f}
-            />
-          )}
-        />
-        <FieldError errors={[errors.description]} />
       </Field>
 
       <Field>
