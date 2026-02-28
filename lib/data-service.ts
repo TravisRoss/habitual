@@ -158,25 +158,19 @@ export async function getHabitsByUserId(
 }
 
 export async function getHabitsByUserIdAndDate(
-  user_id: string,
+  userId: string,
   date: string,
-): Promise<Habit[] | null> {
+) {
   const supabase = createAdminClient();
-  const dayNumber = dateToDayNumber(date);
+  const day = dateToDayNumber(date);
 
   const { data, error } = await supabase
     .from("habits")
-    .select(
-      "id, user_id, name, frequency, description, color, weekly_target, target_days",
-    )
-    .eq("user_id", user_id)
-    .contains("target_days", [dayNumber]);
+    .select("*")
+    .eq("user_id", userId)
+    .or(`frequency.eq.daily,target_days.cs.{${day}}`);
 
-  if (error) {
-    console.error("Error fetching habits:", error);
-    return null;
-  }
-
+  if (error) return null;
   return data;
 }
 
