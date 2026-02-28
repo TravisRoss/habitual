@@ -77,7 +77,7 @@ export function GoalFields({
       </Field>
 
       <Field>
-        <FieldLabel htmlFor="period">Period</FieldLabel>
+        <FieldLabel htmlFor="period">Time Period</FieldLabel>
         <Controller
           name="period"
           control={control}
@@ -100,7 +100,7 @@ export function GoalFields({
       </Field>
 
       <Field>
-        <FieldLabel htmlFor="habit_frequency">Habit Type</FieldLabel>
+        <FieldLabel htmlFor="habit_frequency">Habit Frequency</FieldLabel>
         <Controller
           name="habit_frequency"
           control={control}

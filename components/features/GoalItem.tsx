@@ -34,7 +34,10 @@ export default function GoalItem({
 
   const habitCompletions = useCompletionsForHabit(goal.habit_id);
   const completionCount = habitCompletions.data?.length ?? 0;
-  const completionPercentage = calcPercentage(completionCount, goal.target);
+  const completionPercentage = calcPercentage(
+    completionCount,
+    Number(goal.period),
+  );
 
   return (
     <Item
@@ -51,7 +54,7 @@ export default function GoalItem({
         <Progress value={completionPercentage} />
         <ItemDescription>
           <span>
-            {completionCount} of {goal.target} {goal.unit} target
+            {completionCount} of {goal.period} days target
           </span>
         </ItemDescription>
       </ItemContent>
