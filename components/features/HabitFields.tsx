@@ -21,8 +21,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/utils";
 import { ColorPicker } from "./ColorPicker";
 import { TargetDaysCheckboxes } from "./TargetDaysCheckboxes";
 import { WeeklyTargetSelect } from "./WeeklyTargetSelect";

@@ -16,6 +16,7 @@ import type { HabitFormValues } from "@/lib/zod";
 import { HabitDialog } from "./HabitDialog";
 import BurgerMenu from "./BurgerMenu";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
+import { HabitCheckbox } from "./HabitCheckbox";
 
 type HabitItemProps = {
   habit: Habit;
@@ -79,23 +80,18 @@ export default function HabitItem({
       </ItemContent>
 
       <ItemActions>
-        <div
-          className={cn(
-            "transition-transform duration-150",
-            completed && "scale-110",
-          )}
-        >
-          <Checkbox
-            checked={completed}
-            onCheckedChange={(val) => handleCheckboxChange(Boolean(val))}
-            className="h-5 w-5"
-          />
-        </div>
-        <BurgerMenu onEdit={() => setEditOpen(true)} onDelete={() => setDeleteOpen(true)} />
+        <HabitCheckbox
+          checked={completed}
+          onCheckedChange={handleCheckboxChange}
+        />
+        <BurgerMenu
+          onEdit={() => setEditOpen(true)}
+          onDelete={() => setDeleteOpen(true)}
+        />
         <ConfirmDialog
           open={deleteOpen}
           onOpenChange={setDeleteOpen}
-          title="Delete habit?"
+          title="Are you sure you want to delete this habit?"
           description="This will permanently delete the habit and all its completion history. This action cannot be undone."
           confirmLabel="Delete"
           onConfirm={onDelete}

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { calcPercentage, dateToDayNumber, formatDate } from "./utils";
+import { calcPercentage, dateToDayNumber, formatDate, getWindowDates } from "./utils";
 
 describe("dateToDayNumber", () => {
   it("returns 0 for Sunday", () => {
@@ -72,5 +72,56 @@ describe("calcPercentage", () => {
 
   it("handles decimal values", () => {
     expect(calcPercentage(1, 3)).toBeCloseTo(33.33);
+  });
+});
+
+describe("getWindowDates", () => {
+  it("returns exactly 7 dates", () => {
+    const result = getWindowDates("2024-05-10");
+    expect(result.length).toEqual(7);
+  });
+
+  it("places the center date in the middle of the array", () => {
+    const result = getWindowDates("2024-05-10");
+    expect(result[3]).toEqual("2024-05-10");
+  });
+
+  it("returns the correct 3 days before and after", () => {
+    const result = getWindowDates("2024-05-10");
+    expect(result).toEqual([
+      "2024-05-07",
+      "2024-05-08",
+      "2024-05-09",
+      "2024-05-10",
+      "2024-05-11",
+      "2024-05-12",
+      "2024-05-13",
+    ]);
+  });
+
+  it("handles month boundaries", () => {
+    const result = getWindowDates("2024-03-01");
+    expect(result).toEqual([
+      "2024-02-27",
+      "2024-02-28",
+      "2024-02-29", // leap year
+      "2024-03-01",
+      "2024-03-02",
+      "2024-03-03",
+      "2024-03-04",
+    ]);
+  });
+
+  it("handles year boundaries", () => {
+    const result = getWindowDates("2025-01-01");
+    expect(result).toEqual([
+      "2024-12-29",
+      "2024-12-30",
+      "2024-12-31",
+      "2025-01-01",
+      "2025-01-02",
+      "2025-01-03",
+      "2025-01-04",
+    ]);
   });
 });

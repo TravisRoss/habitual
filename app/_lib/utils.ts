@@ -1,4 +1,5 @@
 import { Period } from "@/types";
+import { DAY_MS } from "./constants";
 
 /** Converts a date string (e.g. "2026-02-24") to a day number (0 = Sunday, 6 = Saturday) */
 export function dateToDayNumber(date: string): number {
@@ -22,4 +23,12 @@ export function calcEndDate(start_date: string, period: Period): string {
 export function calcPercentage(value: number, total: number): number {
   if (total === 0) return 0;
   return Math.min((value / total) * 100, 100);
+}
+
+/** Returns an array of 7 dates centered on the given date */
+export function getWindowDates(centerDate: string): string[] {
+  const centerMs = new Date(centerDate).getTime();
+  return Array.from({ length: 7 }, (_, i) =>
+    new Date(centerMs + (i - 3) * DAY_MS).toISOString().slice(0, 10),
+  );
 }
