@@ -81,3 +81,5 @@ export type CreateGoalInput = {
 export type UpdateGoalInput = Omit<CreateGoalInput, "habit"> & {
   habit: ExistingHabitInput;
 };
+
+export type PeriodOption = "Weekly" | "Monthly" | "Yearly";
