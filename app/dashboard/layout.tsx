@@ -1,6 +1,6 @@
 import { auth } from "@/app/_lib/auth";
-import Navigation from "@/components/features/Navigation";
-import FooterNav from "@/components/features/FooterNav";
+import Navigation from "@/components/features/shared/Navigation";
+import FooterNav from "@/components/features/shared/FooterNav";
 
 export default async function DashboardLayout({
   children,

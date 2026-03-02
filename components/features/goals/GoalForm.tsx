@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldGroup } from "@/components/ui/field";
 import { goalSchema, type GoalFormValues } from "@/lib/zod";
-import { FormShell } from "./FormShell";
+import { FormShell } from "../shared/FormShell";
 import { GoalFields } from "./GoalFields";
 
 type GoalFormProps = {

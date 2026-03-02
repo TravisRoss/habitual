@@ -3,7 +3,7 @@
 import GoalItem from "./GoalItem";
 import { useDeleteGoal, useEditGoal, useGoals } from "@/hooks/useGoals";
 import { useHabits } from "@/hooks/useHabits";
-import ListSkeleton from "./ListSkeleton";
+import ListSkeleton from "../shared/ListSkeleton";
 
 type GoalsListProps = {
   isPreview?: boolean;

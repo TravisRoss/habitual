@@ -21,9 +21,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ColorPicker } from "./ColorPicker";
-import { TargetDaysCheckboxes } from "./TargetDaysCheckboxes";
-import { WeeklyTargetSelect } from "./WeeklyTargetSelect";
+import { ColorPicker } from "../shared/ColorPicker";
+import { TargetDaysCheckboxes } from "../shared/TargetDaysCheckboxes";
+import { WeeklyTargetSelect } from "../shared/WeeklyTargetSelect";
 import { inputClass } from "@/app/_lib/constants";
 import type { HabitFormValues } from "@/lib/zod";
 

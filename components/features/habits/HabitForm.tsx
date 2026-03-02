@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { habitSchema, type HabitFormValues } from "@/lib/zod";
-import { FormShell } from "./FormShell";
+import { FormShell } from "../shared/FormShell";
 import { HabitFields } from "./HabitFields";
 
 type HabitFormProps = {

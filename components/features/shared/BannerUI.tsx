@@ -1,6 +1,6 @@
 "use client";
 
-import CircularProgress from "./CircularProgress";
+import CircularProgress from "../progress/CircularProgress";
 
 type BannerProps = {
   habitsCount: number;

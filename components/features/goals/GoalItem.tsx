@@ -2,21 +2,15 @@
 
 import { GoalFormValues } from "@/lib/zod";
 import { Goal, Habit } from "@/types";
-import {
-  Item,
-  ItemActions,
-  ItemContent,
-  ItemDescription,
-  ItemTitle,
-} from "../ui/item";
-import BurgerMenu from "./BurgerMenu";
-import { Progress } from "../ui/progress";
+import { Item, ItemContent, ItemDescription, ItemTitle, ItemActions } from "@/components/ui/item";
+import BurgerMenu from "../shared/BurgerMenu";
+import { Progress } from "@/components/ui/progress";
 import { useState } from "react";
 import { GoalDialog } from "./GoalDialog";
 import { cn } from "@/lib/utils";
 import { useCompletionsForHabit } from "@/hooks/useCompletions";
 import { calcPercentage } from "@/app/_lib/utils";
-import { ConfirmDialog } from "../ui/confirm-dialog";
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 
 type GoalItemProps = {
   goal: Goal;

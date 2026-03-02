@@ -1,6 +1,6 @@
 "use client";
 
-import HabitItem from "@/components/features/HabitItem";
+import HabitItem from "@/components/features/habits/HabitItem";
 import {
   useDeleteHabit,
   useEditHabit,
@@ -12,7 +12,7 @@ import {
 } from "@/hooks/useCompletions";
 import { useCompletionsForDate } from "@/hooks/useCompletions";
 import { useStreakMap } from "@/hooks/useStreaks";
-import ListSkeleton from "./ListSkeleton";
+import ListSkeleton from "../shared/ListSkeleton";
 
 type HabitsListProps = {
   date: string;

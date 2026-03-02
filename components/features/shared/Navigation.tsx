@@ -10,11 +10,11 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import SignOutDialog from "@/components/features/SignOutDialog";
+import SignOutDialog from "@/components/features/auth/SignOutDialog";
 import { navLinks } from "@/app/_config/nav";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { DarkModeToggle } from "@/components/features/DarkModeToggle";
+import { DarkModeToggle } from "@/components/features/shared/DarkModeToggle";
 import Image from "next/image";
 
 const linkClass =

@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
 import { PasswordInput } from "@/components/ui/PasswordInput";
-import { OAuthSection } from "@/components/features/OAuthSection";
+import { OAuthSection } from "@/components/features/auth/OAuthSection";
 import { loginSchema, type LoginFormValues } from "@/lib/zod";
 
 const inputClass = "bg-card border-border focus-visible:ring-brand focus-visible:border-brand text-foreground aria-invalid:border-red-400";

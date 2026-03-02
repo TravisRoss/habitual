@@ -1,10 +1,10 @@
 "use client";
 
-import HabitsList from "@/components/features/HabitsList";
+import HabitsList from "@/components/features/habits/HabitsList";
 import { formatDate } from "../../_lib/utils";
-import { DateStrip } from "@/components/features/DateStrip";
+import { DateStrip } from "@/components/features/shared/DateStrip";
 import { useState } from "react";
-import SubPageLayout from "@/components/features/SubPageLayout";
+import SubPageLayout from "@/components/features/shared/SubPageLayout";
 
 export default function Page() {
   const [selectedDate, setSelectedDate] = useState(formatDate());

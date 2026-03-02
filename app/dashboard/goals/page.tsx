@@ -1,6 +1,6 @@
-import { CreateGoalButton } from "@/components/features/CreateGoalButton";
-import GoalsList from "@/components/features/GoalsList";
-import SubPageLayout from "@/components/features/SubPageLayout";
+import { CreateGoalButton } from "@/components/features/goals/CreateGoalButton";
+import GoalsList from "@/components/features/goals/GoalsList";
+import SubPageLayout from "@/components/features/shared/SubPageLayout";
 
 export default function page() {
   return (

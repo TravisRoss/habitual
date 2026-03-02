@@ -13,13 +13,13 @@ import {
 import { HABITS_KEY } from "@/hooks/useHabits";
 import { GOALS_KEY } from "@/hooks/useGoals";
 import { STREAKS_KEY } from "@/hooks/useStreaks";
-import HabitsList from "@/components/features/HabitsList";
-import { Banner } from "@/components/features/Banner";
+import HabitsList from "@/components/features/habits/HabitsList";
+import { Banner } from "@/components/features/shared/Banner";
 import { formatDate } from "../_lib/utils";
-import GoalsList from "@/components/features/GoalsList";
+import GoalsList from "@/components/features/goals/GoalsList";
 import { COMPLETIONS_KEY } from "@/hooks/useCompletions";
-import { CreateGoalButton } from "@/components/features/CreateGoalButton";
-import SeeAllButton from "@/components/features/SeeAllButton";
+import { CreateGoalButton } from "@/components/features/goals/CreateGoalButton";
+import SeeAllButton from "@/components/features/shared/SeeAllButton";
 
 export const metadata = {
   title: "Dashboard",

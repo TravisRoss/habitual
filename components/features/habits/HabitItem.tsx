@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 import type { Habit, Streak } from "@/types";
 import type { HabitFormValues } from "@/lib/zod";
 import { HabitDialog } from "./HabitDialog";
-import BurgerMenu from "./BurgerMenu";
+import BurgerMenu from "../shared/BurgerMenu";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { HabitCheckbox } from "./HabitCheckbox";
 

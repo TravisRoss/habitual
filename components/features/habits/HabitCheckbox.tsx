@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { Checkbox } from "../ui/checkbox";
+import { Checkbox } from "@/components/ui/checkbox";
 
 type HabitCheckboxProps = {
   checked: boolean;

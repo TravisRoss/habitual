@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/select";
 import type { GoalFormValues } from "@/lib/zod";
 import { inputClass, DAYS } from "@/app/_lib/constants";
-import { TargetDaysCheckboxes } from "./TargetDaysCheckboxes";
+import { TargetDaysCheckboxes } from "../shared/TargetDaysCheckboxes";
 
 const PERIOD_OPTIONS = [
   { value: "7", label: "1 Week (7 Days)" },
