@@ -1,23 +1,28 @@
 "use client";
 
+import CircularProgress from "@/components/features/progress/CircularProgress";
 import { ProgressSelect } from "@/components/features/progress/ProgressSelect";
 import { PeriodOption } from "@/types";
 import { useState } from "react";
+import DashboardLayout from "@/components/features/shared/DashboardLayout";
+import DashboardSection from "@/components/features/shared/DashboardSection";
+import GoalReportList from "@/components/features/goals/GoalReportList";
 
 export default function page() {
   const [period, setPeriod] = useState<PeriodOption>("Weekly");
   
   return (
-    <div className="space-y-4">
-      <p className="text-2xl font-bold">Your Progress</p>
-      <div className="flex items-center justify-between">
-        <p>Progress Report</p>
-        <ProgressSelect value={period} onChange={setPeriod} />
-      </div>
-      <div className="flex flex-col gap-4">
-        {/* your goals section with title "your goals", progress bar towards all goals for the given period */}
-        
-      </div>
-    </div>
+    <DashboardLayout title="Progress Report" titleAction={<ProgressSelect value={period} onChange={setPeriod} />}>
+      <DashboardSection title="Your Goals">
+        <div className="flex flex-col items-center justify-center py-4">
+          <CircularProgress value={75} size={200} thickness={25} />
+          <p className="text-sm text-muted-foreground mt-4">Overall completion rate</p>
+        </div>
+      </DashboardSection>
+
+      <DashboardSection>
+        <GoalReportList />
+      </DashboardSection>
+    </DashboardLayout>
   );
 }

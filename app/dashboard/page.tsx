@@ -20,6 +20,8 @@ import GoalsList from "@/components/features/goals/GoalsList";
 import { COMPLETIONS_KEY } from "@/hooks/useCompletions";
 import { CreateGoalButton } from "@/components/features/goals/CreateGoalButton";
 import SeeAllButton from "@/components/features/shared/SeeAllButton";
+import DashboardLayout from "@/components/features/shared/DashboardLayout";
+import DashboardSection from "@/components/features/shared/DashboardSection";
 
 export const metadata = {
   title: "Dashboard",
@@ -54,33 +56,25 @@ export default async function Dashboard() {
   ]);
 
   return (
-    <div className="max-w-lg mx-auto px-4 py-6">
-      <p className="text-2xl font-bold mb-1">
-        Hello, {session?.user?.name ?? "Guest"}!
-      </p>
+    <DashboardLayout title={`Hello, ${session?.user?.name ?? "Guest"}!`}>
       <Banner />
 
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <div className="space-y-4 mt-4">
-          <div className="bg-muted/50 rounded-2xl p-5 shadow-sm">
-            <div className="flex items-center justify-between mb-3">
-              <p className="text-lg font-semibold mb-3">Today&apos;s Habits</p>
-              <SeeAllButton href="/dashboard/habits" />
-            </div>
+        <DashboardSection 
+          title="Today's Habits" 
+          action={<SeeAllButton href="/dashboard/habits" />}
+        >
+          <HabitsList date={today} isPreview={true} />
+        </DashboardSection>
 
-            <HabitsList date={today} isPreview={true} />
-          </div>
-
-          <div className="bg-muted/50 rounded-2xl p-5 shadow-sm">
-            <div className="flex items-center justify-between mb-3">
-              <p className="text-lg font-semibold mb-3">Your Goals</p>
-              <SeeAllButton href="/dashboard/goals" />
-            </div>
-            <GoalsList isPreview={true} />
-          </div>
-        </div>
+        <DashboardSection 
+          title="Your Goals" 
+          action={<SeeAllButton href="/dashboard/goals" />}
+        >
+          <GoalsList isPreview={true} />
+        </DashboardSection>
       </HydrationBoundary>
       <CreateGoalButton />
-    </div>
+    </DashboardLayout>
   );
 }

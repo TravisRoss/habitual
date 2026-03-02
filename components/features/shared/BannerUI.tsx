@@ -13,7 +13,7 @@ export default function Banner({ habitsCount, completionsCount }: BannerProps) {
 
   return (
     <div className="bg-brand rounded-2xl p-6 flex items-center gap-6">
-      <CircularProgress value={percentage} />
+      <CircularProgress value={percentage} fillColor="white" textColor="white" />
       <div className="text-white">
         {completionsCount === 0 ? (
           <>
