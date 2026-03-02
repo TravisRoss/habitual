@@ -16,9 +16,13 @@ import ListSkeleton from "./ListSkeleton";
 
 type HabitsListProps = {
   date: string;
+  isPreview?: boolean;
 };
 
-export default function HabitsList({ date }: HabitsListProps) {
+export default function HabitsList({
+  date,
+  isPreview = false,
+}: HabitsListProps) {
   const { data: habits = [], isLoading: habitsLoading } =
     useHabitsForDate(date);
   const { data: completions = [], isLoading: completionsLoading } =
@@ -33,6 +37,8 @@ export default function HabitsList({ date }: HabitsListProps) {
 
   const completedHabitIds = new Set(completions.map((c) => c.habit_id));
   const streakMap = useStreakMap();
+  const previewHabits = habits.slice(0, 3);
+  const habitList = isPreview ? previewHabits : habits;
 
   if (isLoading) {
     return <ListSkeleton count={habits.length} />;
@@ -45,7 +51,7 @@ export default function HabitsList({ date }: HabitsListProps) {
           No habits yet for today. Create some to track your progress!
         </p>
       )}
-      {habits.map((habit) => (
+      {habitList.map((habit) => (
         <HabitItem
           key={habit.id}
           habit={habit}

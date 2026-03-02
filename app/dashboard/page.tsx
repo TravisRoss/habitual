@@ -68,7 +68,7 @@ export default async function Dashboard() {
               <SeeAllButton href="/dashboard/habits" />
             </div>
 
-            <HabitsList date={today} />
+            <HabitsList date={today} isPreview={true} />
           </div>
 
           <div className="bg-muted/50 rounded-2xl p-5 shadow-sm">
@@ -76,7 +76,7 @@ export default async function Dashboard() {
               <p className="text-lg font-semibold mb-3">Your Goals</p>
               <SeeAllButton href="/dashboard/goals" />
             </div>
-            <GoalsList />
+            <GoalsList isPreview={true} />
           </div>
         </div>
       </HydrationBoundary>

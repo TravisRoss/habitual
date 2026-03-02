@@ -5,11 +5,17 @@ import { useDeleteGoal, useEditGoal, useGoals } from "@/hooks/useGoals";
 import { useHabits } from "@/hooks/useHabits";
 import ListSkeleton from "./ListSkeleton";
 
-export default function GoalsList() {
+type GoalsListProps = {
+  isPreview?: boolean;
+};
+
+export default function GoalsList({ isPreview = false }: GoalsListProps) {
   const { data: goals = [], isLoading } = useGoals();
   const { data: habits = [] } = useHabits();
   const editMutation = useEditGoal();
   const deleteMutation = useDeleteGoal();
+  const goalsPreview = goals.slice(0, 3);
+  const goalList = isPreview ? goalsPreview : goals;
 
   if (isLoading) {
     return <ListSkeleton count={goals.length} />;
@@ -22,7 +28,7 @@ export default function GoalsList() {
           No goals yet. Create some to stay motivated!
         </li>
       )}
-      {goals.map((goal) => (
+      {goalList.map((goal) => (
         <li key={goal.id}>
           <GoalItem
             goal={goal}
