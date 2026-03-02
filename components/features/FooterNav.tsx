@@ -9,7 +9,7 @@ export default function FooterNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-card border-t border-border">
+    <nav className="md:hidden bg-card border-t border-border">
       <ul className="flex justify-around p-2">
         {navLinks.map(({ href, label, icon: Icon }) => {
           const isActive = pathname === href;
