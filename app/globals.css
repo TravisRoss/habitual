@@ -54,11 +54,11 @@
 }
 
 :root {
-  --page-bg: #FFFBEB;
-  --brand: #F59E0B;
-  --brand-dim: #D97706;
-  --habit-done-bg: #F0FDF4;
-  --habit-border-default: #E5E7EB;
+  --page-bg: #fffbeb;
+  --brand: #f59e0b;
+  --brand-dim: #d97706;
+  --habit-done-bg: #f0fdf4;
+  --habit-border-default: #e5e7eb;
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.141 0.005 285.823);
@@ -95,8 +95,8 @@
 
 .dark {
   --page-bg: oklch(0.141 0.005 285.823);
-  --brand: #F59E0B;
-  --brand-dim: #D97706;
+  --brand: #f59e0b;
+  --brand-dim: #d97706;
   --habit-done-bg: oklch(0.22 0.05 145);
   --habit-border-default: #374151;
   --background: oklch(0.141 0.005 285.823);
@@ -135,6 +135,9 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+  }
+  html {
+    @apply overflow-y: scroll;
   }
   body {
     @apply bg-background text-foreground;

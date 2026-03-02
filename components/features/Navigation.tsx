@@ -15,6 +15,7 @@ import { navLinks } from "@/app/_config/nav";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { DarkModeToggle } from "@/components/features/DarkModeToggle";
+import Image from "next/image";
 
 const linkClass =
   "font-nunito font-semibold text-muted-foreground hover:text-brand hover:bg-transparent focus:bg-transparent";
@@ -29,7 +30,7 @@ export default function Navigation({ session }: { session: Session | null }) {
           href={session ? "/dashboard" : "/"}
           className="font-nunito font-extrabold text-lg text-brand mr-4 flex items-center gap-1 cursor-auto"
         >
-          <img
+          <Image
             src="/logo.png"
             alt="Habitual Logo"
             width={24}

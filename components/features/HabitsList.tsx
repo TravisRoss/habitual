@@ -12,7 +12,7 @@ import {
 } from "@/hooks/useCompletions";
 import { useCompletionsForDate } from "@/hooks/useCompletions";
 import { useStreakMap } from "@/hooks/useStreaks";
-import { Skeleton } from "@/components/ui/skeleton";
+import ListSkeleton from "./ListSkeleton";
 
 type HabitsListProps = {
   date: string;
@@ -35,15 +35,7 @@ export default function HabitsList({ date }: HabitsListProps) {
   const streakMap = useStreakMap();
 
   if (isLoading) {
-    return (
-      <ul className="flex flex-col gap-2">
-        {Array.from({ length: 3 }).map((_, i) => (
-          <li key={i}>
-            <Skeleton className="h-12 w-full rounded-xl bg-muted" />
-          </li>
-        ))}
-      </ul>
-    );
+    return <ListSkeleton count={habits.length} />;
   }
 
   return (

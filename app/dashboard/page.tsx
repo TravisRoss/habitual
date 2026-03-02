@@ -19,8 +19,7 @@ import { formatDate } from "../_lib/utils";
 import GoalsList from "@/components/features/GoalsList";
 import { COMPLETIONS_KEY } from "@/hooks/useCompletions";
 import { CreateGoalButton } from "@/components/features/CreateGoalButton";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import SeeAllButton from "@/components/features/SeeAllButton";
 
 export const metadata = {
   title: "Dashboard",
@@ -66,21 +65,17 @@ export default async function Dashboard() {
           <div className="bg-muted/50 rounded-2xl p-5 shadow-sm">
             <div className="flex items-center justify-between mb-3">
               <p className="text-lg font-semibold mb-3">Today&apos;s Habits</p>
-              <Button variant="link" size="sm" className="px-0 mb-2">
-                <Link
-                  href="/dashboard/habits"
-                  className="text-sm text-muted-foreground hover:text-brand"
-                >
-                  See all
-                </Link>
-              </Button>
+              <SeeAllButton href="/dashboard/habits" />
             </div>
 
-              <HabitsList date={today} />
+            <HabitsList date={today} />
           </div>
 
           <div className="bg-muted/50 rounded-2xl p-5 shadow-sm">
-            <p className="text-lg font-semibold mb-3">Your Goals</p>
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-lg font-semibold mb-3">Your Goals</p>
+              <SeeAllButton href="/dashboard/goals" />
+            </div>
             <GoalsList />
           </div>
         </div>
