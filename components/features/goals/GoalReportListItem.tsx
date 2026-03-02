@@ -1,7 +1,7 @@
 "use client";
 
 import { Goal, Habit } from "@/types";
-import { Item, ItemContent, ItemDescription, ItemTitle, ItemActions } from "@/components/ui/item";
+import { Item, ItemContent, ItemDescription, ItemTitle, ItemActions, ItemMedia } from "@/components/ui/item";
 import { useCompletionsForHabit } from "@/hooks/useCompletions";
 import { calcPercentage } from "@/app/_lib/utils";
 import { Badge } from "@/components/ui/badge";
@@ -21,7 +21,7 @@ export default function GoalReportListItem({
     completionCount,
     Number(goal.period),
   );
-  const isAchieved = completionCount === goal.target;
+  const isAchieved = completionCount === Number(goal.period);
 
   return (
     <Item
@@ -29,12 +29,13 @@ export default function GoalReportListItem({
         "relative overflow-hidden border-l-4 transition-colors duration-300 bg-card"
       }
     >
-      <ItemContent>
+      <ItemMedia >        
         <CircularProgress value={completionPercentage} />
+      </ItemMedia>
+      <ItemContent>
+        <ItemTitle>{goal.name}</ItemTitle>
         <ItemDescription>
-          <span>
             {completionCount} of {goal.period} days target
-          </span>
         </ItemDescription>
       </ItemContent>
       <ItemActions>

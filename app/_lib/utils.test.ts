@@ -73,6 +73,10 @@ describe("calcPercentage", () => {
   it("handles decimal values", () => {
     expect(calcPercentage(1, 3)).toBeCloseTo(33.33);
   });
+
+  it("rounds the result to the nearest integer", () => {
+    expect(calcPercentage(1, 3)).toBe(33);
+  });
 });
 
 describe("getWindowDates", () => {

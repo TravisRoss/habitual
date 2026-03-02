@@ -22,7 +22,7 @@ export function calcEndDate(start_date: string, period: Period): string {
 /** Calculates the percentage of a value relative to a total, capped at 100% */
 export function calcPercentage(value: number, total: number): number {
   if (total === 0) return 0;
-  return Math.min((value / total) * 100, 100);
+  return Math.round(Math.min((value / total) * 100, 100));
 }
 
 /** Returns an array of 7 dates centered on the given date */
