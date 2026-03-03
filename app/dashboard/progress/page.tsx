@@ -7,6 +7,7 @@ import { useState } from "react";
 import DashboardLayout from "@/components/features/shared/DashboardLayout";
 import DashboardSection from "@/components/features/shared/DashboardSection";
 import GoalReportList from "@/components/features/goals/GoalReportList";
+import SeeAllButton from "@/components/features/shared/SeeAllButton";
 
 export default function page() {
   const [period, setPeriod] = useState<PeriodOption>("Weekly");
@@ -20,7 +21,7 @@ export default function page() {
         </div>
       </DashboardSection>
 
-      <DashboardSection>
+      <DashboardSection action={<SeeAllButton href="/dashboard/goals" />}>
         <GoalReportList />
       </DashboardSection>
     </DashboardLayout>

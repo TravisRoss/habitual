@@ -1,19 +1,20 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { MoveLeft } from "lucide-react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface BackButtonProps {
-  href: string;
-  label: string;
+  label?: string;
 }
 
-export default function BackButton({ href, label }: BackButtonProps) {
+export default function BackButton({ label = "Back" }: BackButtonProps) {
+  const router = useRouter();
+
   return (
-    <Button asChild variant="link" size="sm" className="w-max hover:text-brand">
-      <Link href={href}>
-        <MoveLeft className="w-4 h-4 mr-1" />
-        {label}
-      </Link>
+    <Button variant="link" size="sm" className="w-max hover:text-brand" onClick={() => router.back()}>
+      <MoveLeft className="w-4 h-4 mr-1" />
+      {label}
     </Button>
   );
 }
