@@ -8,11 +8,17 @@ interface CircularProgressProps {
   textColor?: string;
 }
 
-export default function CircularProgress({ value, size = 80, thickness = 10, fillColor = "#f59e0b", textColor = "#f59e0b" }: CircularProgressProps) {
+export default function CircularProgress({
+  value,
+  size = 80,
+  thickness = 10,
+  fillColor = "#f59e0b",
+  textColor = "#f59e0b",
+}: CircularProgressProps) {
   const center = size / 2;
 
   return (
-    <RadialBarChart 
+    <RadialBarChart
       width={size}
       height={size}
       cx={center}
@@ -31,10 +37,10 @@ export default function CircularProgress({ value, size = 80, thickness = 10, fil
         tick={false}
       />
       <RadialBar
-        background={{ fill: "rgba(255,255,255,0.3)" }}
+        background={{ fill: "#e5e7eb" }}
         dataKey="value"
         angleAxisId={0}
-        fill={fillColor}  
+        fill={fillColor}
         cornerRadius={10}
       />
       <text
