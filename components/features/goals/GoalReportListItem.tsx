@@ -21,7 +21,7 @@ export default function GoalReportListItem({
     completionCount,
     Number(goal.period),
   );
-  const isAchieved = completionCount === Number(goal.period);
+  const isAchieved = completionCount >= Number(goal.period);
 
   return (
     <Item
