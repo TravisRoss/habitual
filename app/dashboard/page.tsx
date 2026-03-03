@@ -21,7 +21,7 @@ import { COMPLETIONS_KEY } from "@/hooks/useCompletions";
 import { CreateGoalButton } from "@/components/features/goals/CreateGoalButton";
 import SeeAllButton from "@/components/features/shared/SeeAllButton";
 import DashboardLayout from "@/components/features/shared/DashboardLayout";
-import DashboardSection from "@/components/features/shared/DashboardSection";
+import DashboardCard from "@/components/features/shared/DashboardCard";
 
 export const metadata = {
   title: "Dashboard",
@@ -60,19 +60,19 @@ export default async function Dashboard() {
       <Banner />
 
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <DashboardSection 
-          title="Today's Habits" 
+        <DashboardCard
+          title="Today's Habits"
           action={<SeeAllButton href="/dashboard/habits" />}
         >
           <HabitsList date={today} isPreview={true} />
-        </DashboardSection>
+        </DashboardCard>
 
-        <DashboardSection 
-          title="Your Goals" 
+        <DashboardCard
+          title="Your Goals"
           action={<SeeAllButton href="/dashboard/goals" />}
         >
           <GoalsList isPreview={true} />
-        </DashboardSection>
+        </DashboardCard>
       </HydrationBoundary>
       <CreateGoalButton />
     </DashboardLayout>
