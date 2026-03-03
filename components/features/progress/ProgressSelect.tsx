@@ -7,23 +7,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { PeriodOption } from "@/types";
+import { ReportPeriod } from "@/types";
 
-const periodOptions: PeriodOption[] = ["Weekly", "Monthly", "Yearly"];
+const ReportPeriods: ReportPeriod[] = ["Weekly", "Monthly", "Yearly"];
 
-type ProgressSelectProps = {
-  value: PeriodOption;
-  onChange: (value: PeriodOption) => void;
+type ReportSelect = {
+  value: ReportPeriod;
+  onChange: (value: ReportPeriod) => void;
 };
 
-export function ProgressSelect({ value, onChange }: ProgressSelectProps) {
+export function ReportSelect({ value, onChange }: ReportSelect) {
   return (
     <Select value={value} onValueChange={onChange}>
       <SelectTrigger id="progressSelect" className="w-full max-w-[200px]">
         <SelectValue placeholder={value} />
       </SelectTrigger>
       <SelectContent className="w-full max-w-[200px]" position="popper">
-        {periodOptions.map((option) => (
+        {ReportPeriods.map((option) => (
           <SelectItem className="w-full max-w-[200px]" key={option} value={option}>
             {option}
           </SelectItem>

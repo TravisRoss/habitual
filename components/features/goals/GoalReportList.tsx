@@ -2,19 +2,25 @@ import React from 'react'
 import { useGoals } from '@/hooks/useGoals'
 import GoalReportListItem from './GoalReportListItem'
 
-export default function GoalReportList() {
+type GoalReportListProps = {
+  isPreview?: boolean;
+}
+
+export default function GoalReportList({isPreview}: GoalReportListProps) {
     const { data: goals } = useGoals();
 
+  const goalList = isPreview ? goals?.slice(0, 3) : goals;
+
   return (
-    <div>
-      {goals?.length === 0 && (
+    <ul className="flex flex-col gap-2">
+      {goalList?.length === 0 && (
         <li className="text-sm text-muted-foreground">
           No goals yet. Create some to stay motivated!
         </li>
       )}
-      {goals?.map((goal) => (       
+      {goalList?.map((goal) => (       
         <GoalReportListItem key={goal.id} goal={goal} />
       ))}       
-    </div>
+    </ul>
   )
 }
