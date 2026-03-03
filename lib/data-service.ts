@@ -81,7 +81,8 @@ export async function insertHabit(data: {
       description: data.description,
       color: data.color,
       weekly_target: data.weekly_target,
-      target_days: data.target_days,
+      target_days:
+        data.frequency === "daily" ? [0, 1, 2, 3, 4, 5, 6] : data.target_days,
     })
     .select("id")
     .single();
@@ -109,7 +110,8 @@ export async function updateHabit(
       description: data.description,
       color: data.color,
       weekly_target: data.weekly_target,
-      target_days: data.target_days,
+      target_days:
+        data.frequency === "daily" ? [0, 1, 2, 3, 4, 5, 6] : data.target_days,
     })
     .eq("id", habit_id);
 
@@ -157,10 +159,7 @@ export async function getHabitsByUserId(
   return data;
 }
 
-export async function getHabitsByUserIdAndDate(
-  userId: string,
-  date: string,
-) {
+export async function getHabitsByUserIdAndDate(userId: string, date: string) {
   const supabase = createAdminClient();
   const day = dateToDayNumber(date);
 
