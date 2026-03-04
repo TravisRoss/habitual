@@ -9,6 +9,7 @@
     "lint": "eslint",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
+    "test": "vitest --project=unit",
     "test:storybook": "vitest --project=storybook",
     "test:e2e": "playwright test",
     "test:e2e:ci": "CI=1 playwright test",
