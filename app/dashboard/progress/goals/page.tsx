@@ -29,7 +29,7 @@ export default function Page() {
   return (
     <>
       <div className="flex justify-between items-center mb-2">
-        <BackButton label={"Back to Progress"} />
+        <BackButton label={"Back to Progress"} href="/dashboard/progress" />
         <Select
           value={searchParams.get("status") || "all"}
           onValueChange={handleSelectChange}
