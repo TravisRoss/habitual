@@ -168,7 +168,7 @@ export async function getHabitsByUserIdAndDate(userId: string, date: string) {
     .select("*")
     .eq("user_id", userId)
     .or(`frequency.eq.daily,target_days.cs.{${day}}`)
-    .lte("created_at", date);
+    .lte("created_at", `${date}T23:59:59.999Z`);
 
   if (error) return null;
   return data;
@@ -355,7 +355,7 @@ export async function deleteGoal(
     .eq("id", goal_id)
     .single();
 
-  if (fetchError) return { error: fetchError.message };
+  if (fetchError || !goal.habit_id) return { error: fetchError?.message ?? "Goal has no associated habit." };
 
   const { error } = await supabase.from("goals").delete().eq("id", goal_id);
 

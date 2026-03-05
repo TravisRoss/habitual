@@ -5,6 +5,7 @@ import {
   getCompletionsByUserIdAndDate,
   getCompletionsByUserIdForDateRange,
   getHabitsByUserId,
+  getHabitsByUserIdAndDate,
   insertCompletion,
   insertHabit,
 } from "./data-service";
@@ -148,5 +149,24 @@ describe("insertHabit / getHabitsByUserId", () => {
       name: "Integration Test Habit",
       frequency: "daily",
     });
+  });
+});
+
+describe("getHabitsByUserIdAndDate", () => {
+  it("returns a habit created today when queried for today", async () => {
+    const today = new Date().toISOString().slice(0, 10);
+    const result = await getHabitsByUserIdAndDate(USER_ID, today);
+
+    expect(result).toHaveLength(1);
+    expect(result![0].id).toEqual(HABIT_ID);
+  });
+
+  it("does not return a habit when queried for a date before it was created", async () => {
+    const yesterday = new Date(Date.now() - 86400000)
+      .toISOString()
+      .slice(0, 10);
+    const result = await getHabitsByUserIdAndDate(USER_ID, yesterday);
+
+    expect(result).toHaveLength(0);
   });
 });
