@@ -273,11 +273,15 @@ export async function createGoalAction(
     return { error: "Failed to create habit. Please try again." };
   }
 
+  const daysPerWeek =
+    data.habit_frequency === "daily" ? 7 : (data.habit_target_days?.length ?? 1);
+  const target = Math.max(1, Math.floor((Number(data.period) / 7) * daysPerWeek));
+
   const { error } = await insertGoal({
     user_id: session.user.id,
     habit_id: habitId,
     name: data.name,
-    target: 1,
+    target,
     period: data.period,
     start_date: dateToIsoStr(new Date()),
   });

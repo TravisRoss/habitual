@@ -349,11 +349,19 @@ export async function deleteGoal(
   goal_id: string,
 ): Promise<{ error: string | null }> {
   const supabase = createAdminClient();
+  const { data: goal, error: fetchError } = await supabase
+    .from("goals")
+    .select("habit_id")
+    .eq("id", goal_id)
+    .single();
+
+  if (fetchError) return { error: fetchError.message };
+
   const { error } = await supabase.from("goals").delete().eq("id", goal_id);
 
   // delete the associated habit as well to keep data consistent, since a goal must have a habit
   if (!error) {
-    await supabase.from("habits").delete().eq("id", goal_id);
+    await supabase.from("habits").delete().eq("id", goal.habit_id);
   }
 
   return { error: error?.message ?? null };

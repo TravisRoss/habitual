@@ -23,12 +23,9 @@ export default function GoalReportListItem({ goal }: GoalReportListItemProps) {
   const { data: completionCount = 0 } = useCompletionCountForHabit(
     goal.habit_id,
   );
-  const completionPercentage = calcPercentage(
-    completionCount,
-    Number(goal.period),
-  );
+  const completionPercentage = calcPercentage(completionCount, goal.target);
 
-  const isAchieved = completionCount >= Number(goal.period);
+  const isAchieved = completionCount >= goal.target;
 
   return (
     <Item
@@ -42,7 +39,7 @@ export default function GoalReportListItem({ goal }: GoalReportListItemProps) {
       <ItemContent>
         <ItemTitle>{goal.name}</ItemTitle>
         <ItemDescription>
-          {completionCount} of {goal.period} days target
+          {completionCount} of {goal.target} completions
         </ItemDescription>
       </ItemContent>
       <ItemActions>
