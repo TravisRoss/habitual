@@ -12,10 +12,6 @@ export function dateToIsoStr(date: Date = new Date()): string {
   return date.toISOString().slice(0, 10);
 }
 
-export function isoStringToDate(isoString: string): Date {
-  return new Date(isoString);
-}
-
 /** Calculates the end date based on the start date and the period (in days) */
 export function calcEndDate(start_date: string, period: Period): string {
   const start = new Date(start_date);
