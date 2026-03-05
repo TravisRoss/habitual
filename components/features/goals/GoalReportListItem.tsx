@@ -1,8 +1,15 @@
 "use client";
 
 import { Goal, Habit } from "@/types";
-import { Item, ItemContent, ItemDescription, ItemTitle, ItemActions, ItemMedia } from "@/components/ui/item";
-import { useCompletionsForHabit } from "@/hooks/useCompletions";
+import {
+  Item,
+  ItemContent,
+  ItemDescription,
+  ItemTitle,
+  ItemActions,
+  ItemMedia,
+} from "@/components/ui/item";
+import { useCompletionCountForHabit } from "@/hooks/useCompletions";
 import { calcPercentage } from "@/app/_lib/utils";
 import { Badge } from "@/components/ui/badge";
 import CircularProgress from "../progress/CircularProgress";
@@ -12,15 +19,15 @@ type GoalReportListItemProps = {
   habits?: Habit[];
 };
 
-export default function GoalReportListItem({
-  goal,
-}: GoalReportListItemProps) {
-  const habitCompletions = useCompletionsForHabit(goal.habit_id);
-  const completionCount = habitCompletions.data?.length ?? 0;
+export default function GoalReportListItem({ goal }: GoalReportListItemProps) {
+  const { data: completionCount = 0 } = useCompletionCountForHabit(
+    goal.habit_id,
+  );
   const completionPercentage = calcPercentage(
     completionCount,
     Number(goal.period),
   );
+
   const isAchieved = completionCount >= Number(goal.period);
 
   return (
@@ -29,17 +36,22 @@ export default function GoalReportListItem({
         "relative overflow-hidden border-l-4 transition-colors duration-300 bg-card"
       }
     >
-      <ItemMedia >        
+      <ItemMedia>
         <CircularProgress value={completionPercentage} />
       </ItemMedia>
       <ItemContent>
         <ItemTitle>{goal.name}</ItemTitle>
         <ItemDescription>
-            {completionCount} of {goal.period} days target
+          {completionCount} of {goal.period} days target
         </ItemDescription>
       </ItemContent>
       <ItemActions>
-        <Badge variant="outline" className={isAchieved ? "bg-green-500 text-white" : ""}>{isAchieved ? "Achieved" : "In Progress"}</Badge>
+        <Badge
+          variant="outline"
+          className={isAchieved ? "bg-green-500 text-white" : ""}
+        >
+          {isAchieved ? "Achieved" : "In Progress"}
+        </Badge>
       </ItemActions>
     </Item>
   );

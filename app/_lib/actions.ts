@@ -21,6 +21,7 @@ import {
   getActiveStreaksByUserId,
   getCompletionsByUserIdAndHabitIdForDateRange,
   getCompletionsByUserIdForDateRange,
+  getCompletionsByUserId,
 } from "@/lib/data-service";
 import type { Completion, Habit, Streak } from "@/types";
 import { revalidatePath } from "next/cache";
@@ -119,6 +120,12 @@ export async function fetchCompletionsForHabitAction(
   return (
     (await getCompletionsByUserIdAndHabitId(session.user.id, habit_id)) ?? []
   );
+}
+
+export async function fetchCompletionsForUser(): Promise<Completion[]> {
+  const session = await auth();
+  if (!session?.user?.id) return [];
+  return (await getCompletionsByUserId(session.user.id)) ?? [];
 }
 
 export async function fetchCompletionsForHabitInDateRangeAction(

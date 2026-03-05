@@ -173,6 +173,17 @@ export async function getHabitsByUserIdAndDate(userId: string, date: string) {
   return data;
 }
 
+export async function getCompletionsByUserId(user_id: string) {
+  const supabase = createAdminClient();
+  const { data, error } = await supabase
+    .from("completions")
+    .select("id, user_id, habit_id, completed_on")
+    .eq("user_id", user_id);
+
+  if (error) return null;
+  return data;
+}
+
 export async function getCompletionsByUserIdAndDate(
   user_id: string,
   date: string,

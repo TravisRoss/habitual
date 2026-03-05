@@ -19,8 +19,21 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import { fetchCompletionsForUser } from "@/app/_lib/actions";
 
 export const COMPLETIONS_KEY = ["completions"];
+
+/**
+ * Fetch all completions for the currently logged in user.
+ *
+ * @returns A query hook that fetches all completions for the currently logged in user.
+ */
+export function useCompletions() {
+  return useQuery({
+    queryKey: [...COMPLETIONS_KEY],
+    queryFn: () => fetchCompletionsForUser(),
+  });
+}
 
 export function useCompletionsForDate(date: string) {
   return useQuery({
@@ -33,6 +46,14 @@ export function useCompletionsForHabit(habit_id: string) {
   return useQuery({
     queryKey: [...COMPLETIONS_KEY, habit_id],
     queryFn: () => fetchCompletionsForHabitAction(habit_id),
+  });
+}
+
+export function useCompletionCountForHabit(habit_id: string) {
+  return useQuery({
+    queryKey: [...COMPLETIONS_KEY, "count", habit_id],
+    queryFn: () =>
+      fetchCompletionsForHabitAction(habit_id).then((res) => res.length),
   });
 }
 
