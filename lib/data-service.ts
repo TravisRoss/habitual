@@ -1,4 +1,4 @@
-import { calcEndDate, dateToDayNumber, formatDate } from "@/app/_lib/utils";
+import { calcEndDate, dateToDayNumber } from "@/app/_lib/utils";
 import { createAdminClient } from "@/lib/supabase/server";
 import {
   Completion,
@@ -147,7 +147,7 @@ export async function getHabitsByUserId(
   const { data, error } = await supabase
     .from("habits")
     .select(
-      "id, user_id, name, frequency, description, color, weekly_target, target_days",
+      "id, user_id, name, frequency, description, color, weekly_target, target_days, created_at",
     )
     .eq("user_id", user_id);
 
@@ -204,6 +204,52 @@ export async function getCompletionsByUserIdAndHabitId(
     .select("id, user_id, habit_id, completed_on")
     .eq("user_id", user_id)
     .eq("habit_id", habit_id);
+
+  if (error) {
+    console.error("Error fetching completions:", error);
+    return null;
+  }
+
+  return data;
+}
+
+export async function getCompletionsByUserIdAndHabitIdForDateRange(
+  userId: string,
+  habitId: string,
+  startDate: string,
+  endDate: string,
+) {
+  const supabase = createAdminClient();
+
+  const { data, error } = await supabase
+    .from("completions")
+    .select("id, user_id, habit_id, completed_on")
+    .eq("user_id", userId)
+    .eq("habit_id", habitId)
+    .gte("completed_on", startDate)
+    .lte("completed_on", endDate);
+
+  if (error) {
+    console.error("Error fetching completions:", error);
+    return null;
+  }
+
+  return data;
+}
+
+export async function getCompletionsByUserIdForDateRange(
+  userId: string,
+  startDate: string,
+  endDate: string,
+) {
+  const supabase = createAdminClient();
+
+  const { data, error } = await supabase
+    .from("completions")
+    .select("id, user_id, habit_id, completed_on")
+    .eq("user_id", userId)
+    .gte("completed_on", startDate)
+    .lte("completed_on", endDate);
 
   if (error) {
     console.error("Error fetching completions:", error);

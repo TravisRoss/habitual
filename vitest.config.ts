@@ -18,7 +18,23 @@ export default defineConfig({
           name: "unit",
           environment: "node",
           include: ["**/*.test.ts", "**/*.test.tsx"],
-          exclude: ["**/*.stories.*", "**/node_modules/**"],
+          exclude: [
+            "**/*.integration.test.ts",
+            "**/*.stories.*",
+            "**/node_modules/**",
+          ],
+        },
+      },
+      // Integration tests (hit the real database)
+      {
+        resolve: {
+          alias: { "@": dirname },
+        },
+        test: {
+          name: "integration",
+          environment: "node",
+          include: ["**/*.integration.test.ts"],
+          setupFiles: ["./test/integration-setup.ts"],
         },
       },
       // Storybook tests

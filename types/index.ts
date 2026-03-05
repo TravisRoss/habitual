@@ -16,6 +16,7 @@ export type Habit = {
   color: string | null;
   weekly_target: number | null;
   target_days: number[];
+  created_at?: string;
 };
 
 export type Goal = {

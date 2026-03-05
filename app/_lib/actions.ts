@@ -19,6 +19,8 @@ import {
   deleteGoal,
   getCompletionsByUserIdAndHabitId,
   getActiveStreaksByUserId,
+  getCompletionsByUserIdAndHabitIdForDateRange,
+  getCompletionsByUserIdForDateRange,
 } from "@/lib/data-service";
 import type { Completion, Habit, Streak } from "@/types";
 import { revalidatePath } from "next/cache";
@@ -119,12 +121,44 @@ export async function fetchCompletionsForHabitAction(
   );
 }
 
+export async function fetchCompletionsForHabitInDateRangeAction(
+  habit_id: string,
+  startDate: string,
+  endDate: string,
+): Promise<Completion[]> {
+  const session = await auth();
+  if (!session?.user?.id) return [];
+  return (
+    (await getCompletionsByUserIdAndHabitIdForDateRange(
+      session.user.id,
+      habit_id,
+      startDate,
+      endDate,
+    )) ?? []
+  );
+}
+
 export async function fetchCompletionsForDateAction(
   date: string,
 ): Promise<Completion[]> {
   const session = await auth();
   if (!session?.user?.id) return [];
   return (await getCompletionsByUserIdAndDate(session.user.id, date)) ?? [];
+}
+
+export async function fetchCompletionsForDateRangeAction(
+  startDate: string,
+  endDate: string,
+): Promise<Completion[]> {
+  const session = await auth();
+  if (!session?.user?.id) return [];
+  return (
+    (await getCompletionsByUserIdForDateRange(
+      session.user.id,
+      startDate,
+      endDate,
+    )) ?? []
+  );
 }
 
 export async function deleteHabitAction(

@@ -2,9 +2,17 @@ import {
   createCompletionAction,
   deleteCompletionAction,
   fetchCompletionsForDateAction,
+  fetchCompletionsForDateRangeAction,
   fetchCompletionsForHabitAction,
+  fetchHabitsAction,
 } from "@/app/_lib/actions";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  calculateOverallCompletionRate,
+  formatDate,
+  getReportPeriodDates,
+} from "@/app/_lib/utils";
+import { ReportPeriod } from "@/types";
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
 export const COMPLETIONS_KEY = ["completions"];
@@ -64,5 +72,27 @@ export function useDeleteCompletion() {
     onError: () => {
       toast.error("Failed to unmark habit as complete. Please try again.");
     },
+  });
+}
+
+export function useOverallCompletionRate(period: ReportPeriod) {
+  const { start, end } = getReportPeriodDates(period);
+  const startDate = formatDate(start);
+  const endDate = formatDate(end);
+
+  return useQuery({
+    queryKey: [COMPLETIONS_KEY, period],
+    queryFn: async () => {
+      // Fetch both habits and completions in parallel
+      const [habits, completions] = await Promise.all([
+        fetchHabitsAction(),
+        fetchCompletionsForDateRangeAction(startDate, endDate),
+      ]);
+
+      if (!habits || habits.length === 0) return 0;
+
+      return calculateOverallCompletionRate(habits, completions, start, end);
+    },
+    placeholderData: keepPreviousData
   });
 }

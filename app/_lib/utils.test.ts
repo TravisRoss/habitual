@@ -1,5 +1,14 @@
 import { describe, expect, it } from "vitest";
-import { calcPercentage, dateToDayNumber, formatDate, getWindowDates } from "./utils";
+import {
+  calcPercentage,
+  dateToDayNumber,
+  formatDate,
+  getWindowDates,
+  getReportPeriodDates,
+  calculateHabitCompletionRate,
+  calculateOverallCompletionRate,
+} from "./utils";
+import { Habit, Completion } from "@/types";
 
 describe("dateToDayNumber", () => {
   it("returns 0 for Sunday", () => {
@@ -51,31 +60,23 @@ describe("formatDate", () => {
 
 describe("calcPercentage", () => {
   it("returns 0 when total is 0", () => {
-    expect(calcPercentage(0, 0)).toBe(0);
+    expect(calcPercentage(0, 0)).toEqual(0);
   });
 
   it("returns 0 when value is 0", () => {
-    expect(calcPercentage(0, 10)).toBe(0);
-  });
-
-  it("calculates a standard percentage", () => {
-    expect(calcPercentage(3, 8)).toBeCloseTo(37.5);
-  });
-
-  it("returns 100 when value equals total", () => {
-    expect(calcPercentage(8, 8)).toBe(100);
-  });
-
-  it("caps at 100 when value exceeds total", () => {
-    expect(calcPercentage(10, 8)).toBe(100);
-  });
-
-  it("handles decimal values", () => {
-    expect(calcPercentage(1, 3)).toBeCloseTo(33.33);
+    expect(calcPercentage(0, 10)).toEqual(0);
   });
 
   it("rounds the result to the nearest integer", () => {
-    expect(calcPercentage(1, 3)).toBe(33);
+    expect(calcPercentage(1, 3)).toEqual(33);
+  });
+
+  it("returns 100 when value equals total", () => {
+    expect(calcPercentage(8, 8)).toEqual(100);
+  });
+
+  it("caps at 100 when value exceeds total", () => {
+    expect(calcPercentage(10, 8)).toEqual(100);
   });
 });
 
@@ -127,5 +128,542 @@ describe("getWindowDates", () => {
       "2025-01-03",
       "2025-01-04",
     ]);
+  });
+});
+
+describe("getReportPeriodDates", () => {
+  it("returns weekly period from Sunday to Saturday when period is 'weekly'", () => {
+    const mockDate = new Date("2024-03-13T00:00:00Z"); // Wednesday
+    const result = getReportPeriodDates("Weekly", mockDate);
+
+    expect(formatDate(result.start)).toEqual("2024-03-10");
+    expect(formatDate(result.end)).toEqual("2024-03-16");
+  });
+
+  it("returns monthly period from 1st to last day", () => {
+    const mockDate = new Date("2024-03-15");
+    const result = getReportPeriodDates("Monthly", mockDate);
+
+    expect(formatDate(result.start)).toEqual("2024-03-01");
+    expect(formatDate(result.end)).toEqual("2024-03-31");
+  });
+
+  it("handles February correctly in leap year", () => {
+    const mockDate = new Date("2024-02-15"); // Leap year
+    const result = getReportPeriodDates("Monthly", mockDate);
+
+    expect(result.start.getDate()).toEqual(1);
+    expect(result.end.getDate()).toEqual(29); // February has 29 days in leap year
+  });
+
+  it("returns yearly period from Jan 1st to Dec 31st", () => {
+    const mockDate = new Date("2024-06-15");
+    const result = getReportPeriodDates("Yearly", mockDate);
+
+    expect(formatDate(result.start)).toEqual("2024-01-01");
+    expect(formatDate(result.end)).toEqual("2024-12-31");
+  });
+
+  it("handles leap year correctly", () => {
+    const mockDate = new Date("2024-02-15"); // Leap year
+
+    const result = getReportPeriodDates("Yearly", mockDate);
+    expect(result.start.getFullYear()).toEqual(2024);
+    expect(result.end.getFullYear()).toEqual(2024);
+  });
+});
+
+describe("calculateHabitCompletionRate", () => {
+  const mockHabit: Habit = {
+    id: "habit-1",
+    user_id: "user-1",
+    name: "Test Habit",
+    frequency: "daily",
+    description: null,
+    color: null,
+    weekly_target: null,
+    target_days: [0, 1, 2, 3, 4, 5, 6],
+  };
+
+  it("calculates 100% for perfect daily habit completion", () => {
+    const startDate = new Date("2024-03-10");
+    const endDate = new Date("2024-03-12"); // 3 days
+    const completions: Completion[] = [
+      {
+        id: "1",
+        habit_id: "habit-1",
+        user_id: "user-1",
+        completed_on: "2024-03-10",
+      },
+      {
+        id: "2",
+        habit_id: "habit-1",
+        user_id: "user-1",
+        completed_on: "2024-03-11",
+      },
+      {
+        id: "3",
+        habit_id: "habit-1",
+        user_id: "user-1",
+        completed_on: "2024-03-12",
+      },
+    ];
+
+    const result = calculateHabitCompletionRate(
+      mockHabit,
+      completions,
+      startDate,
+      endDate,
+    );
+    expect(result).toEqual(100);
+  });
+
+  it("calculates 0% for no completions", () => {
+    const startDate = new Date("2024-03-10");
+    const endDate = new Date("2024-03-12");
+    const completions: Completion[] = [];
+
+    const result = calculateHabitCompletionRate(
+      mockHabit,
+      completions,
+      startDate,
+      endDate,
+    );
+    expect(result).toEqual(0);
+  });
+
+  it("calculates correct percentage for partial completion", () => {
+    const startDate = new Date("2024-03-10");
+    const endDate = new Date("2024-03-12"); // 3 days
+    const completions: Completion[] = [
+      {
+        id: "1",
+        habit_id: "habit-1",
+        user_id: "user-1",
+        completed_on: "2024-03-10",
+      },
+      {
+        id: "2",
+        habit_id: "habit-1",
+        user_id: "user-1",
+        completed_on: "2024-03-12",
+      },
+    ];
+
+    const result = calculateHabitCompletionRate(
+      mockHabit,
+      completions,
+      startDate,
+      endDate,
+    );
+    expect(result).toEqual(67); // 2/3 * 100 = 66.67, rounded to 67
+  });
+
+  it("handles custom frequency habits", () => {
+    const customHabit: Habit = {
+      ...mockHabit,
+      frequency: "custom",
+      target_days: [1, 3, 5, 6], // Monday, Wednesday, Friday, Saturday
+    };
+
+    const startDate = new Date("2024-03-11"); // Monday
+    const endDate = new Date("2024-03-16"); // Saturday
+    const completions: Completion[] = [
+      {
+        id: "1",
+        habit_id: "habit-1",
+        user_id: "user-1",
+        completed_on: "2024-03-11",
+      }, // Monday
+      {
+        id: "2",
+        habit_id: "habit-1",
+        user_id: "user-1",
+        completed_on: "2024-03-13",
+      }, // Wednesday
+    ];
+
+    const result = calculateHabitCompletionRate(
+      customHabit,
+      completions,
+      startDate,
+      endDate,
+    );
+    expect(result).toEqual(50);
+  });
+
+  it("ignores completions outside date range", () => {
+    const startDate = new Date("2024-03-10");
+    const endDate = new Date("2024-03-12");
+    const completions: Completion[] = [
+      {
+        id: "1",
+        habit_id: "habit-1",
+        user_id: "user-1",
+        completed_on: "2024-03-09",
+      }, // Before
+      {
+        id: "2",
+        habit_id: "habit-1",
+        user_id: "user-1",
+        completed_on: "2024-03-10",
+      }, // In range
+      {
+        id: "3",
+        habit_id: "habit-1",
+        user_id: "user-1",
+        completed_on: "2024-03-13",
+      }, // After
+    ];
+
+    const result = calculateHabitCompletionRate(
+      mockHabit,
+      completions,
+      startDate,
+      endDate,
+    );
+    expect(result).toEqual(33);
+  });
+
+  describe("when frequency is weekly", () => {
+    it("returns 100 when frequency is 'weekly' and all days are completed", () => {
+      const weeklyHabit: Habit = {
+        ...mockHabit,
+        frequency: "weekly",
+      };
+
+      const startDate = new Date("2024-03-04"); // Monday
+      const endDate = new Date("2024-03-10"); // Sunday (1 week)
+      const completions: Completion[] = [
+        {
+          id: "1",
+          habit_id: "habit-1",
+          user_id: "user-1",
+          completed_on: "2024-03-05",
+        }, // Monday
+      ];
+
+      const result = calculateHabitCompletionRate(
+        weeklyHabit,
+        completions,
+        startDate,
+        endDate,
+      );
+      expect(result).toEqual(100);
+    });
+
+    it("returns 0 when frequency is 'weekly' and no days are completed ", () => {
+      const weeklyHabit: Habit = {
+        ...mockHabit,
+        frequency: "weekly",
+      };
+
+      const startDate = new Date("2024-03-04"); // Monday
+      const endDate = new Date("2024-03-10"); // Sunday (1 week)
+      const completions: Completion[] = [];
+
+      const result = calculateHabitCompletionRate(
+        weeklyHabit,
+        completions,
+        startDate,
+        endDate,
+      );
+      expect(result).toEqual(0);
+    });
+  });
+});
+
+describe("calculateOverallCompletionRate", () => {
+  const startDate = new Date("2024-03-10"); // Sun
+  const endDate = new Date("2024-03-12"); // Tue
+
+  it("calculates average of multiple habits", () => {
+    const habits: Habit[] = [
+      {
+        id: "habit-1",
+        user_id: "user-1",
+        name: "Habit 1",
+        frequency: "daily",
+        description: null,
+        color: null,
+        weekly_target: null,
+        target_days: [0, 1, 2, 3, 4, 5, 6],
+      },
+      {
+        id: "habit-2",
+        user_id: "user-1",
+        name: "Habit 2",
+        frequency: "daily",
+        description: null,
+        color: null,
+        weekly_target: null,
+        target_days: [0, 1, 2, 3, 4, 5, 6],
+      },
+    ];
+
+    const completions: Completion[] = [
+      // Habit 1: 2/3 completions = 67%
+      {
+        id: "1",
+        habit_id: "habit-1",
+        user_id: "user-1",
+        completed_on: "2024-03-10",
+      },
+      {
+        id: "2",
+        habit_id: "habit-1",
+        user_id: "user-1",
+        completed_on: "2024-03-11",
+      },
+      // Habit 2: 1/3 completions = 33%
+      {
+        id: "3",
+        habit_id: "habit-2",
+        user_id: "user-1",
+        completed_on: "2024-03-10",
+      },
+    ];
+
+    const result = calculateOverallCompletionRate(
+      habits,
+      completions,
+      startDate,
+      endDate,
+    );
+    expect(result).toEqual(50); // (67 + 33) / 2 = 50
+  });
+
+  it("returns 0 when no habits", () => {
+    const habits: Habit[] = [];
+    const completions: Completion[] = [];
+
+    const result = calculateOverallCompletionRate(
+      habits,
+      completions,
+      startDate,
+      endDate,
+    );
+    expect(result).toEqual(0);
+  });
+
+  it("filters habits created after period end", () => {
+    const habits: Habit[] = [
+      {
+        id: "habit-1",
+        user_id: "user-1",
+        name: "Old Habit",
+        frequency: "daily",
+        description: null,
+        color: null,
+        weekly_target: null,
+        target_days: [0, 1, 2, 3, 4, 5, 6],
+        created_at: "2024-03-05", // Created before period, counts
+      },
+      {
+        id: "habit-2",
+        user_id: "user-1",
+        name: "New Habit",
+        frequency: "daily",
+        description: null,
+        color: null,
+        weekly_target: null,
+        target_days: [0, 1, 2, 3, 4, 5, 6],
+        created_at: "2024-03-15", // Created after period, does not count
+      },
+    ];
+
+    const completions: Completion[] = [
+      {
+        id: "1",
+        habit_id: "habit-1",
+        user_id: "user-1",
+        completed_on: "2024-03-10",
+      },
+      {
+        id: "2",
+        habit_id: "habit-2",
+        user_id: "user-1",
+        completed_on: "2024-03-11",
+      },
+    ];
+
+    const result = calculateOverallCompletionRate(
+      habits,
+      completions,
+      startDate,
+      endDate,
+    );
+    expect(result).toEqual(33); // Only habit-1 counted: 1/3 * 100 = 33
+  });
+
+  it("includes habits created during the period", () => {
+    const habits: Habit[] = [
+      {
+        id: "habit-1",
+        user_id: "user-1",
+        name: "Period Habit",
+        frequency: "daily",
+        description: null,
+        color: null,
+        weekly_target: null,
+        target_days: [0, 1, 2, 3, 4, 5, 6],
+        created_at: "2024-03-11", // Created during period, counts
+      },
+    ];
+
+    const completions: Completion[] = [
+      {
+        id: "1",
+        habit_id: "habit-1",
+        user_id: "user-1",
+        completed_on: "2024-03-11",
+      },
+      {
+        id: "2",
+        habit_id: "habit-1",
+        user_id: "user-1",
+        completed_on: "2024-03-12",
+      },
+    ];
+
+    const result = calculateOverallCompletionRate(
+      habits,
+      completions,
+      startDate,
+      endDate,
+    );
+    expect(result).toEqual(67); // 2/3 * 100 = 66.67, rounded to 67
+  });
+
+  it("handles habits without created_at for backward compatibility", () => {
+    const habits: Habit[] = [
+      {
+        id: "habit-1",
+        user_id: "user-1",
+        name: "Legacy Habit",
+        frequency: "daily",
+        description: null,
+        color: null,
+        weekly_target: null,
+        target_days: [0, 1, 2, 3, 4, 5, 6],
+        // No created_at field
+      },
+    ];
+
+    const completions: Completion[] = [
+      {
+        id: "1",
+        habit_id: "habit-1",
+        user_id: "user-1",
+        completed_on: "2024-03-10",
+      },
+    ];
+
+    const result = calculateOverallCompletionRate(
+      habits,
+      completions,
+      startDate,
+      endDate,
+    );
+    expect(result).toEqual(33); // 1/3 * 100 = 33.33, rounded to 33
+  });
+
+  it("returns 0 when no relevant habits", () => {
+    const habits: Habit[] = [
+      {
+        id: "habit-1",
+        user_id: "user-1",
+        name: "Future Habit",
+        frequency: "daily",
+        description: null,
+        color: null,
+        weekly_target: null,
+        target_days: [0, 1, 2, 3, 4, 5, 6],
+        created_at: "2024-03-15", // Created after period
+      },
+    ];
+
+    const completions: Completion[] = [];
+
+    const result = calculateOverallCompletionRate(
+      habits,
+      completions,
+      startDate,
+      endDate,
+    );
+    expect(result).toEqual(0);
+  });
+
+  it("handles mixed habit frequencies correctly", () => {
+    const habits: Habit[] = [
+      {
+        id: "habit-1",
+        user_id: "user-1",
+        name: "Daily Habit",
+        frequency: "daily",
+        description: null,
+        color: null,
+        weekly_target: null,
+        target_days: [0, 1, 2, 3, 4, 5, 6],
+      },
+      {
+        id: "habit-2",
+        user_id: "user-1",
+        name: "Custom Habit",
+        frequency: "custom",
+        description: null,
+        color: null,
+        weekly_target: null,
+        target_days: [1, 3, 5], // Mon, Wed, Fri
+      },
+      {
+        id: "habit-3",
+        user_id: "user-1",
+        name: "Weekly Habit",
+        frequency: "weekly",
+        description: null,
+        color: null,
+        weekly_target: null,
+        target_days: [2], // Tue, within range
+      },
+    ];
+
+    const completions: Completion[] = [
+      // Daily habit: 2/3 = 67%
+      {
+        id: "1",
+        habit_id: "habit-1",
+        user_id: "user-1",
+        completed_on: "2024-03-10",
+      }, // Sun
+      {
+        id: "2",
+        habit_id: "habit-1",
+        user_id: "user-1",
+        completed_on: "2024-03-11",
+      }, // Mon
+      // Custom habit: 1/1 = 100% (only Mon in range — Wed Mar 13 is outside)
+      {
+        id: "3",
+        habit_id: "habit-2",
+        user_id: "user-1",
+        completed_on: "2024-03-11",
+      }, // Mon
+      // Weekly habit: 1/1 = 100% (Tue Mar 12 is in range)
+      {
+        id: "4",
+        habit_id: "habit-3",
+        user_id: "user-1",
+        completed_on: "2024-03-12",
+      }, // Tue
+    ];
+
+    const result = calculateOverallCompletionRate(
+      habits,
+      completions,
+      startDate,
+      endDate,
+    );
+    expect(result).toEqual(89); // (67 + 100 + 100) / 3 = 89
   });
 });
