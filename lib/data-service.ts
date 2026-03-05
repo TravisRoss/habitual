@@ -167,7 +167,8 @@ export async function getHabitsByUserIdAndDate(userId: string, date: string) {
     .from("habits")
     .select("*")
     .eq("user_id", userId)
-    .or(`frequency.eq.daily,target_days.cs.{${day}}`);
+    .or(`frequency.eq.daily,target_days.cs.{${day}}`)
+    .lte("created_at", date);
 
   if (error) return null;
   return data;
