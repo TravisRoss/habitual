@@ -82,6 +82,12 @@ export function getReportPeriodDates(
   return { start, end };
 }
 
+/**
+ * Calculates the completion rate of a single habit within a date range.
+ * For weekly habits, uses number of whole weeks as the denominator.
+ * For daily/custom habits, counts scheduled days in the range.
+ * Returns a 0–100 integer.
+ */
 export function calculateHabitCompletionRate(
   habit: Habit,
   completions: Completion[],
@@ -116,6 +122,25 @@ export function calculateHabitCompletionRate(
   return calcPercentage(completedCount, scheduledDays);
 }
 
+/**
+ * Returns the later of periodStart and the habit's creation date.
+ * Prevents counting scheduled days before the habit existed.
+ */
+export function getEffectiveStart(
+  periodStart: Date,
+  createdAt?: string | null,
+): Date {
+  if (createdAt && new Date(createdAt) > periodStart)
+    return new Date(createdAt);
+  return periodStart;
+}
+
+/**
+ * Calculates the overall completion rate across all habits for a date range.
+ * Habits created after endDate are excluded. For habits created mid-period,
+ * scheduled days are counted from their creation date, not the period start.
+ * Returns the average per-habit rate as a 0–100 integer.
+ */
 export function calculateOverallCompletionRate(
   habits: Habit[],
   allCompletions: Completion[],
@@ -134,10 +159,11 @@ export function calculateOverallCompletionRate(
     const habitCompletions = allCompletions.filter(
       (completion) => completion.habit_id === habit.id,
     );
+    const effectiveStart = getEffectiveStart(startDate, habit.created_at);
     return calculateHabitCompletionRate(
       habit,
       habitCompletions,
-      startDate,
+      effectiveStart,
       endDate,
     );
   });

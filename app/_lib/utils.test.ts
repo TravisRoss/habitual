@@ -7,6 +7,7 @@ import {
   getReportPeriodDates,
   calculateHabitCompletionRate,
   calculateOverallCompletionRate,
+  getEffectiveStart,
 } from "./utils";
 import { Habit, Completion } from "@/types";
 
@@ -373,6 +374,31 @@ describe("calculateHabitCompletionRate", () => {
   });
 });
 
+describe("getEffectiveStart", () => {
+  const periodStart = new Date("2024-03-10");
+
+  it("returns periodStart when createdAt is null", () => {
+    expect(getEffectiveStart(periodStart, null)).toEqual(periodStart);
+  });
+
+  it("returns periodStart when createdAt is undefined", () => {
+    expect(getEffectiveStart(periodStart, undefined)).toEqual(periodStart);
+  });
+
+  it("returns periodStart when createdAt is before the period", () => {
+    expect(getEffectiveStart(periodStart, "2024-03-05")).toEqual(periodStart);
+  });
+
+  it("returns periodStart when createdAt equals periodStart", () => {
+    expect(getEffectiveStart(periodStart, "2024-03-10")).toEqual(periodStart);
+  });
+
+  it("returns createdAt date when createdAt is after periodStart", () => {
+    const result = getEffectiveStart(periodStart, "2024-03-12");
+    expect(result).toEqual(new Date("2024-03-12"));
+  });
+});
+
 describe("calculateOverallCompletionRate", () => {
   const startDate = new Date("2024-03-10"); // Sun
   const endDate = new Date("2024-03-12"); // Tue
@@ -532,7 +558,8 @@ describe("calculateOverallCompletionRate", () => {
       startDate,
       endDate,
     );
-    expect(result).toEqual(67); // 2/3 * 100 = 66.67, rounded to 67
+    // effective start = Mar 11 (created_at), scheduled days = Mar 11–12 = 2, completions = 2 → 100%
+    expect(result).toEqual(100);
   });
 
   it("handles habits without created_at for backward compatibility", () => {
@@ -592,6 +619,31 @@ describe("calculateOverallCompletionRate", () => {
       endDate,
     );
     expect(result).toEqual(0);
+  });
+
+    it("uses created_at as effective start for habits created mid-period", () => {
+    // Period: Mar 10 (Sun) – Mar 12 (Tue), habit created Mar 12 (Tue)
+    // Scheduled days should be 1 (only Mar 12), not 3 (the full period)
+    const habits: Habit[] = [
+      {
+        id: "habit-1",
+        user_id: "user-1",
+        name: "Mid-Period Habit",
+        frequency: "daily",
+        description: null,
+        color: null,
+        weekly_target: null,
+        target_days: [0, 1, 2, 3, 4, 5, 6],
+        created_at: "2024-03-12",
+      },
+    ];
+
+    const completions: Completion[] = [
+      { id: "1", habit_id: "habit-1", user_id: "user-1", completed_on: "2024-03-12" },
+    ];
+
+    const result = calculateOverallCompletionRate(habits, completions, startDate, endDate);
+    expect(result).toEqual(100); // 1/1 = 100%, not 1/3 = 33% (old bug)
   });
 
   it("handles mixed habit frequencies correctly", () => {
