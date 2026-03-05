@@ -8,11 +8,16 @@ import {
 } from "@/app/_lib/actions";
 import {
   calculateOverallCompletionRate,
-  formatDate,
+  dateToIsoStr,
   getReportPeriodDates,
 } from "@/app/_lib/utils";
 import { ReportPeriod } from "@/types";
-import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  keepPreviousData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
 export const COMPLETIONS_KEY = ["completions"];
@@ -77,8 +82,8 @@ export function useDeleteCompletion() {
 
 export function useOverallCompletionRate(period: ReportPeriod) {
   const { start, end } = getReportPeriodDates(period);
-  const startDate = formatDate(start);
-  const endDate = formatDate(end);
+  const startDate = dateToIsoStr(start);
+  const endDate = dateToIsoStr(end);
 
   return useQuery({
     queryKey: [COMPLETIONS_KEY, period],
@@ -93,6 +98,6 @@ export function useOverallCompletionRate(period: ReportPeriod) {
 
       return calculateOverallCompletionRate(habits, completions, start, end);
     },
-    placeholderData: keepPreviousData
+    placeholderData: keepPreviousData,
   });
 }

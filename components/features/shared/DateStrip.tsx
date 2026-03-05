@@ -1,6 +1,6 @@
 "use client";
 
-import { formatDate, getWindowDates } from "@/app/_lib/utils";
+import { dateToIsoStr, getWindowDates } from "@/app/_lib/utils";
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { DayButton } from "./DayButton";
@@ -12,7 +12,7 @@ type DateStripProps = {
 };
 
 export function DateStrip({ selectedDate, onSelect }: DateStripProps) {
-  const today = formatDate();
+  const today = dateToIsoStr();
   const [direction, setDirection] = useState<1 | -1>(1);
 
   const handleSelect = (dateStr: string) => {

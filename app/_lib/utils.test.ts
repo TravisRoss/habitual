@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   calcPercentage,
   dateToDayNumber,
-  formatDate,
+  dateToIsoStr,
   getWindowDates,
   getReportPeriodDates,
   calculateHabitCompletionRate,
@@ -40,21 +40,21 @@ describe("dateToDayNumber", () => {
   });
 });
 
-describe("formatDate", () => {
+describe("dateToIsoStr", () => {
   it("formats a date in YYYY-MM-DD format", () => {
-    expect(formatDate(new Date("2026-02-24"))).toEqual("2026-02-24");
+    expect(dateToIsoStr(new Date("2026-02-24"))).toEqual("2026-02-24");
   });
 
   it("handles start of month", () => {
-    expect(formatDate(new Date("2026-03-01"))).toEqual("2026-03-01");
+    expect(dateToIsoStr(new Date("2026-03-01"))).toEqual("2026-03-01");
   });
 
   it("handles end of year", () => {
-    expect(formatDate(new Date("2026-12-31"))).toEqual("2026-12-31");
+    expect(dateToIsoStr(new Date("2026-12-31"))).toEqual("2026-12-31");
   });
 
   it("defaults to today when no date is provided", () => {
-    expect(formatDate()).toEqual(new Date().toISOString().slice(0, 10));
+    expect(dateToIsoStr()).toEqual(new Date().toISOString().slice(0, 10));
   });
 });
 
@@ -136,16 +136,16 @@ describe("getReportPeriodDates", () => {
     const mockDate = new Date("2024-03-13T00:00:00Z"); // Wednesday
     const result = getReportPeriodDates("Weekly", mockDate);
 
-    expect(formatDate(result.start)).toEqual("2024-03-10");
-    expect(formatDate(result.end)).toEqual("2024-03-16");
+    expect(dateToIsoStr(result.start)).toEqual("2024-03-10");
+    expect(dateToIsoStr(result.end)).toEqual("2024-03-16");
   });
 
   it("returns monthly period from 1st to last day", () => {
     const mockDate = new Date("2024-03-15");
     const result = getReportPeriodDates("Monthly", mockDate);
 
-    expect(formatDate(result.start)).toEqual("2024-03-01");
-    expect(formatDate(result.end)).toEqual("2024-03-31");
+    expect(dateToIsoStr(result.start)).toEqual("2024-03-01");
+    expect(dateToIsoStr(result.end)).toEqual("2024-03-31");
   });
 
   it("handles February correctly in leap year", () => {
@@ -160,8 +160,8 @@ describe("getReportPeriodDates", () => {
     const mockDate = new Date("2024-06-15");
     const result = getReportPeriodDates("Yearly", mockDate);
 
-    expect(formatDate(result.start)).toEqual("2024-01-01");
-    expect(formatDate(result.end)).toEqual("2024-12-31");
+    expect(dateToIsoStr(result.start)).toEqual("2024-01-01");
+    expect(dateToIsoStr(result.end)).toEqual("2024-12-31");
   });
 
   it("handles leap year correctly", () => {

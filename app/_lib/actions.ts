@@ -25,7 +25,7 @@ import {
 import type { Completion, Habit, Streak } from "@/types";
 import { revalidatePath } from "next/cache";
 import { GoalFormValues } from "@/lib/zod";
-import { formatDate } from "@/app/_lib/utils";
+import { dateToIsoStr } from "@/app/_lib/utils";
 
 export async function signInWithGoogle() {
   await signIn("google", { redirectTo: "/dashboard" });
@@ -272,7 +272,7 @@ export async function createGoalAction(
     name: data.name,
     target: 1,
     period: data.period,
-    start_date: formatDate(new Date()),
+    start_date: dateToIsoStr(new Date()),
   });
 
   revalidatePath("/dashboard");

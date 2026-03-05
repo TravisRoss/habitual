@@ -2,11 +2,11 @@
 
 import { useHabitsForDate } from "@/hooks/useHabits";
 import { useCompletionsForDate } from "@/hooks/useCompletions";
-import { formatDate } from "@/app/_lib/utils";
+import { dateToIsoStr } from "@/app/_lib/utils";
 import BannerUI from "./BannerUI";
 
 export function Banner() {
-  const today = formatDate();
+  const today = dateToIsoStr();
   const { data: habits = [] } = useHabitsForDate(today);
   const { data: completions = [] } = useCompletionsForDate(today);
 

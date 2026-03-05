@@ -15,7 +15,7 @@ import { GOALS_KEY } from "@/hooks/useGoals";
 import { STREAKS_KEY } from "@/hooks/useStreaks";
 import HabitsList from "@/components/features/habits/HabitsList";
 import { Banner } from "@/components/features/shared/Banner";
-import { formatDate } from "../_lib/utils";
+import { dateToIsoStr } from "../_lib/utils";
 import GoalsList from "@/components/features/goals/GoalsList";
 import { COMPLETIONS_KEY } from "@/hooks/useCompletions";
 import { CreateGoalButton } from "@/components/features/goals/CreateGoalButton";
@@ -30,7 +30,7 @@ export const metadata = {
 export default async function Dashboard() {
   const session = await auth();
   const userId = session?.user?.id;
-  const today = formatDate();
+  const today = dateToIsoStr();
 
   if (!userId) throw new Error("Unauthorized");
 
