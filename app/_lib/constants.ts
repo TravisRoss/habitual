@@ -21,3 +21,18 @@ export const DAYS = [
 ] as const;
 
 export const DAY_MS = 86_400_000;
+
+export const MONTH_NAMES = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
