@@ -3,6 +3,7 @@ import {
   calcPercentage,
   dateToDayNumber,
   dateToIsoStr,
+  formatIsoDate,
   getWindowDates,
   getReportPeriodDates,
   calculateHabitCompletionRate,
@@ -804,5 +805,37 @@ describe("getMonthIndexesBetweenDates", () => {
       new Date("2021-03-01"),
     );
     expect(result).toEqual([]);
+  });
+});
+
+describe("formatIsoDate", () => {
+  describe("with explicit locale", () => {
+    it("formats date in en-GB", () => {
+      expect(formatIsoDate("2024-03-15", "en-GB")).toEqual("15 Mar 2024");
+    });
+
+    it("formats date in en-US", () => {
+      expect(formatIsoDate("2024-03-15", "en-US")).toEqual("Mar 15, 2024");
+    });
+
+    it("handles start of year", () => {
+      expect(formatIsoDate("2020-01-01", "en-GB")).toEqual("1 Jan 2020");
+    });
+
+    it("handles end of year", () => {
+      expect(formatIsoDate("2023-12-31", "en-GB")).toEqual("31 Dec 2023");
+    });
+  });
+
+  describe("edge cases", () => {
+    it("handles leap year date", () => {
+      expect(formatIsoDate("2024-02-29", "en-GB")).toEqual("29 Feb 2024");
+    });
+
+    it("returns 'Invalid Date' for invalid input", () => {
+      const result = formatIsoDate("invalid-date", "en-GB");
+
+      expect(result).toEqual("Invalid Date");
+    });
   });
 });

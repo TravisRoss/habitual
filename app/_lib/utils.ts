@@ -12,6 +12,16 @@ export function dateToIsoStr(date: Date = new Date()): string {
   return date.toISOString().slice(0, 10);
 }
 
+/** Formats an ISO date string (e.g. "2026-03-06") as a localised date (e.g. "6 Mar 2026").
+ *  Appends T00:00:00 to parse as local midnight and avoid UTC-offset date shifts. */
+export function formatIsoDate(iso: string, locale?: string): string {
+  return new Date(iso + "T00:00:00").toLocaleDateString(locale, {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+}
+
 /** Calculates the end date based on the start date and the period (in days) */
 export function calcEndDate(start_date: string, period: Period): string {
   const start = new Date(start_date);

@@ -1,6 +1,6 @@
 "use client";
 
-import { calcEndDate } from "@/app/_lib/utils";
+import { calcEndDate, formatIsoDate } from "@/app/_lib/utils";
 import { CustomMonthCaption } from "@/components/features/goals/CustomMonthCaption";
 import BackButton from "@/components/features/shared/BackButton";
 import DashboardCard from "@/components/features/shared/DashboardCard";
@@ -54,7 +54,7 @@ export default function Page({
     { label: "Habit type:", value: habit?.frequency },
     {
       label: "Created on:",
-      value: habit?.created_at ? habit.created_at.slice(0, 10) : "N/A",
+      value: habit?.created_at ? formatIsoDate(habit.created_at.slice(0, 10)) : "N/A",
     },
   ];
 
@@ -76,13 +76,13 @@ export default function Page({
             <div>
               <p className="text-sm text-muted-foreground">Start date</p>
               <time className="text-sm font-medium" dateTime={goal.start_date}>
-                {goal.start_date}
+                {formatIsoDate(goal.start_date)}
               </time>
             </div>
             <div className="text-right">
               <p className="text-sm text-muted-foreground">End date</p>
               <time className="text-sm font-medium" dateTime={endDate}>
-                {endDate}
+                {formatIsoDate(endDate)}
               </time>
             </div>
           </div>
