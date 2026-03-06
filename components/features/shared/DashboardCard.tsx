@@ -14,12 +14,14 @@ export default function DashboardCard({
 }: DashboardCardProps) {
   return (
     <Card>
-      <CardHeader>
-        <CardTitle className="flex justify-between">
-          {title && <p className="text-lg font-semibold mb-3">{title}</p>}
-          {action}
-        </CardTitle>
-      </CardHeader>
+      {(title || action) && (
+        <CardHeader>
+          <CardTitle className="flex items-center justify-between">
+            {title && <p className="text-lg font-semibold">{title}</p>}
+            {action}
+          </CardTitle>
+        </CardHeader>
+      )}
       <CardContent>{children}</CardContent>
     </Card>
   );

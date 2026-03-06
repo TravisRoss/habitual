@@ -13,7 +13,7 @@ export default function Page() {
   return (
     <SubPageLayout title="Your Habits">
       <DateStrip selectedDate={selectedDate} onSelect={setSelectedDate} />
-      <DashboardCard title="Your Habits for today">
+      <DashboardCard>
         <HabitsList date={selectedDate} />
       </DashboardCard>
     </SubPageLayout>
