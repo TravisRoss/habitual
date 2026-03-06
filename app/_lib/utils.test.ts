@@ -8,6 +8,7 @@ import {
   calculateHabitCompletionRate,
   calculateOverallCompletionRate,
   getEffectiveStart,
+  getMonthIndexesBetweenDates,
 } from "./utils";
 import { Habit, Completion } from "@/types";
 
@@ -621,7 +622,7 @@ describe("calculateOverallCompletionRate", () => {
     expect(result).toEqual(0);
   });
 
-    it("uses created_at as effective start for habits created mid-period", () => {
+  it("uses created_at as effective start for habits created mid-period", () => {
     // Period: Mar 10 (Sun) – Mar 12 (Tue), habit created Mar 12 (Tue)
     // Scheduled days should be 1 (only Mar 12), not 3 (the full period)
     const habits: Habit[] = [
@@ -639,10 +640,20 @@ describe("calculateOverallCompletionRate", () => {
     ];
 
     const completions: Completion[] = [
-      { id: "1", habit_id: "habit-1", user_id: "user-1", completed_on: "2024-03-12" },
+      {
+        id: "1",
+        habit_id: "habit-1",
+        user_id: "user-1",
+        completed_on: "2024-03-12",
+      },
     ];
 
-    const result = calculateOverallCompletionRate(habits, completions, startDate, endDate);
+    const result = calculateOverallCompletionRate(
+      habits,
+      completions,
+      startDate,
+      endDate,
+    );
     expect(result).toEqual(100); // 1/1 = 100%, not 1/3 = 33% (old bug)
   });
 
@@ -717,5 +728,81 @@ describe("calculateOverallCompletionRate", () => {
       endDate,
     );
     expect(result).toEqual(89); // (67 + 100 + 100) / 3 = 89
+  });
+});
+
+describe("getMonthIndexesBetweenDates", () => {
+  it("returns single month index when startDate and endDate are same month", () => {
+    const result = getMonthIndexesBetweenDates(
+      new Date("2020-03-01"),
+      new Date("2020-03-15"),
+    );
+    expect(result).toEqual([2]);
+  });
+
+  it("returns two months if startDate and endDate only one month apart", () => {
+    const result = getMonthIndexesBetweenDates(
+      new Date("2020-04-15"),
+      new Date("2020-05-28"),
+    );
+    expect(result).toEqual([3, 4]);
+  });
+
+  it("returns month indexes between months (inclusive) when startDate and endDate are months apart", () => {
+    const result = getMonthIndexesBetweenDates(
+      new Date("2020-04-05"),
+      new Date("2020-12-12"),
+    );
+    expect(result).toEqual([3, 4, 5, 6, 7, 8, 9, 10, 11]);
+  });
+
+  it("returns single month index when startDate and endDate are the same day", () => {
+    const result = getMonthIndexesBetweenDates(
+      new Date("2021-07-10"),
+      new Date("2021-07-10"),
+    );
+    expect(result).toEqual([6]);
+  });
+
+  it("includes months when dates span across a year boundary", () => {
+    const result = getMonthIndexesBetweenDates(
+      new Date("2020-11-15"),
+      new Date("2021-02-10"),
+    );
+    expect(result).toEqual([10, 11, 0, 1]);
+  });
+
+  it("returns all month indexes when dates span an entire year", () => {
+    const result = getMonthIndexesBetweenDates(
+      new Date("2020-01-01"),
+      new Date("2020-12-31"),
+    );
+    expect(result).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+  });
+
+  it("returns correct months when startDate is end of month and endDate is start of next month", () => {
+    const result = getMonthIndexesBetweenDates(
+      new Date("2022-06-30"),
+      new Date("2022-07-01"),
+    );
+    expect(result).toEqual([5, 6]);
+  });
+
+  it("handles multiple year span correctly", () => {
+    const result = getMonthIndexesBetweenDates(
+      new Date("2019-10-10"),
+      new Date("2021-03-05"),
+    );
+    expect(result).toEqual([
+      9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2,
+    ]);
+  });
+
+  it("returns empty array if startDate is after endDate", () => {
+    const result = getMonthIndexesBetweenDates(
+      new Date("2021-05-01"),
+      new Date("2021-03-01"),
+    );
+    expect(result).toEqual([]);
   });
 });

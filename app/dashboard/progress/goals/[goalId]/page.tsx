@@ -1,5 +1,6 @@
 "use client";
 
+import { calcEndDate, getMonthIndexesBetweenDates } from "@/app/_lib/utils";
 import MonthNavigator from "@/components/features/goals/MonthNavigator";
 import BackButton from "@/components/features/shared/BackButton";
 import DashboardCard from "@/components/features/shared/DashboardCard";
@@ -38,10 +39,27 @@ export default function Page({
     { label: "Created on:", value: "TODO: get created on date" },
   ];
 
+  const endDate = calcEndDate(goal.start_date, goal.period);
+
   return (
     <>
       <DashboardCard>
-        <MonthNavigator months={["January", "February", "March"]} />
+        <div className="flex justify-between">
+          <div className="flex flex-col">
+            <p>Start date</p>
+            <time dateTime={goal.start_date}>{goal.start_date}</time>
+          </div>
+          <MonthNavigator
+            monthIndexes={getMonthIndexesBetweenDates(
+              new Date(goal.start_date),
+              new Date(endDate),
+            )}
+          />
+          <div className="flex flex-col">
+            <p>End date</p>
+            <time dateTime={endDate}>{endDate}</time>
+          </div>
+        </div>
       </DashboardCard>
       <DashboardCard
         title={goal?.name}

@@ -1,5 +1,5 @@
 import { Habit, Completion, Period, ReportPeriod } from "@/types";
-import { DAY_MS } from "./constants";
+import { DAY_MS, MONTH_INDEXES } from "./constants";
 
 /** Converts a date string (e.g. "2026-02-24") to a day number (0 = Sunday, 6 = Saturday) */
 export function dateToDayNumber(date: string): number {
@@ -31,6 +31,32 @@ export function getWindowDates(centerDate: string): string[] {
   return Array.from({ length: 7 }, (_, i) =>
     new Date(centerMs + (i - 3) * DAY_MS).toISOString().slice(0, 10),
   );
+}
+
+/** Returns the indexes of the months between two dates */
+export function getMonthIndexesBetweenDates(
+  startDate: Date,
+  endDate: Date,
+): number[] {
+  const startMonthIndex = startDate.getMonth();
+  const endMonthIndex = endDate.getMonth();
+  const yearDifference = endDate.getFullYear() - startDate.getFullYear();
+
+  if (yearDifference === 0) {
+    return MONTH_INDEXES.slice(startMonthIndex, endMonthIndex + 1);
+  }
+
+  const monthsFromStartYear = MONTH_INDEXES.slice(startMonthIndex);
+  const monthsFromEndYear = MONTH_INDEXES.slice(0, endMonthIndex + 1);
+
+  const numberOfFullYearsBetween = yearDifference - 1;
+
+  const monthsFromFullYears = Array.from(
+    { length: numberOfFullYearsBetween },
+    () => MONTH_INDEXES,
+  ).flat();
+
+  return [...monthsFromStartYear, ...monthsFromFullYears, ...monthsFromEndYear];
 }
 
 /**
