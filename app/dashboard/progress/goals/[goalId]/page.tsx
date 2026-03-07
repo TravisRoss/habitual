@@ -56,7 +56,7 @@ export default function Page({
   );
 
   return (
-    <DashboardLayout title={goal.name} titleAction={badge}>
+    <DashboardLayout title={goal.name}>
       <BackButton label="Back to goals" href="/dashboard/progress/goals" />
       <DashboardCard>
         <div className="flex flex-col gap-3">
@@ -76,10 +76,10 @@ export default function Page({
           </div>
 
           <Calendar
-            className="w-full rounded-lg border"
-            classNames={{ root: "w-full" }}
+            className="w-full border-none bg-transparent"
             startMonth={new Date(goal.start_date)}
             endMonth={new Date(endDate)}
+            classNames={{today: "text-brand"}}
             modifiers={{
               goalRange: completions.map(
                 (c) => new Date(c.completed_on + "T00:00:00"),
@@ -96,7 +96,7 @@ export default function Page({
         </div>
       </DashboardCard>
 
-      <DashboardCard>
+      <DashboardCard title={goal.name} action={badge}>
         <GoalTable
           goal={goal}
           habit={habit}
