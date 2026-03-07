@@ -7,7 +7,7 @@ import GitHub from "next-auth/providers/github";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import {
-  getProfileForCredentials,
+  getProfile,
   getProfileIdByEmail,
   upsertProfile,
 } from "@/lib/data-service";
@@ -30,16 +30,20 @@ const authConfig: NextAuthConfig = {
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
 
-        const profile = await getProfileForCredentials(credentials.email as string);
+        const profile = await getProfile(credentials.email as string);
         if (!profile?.password_hash) return null;
 
         const isValid = await bcrypt.compare(
           credentials.password as string,
-          profile.password_hash
+          profile.password_hash,
         );
         if (!isValid) return null;
 
-        return { id: profile.id, email: profile.email, name: profile.full_name };
+        return {
+          id: profile.id,
+          email: profile.email,
+          name: profile.full_name,
+        };
       },
     }),
   ],

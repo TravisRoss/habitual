@@ -1,6 +1,6 @@
 export type HabitFrequency = "daily" | "weekly" | "custom";
 
-export type ProfileForCredentials = {
+export type Profile = {
   id: string;
   email: string | null;
   full_name: string | null;

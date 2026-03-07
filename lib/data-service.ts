@@ -5,14 +5,12 @@ import {
   Goal,
   Habit,
   Period,
-  ProfileForCredentials,
+  Profile,
   Streak,
   Unit,
 } from "@/types";
 
-export async function getProfileForCredentials(
-  email: string,
-): Promise<ProfileForCredentials | null> {
+export async function getProfile(email: string): Promise<Profile | null> {
   const supabase = createAdminClient();
   const { data } = await supabase
     .from("profiles")
@@ -355,7 +353,8 @@ export async function deleteGoal(
     .eq("id", goal_id)
     .single();
 
-  if (fetchError || !goal.habit_id) return { error: fetchError?.message ?? "Goal has no associated habit." };
+  if (fetchError || !goal.habit_id)
+    return { error: fetchError?.message ?? "Goal has no associated habit." };
 
   const { error } = await supabase.from("goals").delete().eq("id", goal_id);
 
