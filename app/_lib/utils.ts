@@ -207,3 +207,6 @@ export function calculateOverallCompletionRate(
   const totalRate = completionRates.reduce((sum, rate) => sum + rate, 0);
   return Math.round(totalRate / relevantHabits.length);
 }
+
+export const pluralDays = (n: number) => `${n} Day${n !== 1 ? "s" : ""}`;
+
