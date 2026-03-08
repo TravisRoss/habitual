@@ -1,4 +1,4 @@
-import { LayoutDashboard, BarChart2, Settings } from "lucide-react";
+import { LayoutDashboard, BarChart2, Settings, CircleUserRound, Info } from "lucide-react";
 
 export const navLinks = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -7,6 +7,6 @@ export const navLinks = [
 ];
 
 export const settingsNavLinks = [
-  { label: "Account", href: "settings/account" },
-  { label: "About", href: "settings/about" },
+  { label: "Account", href: "settings/account", icon: CircleUserRound },
+  { label: "About", href: "settings/about", icon: Info },
 ];

@@ -9,7 +9,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+import SettingItem from "./SettingItem";
 
 const THEMES = ["Light", "Dark", "System"] as const;
 
@@ -22,12 +24,7 @@ export function AppearanceDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="ghost" className={itemCls}>
-          <span>Appearance</span>
-          <span className="text-muted-foreground capitalize">
-            {theme === "system" ? "(System)" : theme}
-          </span>
-        </Button>
+        <SettingItem icon={Sun} label="Appearance" value={theme} />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
