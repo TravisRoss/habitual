@@ -29,7 +29,7 @@ import {
   deletePasswordResetToken,
   updatePasswordByEmail,
 } from "@/lib/data-service";
-import { resend } from "@/lib/resend";
+import { getResend } from "@/lib/resend";
 import type { Completion, Habit, Streak } from "@/types";
 import { revalidatePath } from "next/cache";
 import { GoalFormValues } from "@/lib/zod";
@@ -391,7 +391,7 @@ export async function requestPasswordResetAction(
 
   const resetUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/login/reset-password?token=${token}`;
 
-  const { error: emailError } = await resend.emails.send({
+  const { error: emailError } = await getResend().emails.send({
     from: "Habitual <noreply@resend.dev>",
     to: email,
     subject: "Reset your password",
