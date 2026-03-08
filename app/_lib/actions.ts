@@ -23,6 +23,7 @@ import {
   getCompletionsByUserIdForDateRange,
   getCompletionsByUserId,
   updateProfile,
+  updateWeekStartsOn,
 } from "@/lib/data-service";
 import type { Completion, Habit, Streak } from "@/types";
 import { revalidatePath } from "next/cache";
@@ -356,4 +357,17 @@ export async function updateGoalAction(
 
   revalidatePath("/dashboard");
   return error ? { error: "Failed to edit goal. Please try again." } : {};
+}
+
+export async function updateWeekStartsOnAction(
+  weekStartsOn: 0 | 1,
+): Promise<{ error?: string }> {
+  const session = await auth();
+  if (!session?.user?.id) return { error: "Not authenticated." };
+
+  const { error } = await updateWeekStartsOn(session.user.id, weekStartsOn);
+  if (error) return { error: "Failed to update setting." };
+
+  revalidatePath("/dashboard");
+  return {};
 }

@@ -5,6 +5,7 @@ export type Profile = {
   email: string | null;
   full_name: string | null;
   password_hash: string | null;
+  week_starts_on: number;
 };
 
 export type Habit = {

@@ -64,6 +64,30 @@ export async function profileExistsByEmail(email: string): Promise<boolean> {
   return id !== null;
 }
 
+export async function getProfileById(id: string): Promise<Profile | null> {
+  const supabase = createAdminClient();
+  const { data } = await supabase
+    .from("profiles")
+    .select("id, email, full_name, password_hash, week_starts_on")
+    .eq("id", id)
+    .single();
+
+  return data;
+}
+
+export async function updateWeekStartsOn(
+  userId: string,
+  weekStartsOn: 0 | 1,
+): Promise<{ error: string | null }> {
+  const supabase = createAdminClient();
+  const { error } = await supabase
+    .from("profiles")
+    .update({ week_starts_on: weekStartsOn })
+    .eq("id", userId);
+
+  return { error: error?.message ?? null };
+}
+
 /** Upserts a profile by email. Used by OAuth sign-in to create or update on each login. */
 export async function upsertProfile(data: {
   email: string;
