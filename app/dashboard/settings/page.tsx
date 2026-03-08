@@ -10,20 +10,17 @@ export default function Page() {
     <SubPageLayout title="Settings">
       <DashboardCard>
         <div className="space-y-4">
-          {settingsNavLinks.map(({ label, href }) =>
-            href ? (
-              <Link
-                key={href}
-                href={href}
-                className="flex items-center justify-between rounded-md bg-muted/50 p-4 text-sm transition-colors hover:bg-accent hover:text-brand active:opacity-90"
-              >
-                {label}
-                <ChevronRight className="size-4 text-muted-foreground" />
-              </Link>
-            ) : (
-              <AppearanceDialog key={label} />
-            ),
-          )}
+          {settingsNavLinks.map(({ label, href }) => (
+            <Link
+              key={href}
+              href={href}
+              className="flex items-center justify-between rounded-md bg-muted/50 p-4 text-sm transition-colors hover:bg-accent hover:text-brand active:opacity-90"
+            >
+              {label}
+              <ChevronRight className="size-4 text-muted-foreground" />
+            </Link>
+          ))}
+          <AppearanceDialog />
         </div>
       </DashboardCard>
     </SubPageLayout>
