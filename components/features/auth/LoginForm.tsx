@@ -18,7 +18,7 @@ import { loginSchema, type LoginFormValues } from "@/lib/zod";
 
 const inputClass = "bg-card border-border focus-visible:ring-brand focus-visible:border-brand text-foreground aria-invalid:border-red-400";
 
-export default function LoginForm() {
+export default function LoginForm({ resetSuccess }: { resetSuccess?: boolean }) {
   const router = useRouter();
   const {
     register,
@@ -50,6 +50,11 @@ export default function LoginForm() {
         <CardDescription>Enter your email and password to continue</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-6">
+        {resetSuccess && (
+          <p className="text-sm text-green-600 font-nunito text-center bg-green-50 dark:bg-green-950 rounded-md p-3">
+            Password reset successfully. You can now log in.
+          </p>
+        )}
 
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <FieldGroup>

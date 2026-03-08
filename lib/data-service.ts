@@ -88,6 +88,50 @@ export async function updateWeekStartsOn(
   return { error: error?.message ?? null };
 }
 
+export async function updatePasswordByEmail(
+  email: string,
+  passwordHash: string,
+): Promise<{ error: string | null }> {
+  const supabase = createAdminClient();
+  const { error } = await supabase
+    .from("profiles")
+    .update({ password_hash: passwordHash })
+    .eq("email", email);
+
+  return { error: error?.message ?? null };
+}
+
+export async function insertPasswordResetToken(
+  email: string,
+  token: string,
+  expiresAt: Date,
+): Promise<{ error: string | null }> {
+  const supabase = createAdminClient();
+  const { error } = await supabase
+    .from("password_reset_tokens")
+    .insert({ token, email, expires_at: expiresAt.toISOString() });
+
+  return { error: error?.message ?? null };
+}
+
+export async function getPasswordResetToken(
+  token: string,
+): Promise<{ email: string; expires_at: string } | null> {
+  const supabase = createAdminClient();
+  const { data } = await supabase
+    .from("password_reset_tokens")
+    .select("email, expires_at")
+    .eq("token", token)
+    .single();
+
+  return data;
+}
+
+export async function deletePasswordResetToken(token: string): Promise<void> {
+  const supabase = createAdminClient();
+  await supabase.from("password_reset_tokens").delete().eq("token", token);
+}
+
 /** Upserts a profile by email. Used by OAuth sign-in to create or update on each login. */
 export async function upsertProfile(data: {
   email: string;

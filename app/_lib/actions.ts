@@ -24,7 +24,12 @@ import {
   getCompletionsByUserId,
   updateProfile,
   updateWeekStartsOn,
+  insertPasswordResetToken,
+  getPasswordResetToken,
+  deletePasswordResetToken,
+  updatePasswordByEmail,
 } from "@/lib/data-service";
+import { resend } from "@/lib/resend";
 import type { Completion, Habit, Streak } from "@/types";
 import { revalidatePath } from "next/cache";
 import { GoalFormValues } from "@/lib/zod";
@@ -369,5 +374,54 @@ export async function updateWeekStartsOnAction(
   if (error) return { error: "Failed to update setting." };
 
   revalidatePath("/dashboard");
+  return {};
+}
+
+export async function requestPasswordResetAction(
+  email: string,
+): Promise<{ error?: string }> {
+  const exists = await profileExistsByEmail(email);
+  if (!exists) return {}; // Don't reveal whether the email exists
+
+  const token = crypto.randomUUID();
+  const expiresAt = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
+
+  const { error } = await insertPasswordResetToken(email, token, expiresAt);
+  if (error) return { error: "Failed to generate reset token." };
+
+  const resetUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/login/reset-password?token=${token}`;
+
+  const { error: emailError } = await resend.emails.send({
+    from: "Habitual <noreply@resend.dev>",
+    to: email,
+    subject: "Reset your password",
+    html: `
+      <p>You requested a password reset for your Habitual account.</p>
+      <p><a href="${resetUrl}">Click here to reset your password</a></p>
+      <p>This link expires in 1 hour. If you didn't request this, you can ignore this email.</p>
+    `,
+  });
+
+  if (emailError) return { error: "Failed to send email." };
+  return {};
+}
+
+export async function resetPasswordAction(
+  token: string,
+  newPassword: string,
+): Promise<{ error?: string }> {
+  const record = await getPasswordResetToken(token);
+  if (!record) return { error: "Invalid or expired reset link." };
+
+  if (new Date() > new Date(record.expires_at)) {
+    await deletePasswordResetToken(token);
+    return { error: "This reset link has expired." };
+  }
+
+  const passwordHash = await bcrypt.hash(newPassword, 12);
+  const { error } = await updatePasswordByEmail(record.email, passwordHash);
+  if (error) return { error: "Failed to update password." };
+
+  await deletePasswordResetToken(token);
   return {};
 }

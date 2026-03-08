@@ -104,7 +104,27 @@ export const goalSchema = z
     { message: "Select at least one day", path: ["habit_target_days"] },
   );
 
+export const forgotPasswordSchema = z.object({
+  email: z.email("Enter a valid email"),
+});
+
+export const resetPasswordSchema = z
+  .object({
+    password: z
+      .string()
+      .min(8, "Password must be at least 8 characters")
+      .regex(/[A-Z]/, "Must include an uppercase letter")
+      .regex(/[0-9]/, "Must include a number"),
+    confirm: z.string().min(1, "Please confirm your password"),
+  })
+  .refine((data) => data.password === data.confirm, {
+    message: "Passwords don't match",
+    path: ["confirm"],
+  });
+
 export type LoginFormValues = z.infer<typeof loginSchema>;
 export type SignUpFormValues = z.infer<typeof signUpSchema>;
 export type HabitFormValues = z.infer<typeof habitSchema>;
 export type GoalFormValues = z.infer<typeof goalSchema>;
+export type ForgotPasswordFormValues = z.infer<typeof forgotPasswordSchema>;
+export type ResetPasswordFormValues = z.infer<typeof resetPasswordSchema>;
