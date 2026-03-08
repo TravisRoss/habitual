@@ -15,7 +15,7 @@ import { navLinks } from "@/app/_config/nav";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { DarkModeToggle } from "@/components/features/shared/DarkModeToggle";
-import Image from "next/image";
+import { Flame } from "lucide-react";
 
 const linkClass =
   "font-nunito font-semibold text-muted-foreground hover:text-brand hover:bg-transparent focus:bg-transparent";
@@ -28,15 +28,9 @@ export default function Navigation({ session }: { session: Session | null }) {
       <div className="max-w-7xl mx-auto px-6 h-14 flex items-center gap-2">
         <Link
           href={session ? "/dashboard" : "/"}
-          className="font-nunito font-extrabold text-lg text-brand mr-4 flex items-center gap-1 cursor-auto"
+          className="font-nunito font-extrabold text-lg text-brand mr-4 flex items-center gap-1 cursor-pointer"
         >
-          <Image
-            src="/logo.png"
-            alt="Habitual Logo"
-            width={24}
-            height={24}
-            className="inline-block mr-2"
-          />
+          <Flame className="h-5 w-5" />
           Habitual
         </Link>
 
