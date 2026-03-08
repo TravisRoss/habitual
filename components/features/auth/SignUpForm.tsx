@@ -4,19 +4,19 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
+import { FieldGroup } from "@/components/ui/field";
 import { Spinner } from "@/components/ui/spinner";
-import { PasswordInput } from "@/components/ui/PasswordInput";
 import { OAuthSection } from "./OAuthSection";
+import SignUpFields from "./SignUpFields";
 import { signUpWithCredentials } from "@/app/_lib/actions";
 import { signUpSchema, type SignUpFormValues } from "@/lib/zod";
 
-const inputClass = "bg-card border-border focus-visible:ring-brand focus-visible:border-brand text-foreground aria-invalid:border-red-400";
 
 export default function SignUpForm() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -39,8 +39,9 @@ export default function SignUpForm() {
     await signIn("credentials", {
       email: data.email,
       password: data.password,
-      callbackUrl: "/dashboard",
+      redirect: false,
     });
+    router.push("/dashboard");
   }
 
   return (
@@ -53,55 +54,7 @@ export default function SignUpForm() {
 
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <FieldGroup>
-            <Field>
-              <FieldLabel htmlFor="name">Full Name</FieldLabel>
-              <Input
-                id="name"
-                type="text"
-                autoComplete="name"
-                aria-invalid={!!errors.name}
-                className={inputClass}
-                {...register("name")}
-              />
-              <FieldError errors={[errors.name]} />
-            </Field>
-
-            <Field>
-              <FieldLabel htmlFor="email">Email</FieldLabel>
-              <Input
-                id="email"
-                type="email"
-                autoComplete="email"
-                aria-invalid={!!errors.email}
-                className={inputClass}
-                {...register("email")}
-              />
-              <FieldError errors={[errors.email]} />
-            </Field>
-
-            <Field>
-              <FieldLabel htmlFor="password">Password</FieldLabel>
-              <PasswordInput
-                id="password"
-                autoComplete="new-password"
-                aria-invalid={!!errors.password}
-                className={inputClass}
-                {...register("password")}
-              />
-              <FieldError errors={[errors.password]} />
-            </Field>
-
-            <Field>
-              <FieldLabel htmlFor="confirm">Confirm Password</FieldLabel>
-              <PasswordInput
-                id="confirm"
-                autoComplete="new-password"
-                aria-invalid={!!errors.confirm}
-                className={inputClass}
-                {...register("confirm")}
-              />
-              <FieldError errors={[errors.confirm]} />
-            </Field>
+            <SignUpFields register={register} errors={errors} />
 
             {errors.root && (
               <p role="alert" className="text-sm text-red-500 font-nunito text-center">

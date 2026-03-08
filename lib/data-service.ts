@@ -10,7 +10,32 @@ import {
   Unit,
 } from "@/types";
 
-export async function getProfile(email: string): Promise<Profile | null> {
+/** Inserts a new profile. Used by email/password sign-up. */
+export async function insertProfile(data: {
+  email: string;
+  full_name: string | null;
+  password_hash: string;
+}): Promise<{ error: string | null }> {
+  const supabase = createAdminClient();
+  const { error } = await supabase.from("profiles").insert(data);
+
+  return { error: error?.message ?? null };
+}
+
+export async function updateProfile(data: {
+  email: string;
+  full_name: string | null;
+  password_hash: string;
+}): Promise<{ error: string | null }> {
+  const supabase = createAdminClient();
+  const { error } = await supabase.from("profiles").update(data).eq("email", data.email);
+
+  return { error: error?.message ?? null };
+}
+
+export async function getProfileByEmail(
+  email: string,
+): Promise<Profile | null> {
   const supabase = createAdminClient();
   const { data } = await supabase
     .from("profiles")
@@ -122,18 +147,6 @@ export async function deleteHabit(
 ): Promise<{ error: string | null }> {
   const supabase = createAdminClient();
   const { error } = await supabase.from("habits").delete().eq("id", habit_id);
-
-  return { error: error?.message ?? null };
-}
-
-/** Inserts a new profile. Used by email/password sign-up. */
-export async function insertProfile(data: {
-  email: string;
-  full_name: string | null;
-  password_hash: string;
-}): Promise<{ error: string | null }> {
-  const supabase = createAdminClient();
-  const { error } = await supabase.from("profiles").insert(data);
 
   return { error: error?.message ?? null };
 }

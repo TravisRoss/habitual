@@ -22,6 +22,7 @@ import {
   getCompletionsByUserIdAndHabitIdForDateRange,
   getCompletionsByUserIdForDateRange,
   getCompletionsByUserId,
+  updateProfile,
 } from "@/lib/data-service";
 import type { Completion, Habit, Streak } from "@/types";
 import { revalidatePath } from "next/cache";
@@ -59,6 +60,25 @@ export async function signUpWithCredentials(data: {
 
   if (error) {
     return { error: "Failed to create account. Please try again." };
+  }
+
+  return {};
+}
+
+export async function updateProfileAction(data: {
+  name: string;
+  email: string;
+  password: string;
+}) {
+  const passwordHash = await bcrypt.hash(data.password, 12);
+  const { error } = await updateProfile({
+    email: data.email,
+    full_name: data.name,
+    password_hash: passwordHash,
+  });
+
+  if (error) {
+    return { error: "Failed to update account. Please try again." };
   }
 
   return {};
@@ -274,8 +294,13 @@ export async function createGoalAction(
   }
 
   const daysPerWeek =
-    data.habit_frequency === "daily" ? 7 : (data.habit_target_days?.length ?? 1);
-  const target = Math.max(1, Math.floor((Number(data.period) / 7) * daysPerWeek));
+    data.habit_frequency === "daily"
+      ? 7
+      : (data.habit_target_days?.length ?? 1);
+  const target = Math.max(
+    1,
+    Math.floor((Number(data.period) / 7) * daysPerWeek),
+  );
 
   const { error } = await insertGoal({
     user_id: session.user.id,

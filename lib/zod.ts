@@ -20,7 +20,10 @@ export const signUpSchema = z
       .regex(/[0-9]/, "Must include a number"),
     confirm: z.string().min(8, "Please confirm your password"),
   })
-  .refine((data) => data.password === data.confirm, "Passwords don't match")
+  .refine((data) => data.password === data.confirm, {
+    message: "Passwords don't match",
+    path: ["confirm"],
+  })
   .refine(
     (data) => data.password.length >= 8,
     "Password must be at least 8 characters",

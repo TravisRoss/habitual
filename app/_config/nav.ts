@@ -7,7 +7,7 @@ export const navLinks = [
 ];
 
 export const settingsNavLinks = [
-  { label: "Account", href: "dashboard/settings/account" },
-  { label: "About", href: "dashboard/settings/about" },
-  { label: "Appearance", href: "dashboard/settings/appearance" },
+  { label: "Account", href: "settings/account" },
+  { label: "About", href: "settings/about" },
+  { label: "Appearance", href: "settings/appearance" },
 ];
