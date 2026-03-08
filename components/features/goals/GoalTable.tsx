@@ -23,7 +23,7 @@ export default function GoalTable({
       label: "Days complete:",
       value: `${completionCount} from ${pluralDays(goal.target)}`,
     },
-    { label: "Days failed:", value: pluralDays(daysRemaining) },
+    { label: "Days remaining:", value: pluralDays(daysRemaining) },
     { label: "Habit type:", value: habit?.frequency },
     {
       label: "Created on:",
