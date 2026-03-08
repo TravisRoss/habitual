@@ -18,7 +18,7 @@ import { DarkModeToggle } from "@/components/features/shared/DarkModeToggle";
 import { Flame } from "lucide-react";
 
 const linkClass =
-  "font-nunito font-semibold text-muted-foreground hover:text-brand hover:bg-transparent focus:bg-transparent";
+  "font-nunito font-semibold text-muted-foreground hover:text-brand transition-colors bg-transparent";
 
 export default function Navigation({ session }: { session: Session | null }) {
   const pathName = usePathname();
