@@ -17,7 +17,7 @@ type Story = StoryObj<typeof MonthNavigator>;
 
 export const AllMonths: Story = {
   args: {
-    months: MONTH_NAMES,
+    monthIndexes: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -35,7 +35,7 @@ export const AllMonths: Story = {
 
 export const SingleMonth: Story = {
   args: {
-    months: ["March"],
+    monthIndexes: [2],
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -46,7 +46,7 @@ export const SingleMonth: Story = {
 
 export const QuarterMonths: Story = {
   args: {
-    months: ["January", "February", "March"],
+    monthIndexes: [0, 1, 2],
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -72,7 +72,7 @@ export const QuarterMonths: Story = {
 
 export const TwoMonths: Story = {
   args: {
-    months: ["June", "July"],
+    monthIndexes: [5,6],
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -91,6 +91,6 @@ export const TwoMonths: Story = {
 
 export const NoMonths: Story = {
   args: {
-    months: [],
+    monthIndexes: [],
   },
 };
