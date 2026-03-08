@@ -17,13 +17,16 @@ const itemCls =
   "flex h-auto w-full items-center justify-between rounded-md bg-muted/50 p-4 text-sm font-normal transition-colors hover:bg-accent hover:text-brand active:opacity-90";
 
 export function AppearanceDialog() {
-  const { setTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
 
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="ghost" className={itemCls}>
-          Appearance
+          <span>Appearance</span>
+          <span className="text-muted-foreground capitalize">
+            {theme === "system" ? "(System)" : theme}
+          </span>
         </Button>
       </DialogTrigger>
       <DialogContent>
