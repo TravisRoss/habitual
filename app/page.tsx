@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { auth } from "./_lib/auth";
 import { Button } from "@/components/ui/button";
+import { Flame } from "lucide-react";
 
 export default async function Home() {
   const session = await auth();
@@ -11,16 +12,7 @@ export default async function Home() {
     <main className="min-h-screen bg-page-bg flex items-center justify-center px-6">
       <div className="w-full max-w-93.75 flex flex-col gap-8 py-12">
         {/* Logo mark */}
-        <div className="w-14 h-14 rounded-2xl flex items-center justify-center btn-primary">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-            <path
-              d="M14 4C14 4 7 10 7 16a7 7 0 0014 0c0-6-7-12-7-12z"
-              fill="white"
-              opacity="0.9"
-            />
-            <circle cx="14" cy="16" r="3" fill="white" opacity="0.6" />
-          </svg>
-        </div>
+        <Flame className="h-20 w-20 text-brand" />
 
         {/* Heading */}
         <div className="flex flex-col gap-3">
