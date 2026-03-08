@@ -8,6 +8,7 @@ import { itemCls } from "@/components/features/settings/SettingItem";
 import { getProfileById } from "@/lib/data-service";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
+import { version } from "@/package.json";
 
 export default async function Page() {
   const session = await auth();
@@ -18,19 +19,28 @@ export default async function Page() {
 
   return (
     <SubPageLayout title="Settings">
-      <DashboardCard>
-        <div className="space-y-4">
-          {settingsNavLinks.map(({ label, href, icon: Icon }) => (
-            <Link key={href} href={href} className={itemCls}>
-              <Icon className="size-5 shrink-0" />
-              <span className="flex-1">{label}</span>
-              <ChevronRight className="size-4 text-muted-foreground" />
-            </Link>
-          ))}
-          <AppearanceDialog />
-          <WeekStartsOnDialog defaultValue={weekStartsOn} />
-        </div>
-      </DashboardCard>
+      <div className="space-y-4">
+        <DashboardCard>
+          <div className="space-y-4">
+            {settingsNavLinks.map(({ label, href, icon: Icon }) => (
+              <Link key={href} href={href} className={itemCls}>
+                <Icon className="size-5 shrink-0" />
+                <span className="flex-1">{label}</span>
+                <ChevronRight className="size-4 text-muted-foreground" />
+              </Link>
+            ))}
+          </div>
+        </DashboardCard>
+
+        <DashboardCard>
+          <div className="space-y-4">
+            <AppearanceDialog />
+            <WeekStartsOnDialog defaultValue={weekStartsOn} />
+          </div>
+        </DashboardCard>
+
+        <p className="px-1 text-xs text-muted-foreground">v{version}</p>
+      </div>
     </SubPageLayout>
   );
 }
