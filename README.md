@@ -1,36 +1,131 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Habitual
+
+Build better habits. Track your progress and stay consistent, one day at a time. It's about progress, not perfection.
+
+## Features
+
+- **Dashboard** — Daily overview of habits and active goals
+- **Habit Tracking** — Create habits with daily, weekly, or custom schedules and mark them complete
+- **Goal Management** — Set measurable goals with targets and time periods
+- **Progress Reports** — Visualise completion rates and per-goal progress, filterable by week/month/year
+- **Settings** — Theme (light/dark), week start day, and account management
+- **Auth** — Email/password with forgot password flow, Google and GitHub OAuth
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 16, React 19 |
+| Database | Supabase (PostgreSQL) |
+| Auth | next-auth |
+| Data fetching | TanStack Query v5 |
+| Styling | Tailwind CSS v4, shadcn/ui, Radix UI |
+| Email | Resend |
+| Forms | react-hook-form + Zod |
+| Testing | Vitest, Playwright, Storybook |
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 20+
+- A [Supabase](https://supabase.com) project
+- A [Resend](https://resend.com) account (for password reset emails)
+- Google and/or GitHub OAuth app credentials (optional)
+
+### Installation
+
+```bash
+npm install
+```
+
+### Environment Variables
+
+Create a `.env.local` file in the project root:
+
+```env
+# Site
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+
+# Database (use pooler URL if on WSL2)
+DATABASE_URL=
+
+# next-auth
+NEXT_AUTH_SECRET=
+NEXT_AUTH_URL=http://localhost:3000
+NEXT_PUBLIC_BETTER_AUTH_URL=http://localhost:3000
+
+# OAuth (optional)
+AUTH_GOOGLE_ID=
+AUTH_GOOGLE_SECRET=
+AUTH_GITHUB_ID=
+AUTH_GITHUB_SECRET=
+
+# Email
+RESEND_API_KEY=
+```
+
+### Database Setup
+
+Run the next-auth schema in your Supabase SQL editor:
+
+```bash
+npm run auth:generate
+```
+
+Then apply your Supabase migrations.
+
+### Development
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run dev                 # Start dev server
+npm run build               # Build for production
+npm run start               # Start production server
+npm run lint                # Lint code
 
-## Learn More
+# Testing
+npm run test                # Unit tests (Vitest)
+npm run test:integration    # Integration tests
+npm run test:storybook      # Storybook component tests
+npm run test:e2e            # End-to-end tests (Playwright)
 
-To learn more about Next.js, take a look at the following resources:
+# Other
+npm run storybook           # Run Storybook on port 6006
+npm run gen:types           # Regenerate Supabase TypeScript types
+npm run auth:generate       # Generate next-auth schema
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+app/                  # Next.js App Router pages and layouts
+├── dashboard/        # Protected dashboard routes
+├── login/            # Auth pages
+└── _lib/             # Server-side utilities and actions
 
-## Deploy on Vercel
+components/
+├── ui/               # Base UI components (shadcn)
+└── features/         # Feature-specific components
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+lib/
+├── data-service.ts   # Supabase data access layer
+├── auth.ts           # next-auth server config
+├── auth-client.ts    # next-auth browser client
+└── resend.ts         # Email service
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+hooks/                # Custom React hooks
+types/                # TypeScript type definitions
+```
