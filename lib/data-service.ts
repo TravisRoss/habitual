@@ -28,7 +28,10 @@ export async function updateProfile(data: {
   password_hash: string;
 }): Promise<{ error: string | null }> {
   const supabase = createAdminClient();
-  const { error } = await supabase.from("profiles").update(data).eq("email", data.email);
+  const { error } = await supabase
+    .from("profiles")
+    .update(data)
+    .eq("email", data.email);
 
   return { error: error?.message ?? null };
 }
@@ -39,7 +42,7 @@ export async function getProfileByEmail(
   const supabase = createAdminClient();
   const { data } = await supabase
     .from("profiles")
-    .select("id, email, full_name, password_hash")
+    .select("id, email, full_name, password_hash, week_starts_on")
     .eq("email", email)
     .single();
 
