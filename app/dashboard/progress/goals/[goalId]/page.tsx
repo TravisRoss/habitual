@@ -76,10 +76,10 @@ export default function Page({
           </div>
 
           <Calendar
-            className="w-full border-none bg-transparent"
+            className="w-full border-none bg-transparent max-h-75 overflow-auto"
             startMonth={new Date(goal.start_date)}
             endMonth={new Date(endDate)}
-            classNames={{today: "text-brand"}}
+            classNames={{ today: "text-brand" }}
             modifiers={{
               goalRange: completions.map(
                 (c) => new Date(c.completed_on + "T00:00:00"),
