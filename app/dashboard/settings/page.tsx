@@ -9,6 +9,7 @@ import { getProfileById } from "@/lib/data-service";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { version } from "@/package.json";
+import SignOutDialog from "@/components/features/auth/SignOutDialog";
 
 export default async function Page() {
   const session = await auth();
@@ -36,6 +37,7 @@ export default async function Page() {
           <div className="space-y-4">
             <AppearanceDialog />
             <WeekStartsOnDialog defaultValue={weekStartsOn} />
+            <SignOutDialog isSetting={true} />
           </div>
         </DashboardCard>
 
