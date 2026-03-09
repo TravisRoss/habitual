@@ -18,7 +18,7 @@ export default function FooterNav() {
               <Link
                 href={href}
                 className={cn(
-                  "flex flex-col items-center gap-1 px-3 py-1 text-xs font-nunito font-semibold transition-colors",
+                  "flex flex-col items-center gap-1 px-8 py-1 text-xs font-nunito font-semibold transition-colors",
                   isActive
                     ? "text-brand"
                     : "text-muted-foreground hover:text-brand",
