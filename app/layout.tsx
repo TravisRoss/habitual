@@ -24,6 +24,10 @@ export const metadata: Metadata = {
   description: "Build better habits, one day at a time",
 };
 
+export const viewport = {
+  viewportFit: "cover",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{

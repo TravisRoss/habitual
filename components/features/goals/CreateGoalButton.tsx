@@ -21,7 +21,7 @@ export function CreateGoalButton() {
   return (
     <>
       <CirclePlus
-        className="fixed bottom-20 right-6 md:bottom-6 h-12 w-12 rounded-full bg-brand text-white p-3 shadow-lg cursor-pointer hover:bg-brand-dim transition-colors duration-300"
+        className="fixed bottom-[calc(5rem+env(safe-area-inset-bottom))] right-6 md:bottom-6 h-12 w-12 rounded-full bg-brand text-white p-3 cursor-pointer hover:bg-brand-dim transition-colors duration-300"
         onClick={() => setOpen(true)}
       />
       <GoalDialog
