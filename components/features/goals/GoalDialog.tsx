@@ -8,11 +8,13 @@ import {
 } from "@/components/ui/dialog";
 import type { Goal, Habit } from "@/types";
 import type { GoalFormValues } from "@/lib/zod";
+import type { UseFormReturn } from "react-hook-form";
 import { GoalForm } from "./GoalForm";
 import { goalToFormValues } from "@/app/_lib/mappers";
 
 type GoalDialogProps = {
   action: "create" | "edit";
+  form?: UseFormReturn<GoalFormValues>;
   goal?: Goal;
   habits?: Habit[];
   open: boolean;
@@ -21,6 +23,7 @@ type GoalDialogProps = {
 };
 
 export function GoalDialog({
+  form,
   goal,
   habits,
   action,
@@ -43,6 +46,7 @@ export function GoalDialog({
           </DialogTitle>
         </DialogHeader>
         <GoalForm
+          form={form}
           defaultValues={goal ? goalToFormValues(goal, habits?.find((h) => h.id === goal.habit_id)) : undefined}
           onSubmit={handleOnSubmit}
           submitLabel={action === "create" ? "Create New" : "Save"}

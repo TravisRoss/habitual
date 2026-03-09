@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import { CirclePlus } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useHabits } from "@/hooks/useHabits";
-import { GoalFormValues } from "@/lib/zod";
+import { goalSchema, GoalFormValues } from "@/lib/zod";
 import { useCreateGoal } from "@/hooks/useGoals";
 import { GoalDialog } from "./GoalDialog";
 
@@ -12,10 +14,16 @@ export function CreateGoalButton() {
   const createGoalMutation = useCreateGoal();
   const { data: habits } = useHabits();
 
+  const form = useForm<GoalFormValues>({
+    resolver: zodResolver(goalSchema),
+    defaultValues: { period: "30", habit_frequency: "daily" },
+  });
+
   function handleOnSubmit(data: GoalFormValues) {
-    return createGoalMutation.mutateAsync(data).then((result) => ({
-      error: result.error ?? undefined,
-    }));
+    return createGoalMutation.mutateAsync(data).then((result) => {
+      if (!result.error) form.reset();
+      return { error: result.error ?? undefined };
+    });
   }
 
   return (
@@ -25,6 +33,7 @@ export function CreateGoalButton() {
         onClick={() => setOpen(true)}
       />
       <GoalDialog
+        form={form}
         action="create"
         open={open}
         onOpenChange={setOpen}
