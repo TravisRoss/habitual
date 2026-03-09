@@ -18,42 +18,45 @@ export default function CircularProgress({
   const center = size / 2;
 
   return (
-    <RadialBarChart
-      width={size}
-      height={size}
-      cx={center}
-      cy={center}
-      innerRadius={center - thickness}
-      outerRadius={center}
-      startAngle={90}
-      endAngle={-270}
-      data={[{ value }]}
-      responsive
-    >
-      <PolarAngleAxis
-        type="number"
-        domain={[0, 100]}
-        angleAxisId={0}
-        tick={false}
-      />
-      <RadialBar
-        background={{ fill: "#e5e7eb" }}
-        dataKey="value"
-        angleAxisId={0}
-        fill={fillColor}
-        cornerRadius={10}
-      />
-      <text
-        x={center}
-        y={center + 5}
-        textAnchor="middle"
-        fill={textColor ? textColor : "#f59e0b"}
-        fontWeight="bold"
-        fontSize={16}
-        className="font-bold"
+    <div className="**:outline-none **:focus:outline-none">
+      <RadialBarChart
+        width={size}
+        height={size}
+        cx={center}
+        cy={center}
+        innerRadius={center - thickness}
+        outerRadius={center}
+        startAngle={90}
+        endAngle={-270}
+        data={[{ value }]}
+        responsive
+        tabIndex={-1}
       >
-        {value}%
-      </text>
-    </RadialBarChart>
+        <PolarAngleAxis
+          type="number"
+          domain={[0, 100]}
+          angleAxisId={0}
+          tick={false}
+        />
+        <RadialBar
+          background={{ fill: "#e5e7eb" }}
+          dataKey="value"
+          angleAxisId={0}
+          fill={fillColor}
+          cornerRadius={10}
+        />
+        <text
+          x={center}
+          y={center + 5}
+          textAnchor="middle"
+          fill={textColor ? textColor : "#f59e0b"}
+          fontWeight="bold"
+          fontSize={16}
+          className="font-bold"
+        >
+          {value}%
+        </text>
+      </RadialBarChart>
+    </div>
   );
 }
