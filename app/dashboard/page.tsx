@@ -3,6 +3,7 @@ import {
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
+import { redirect } from "next/navigation";
 import { auth } from "../_lib/auth";
 import {
   getCompletionsByUserIdAndDate,
@@ -13,67 +14,90 @@ import {
 import { HABITS_KEY } from "@/hooks/useHabits";
 import { GOALS_KEY } from "@/hooks/useGoals";
 import { STREAKS_KEY } from "@/hooks/useStreaks";
+import { COMPLETIONS_KEY } from "@/hooks/useCompletions";
 import HabitsList from "@/components/features/habits/HabitsList";
 import { Banner } from "@/components/features/shared/Banner";
 import { dateToIsoStr } from "../_lib/utils";
 import GoalsList from "@/components/features/goals/GoalsList";
-import { COMPLETIONS_KEY } from "@/hooks/useCompletions";
 import { CreateGoalButton } from "@/components/features/goals/CreateGoalButton";
 import SeeAllButton from "@/components/features/shared/SeeAllButton";
 import DashboardLayout from "@/components/features/shared/DashboardLayout";
 import DashboardCard from "@/components/features/shared/DashboardCard";
+import { PREVIEW_LIMIT } from "../_lib/constants";
 
 export const metadata = {
   title: "Dashboard",
 };
 
+
+async function prefetchDashboardData(
+  queryClient: QueryClient,
+  userId: string,
+  today: string
+): Promise<{ habitCount: number; goalCount: number }> {
+  const [habits, completions, goals, streaks] = await Promise.all([
+    getHabitsByUserIdAndDate(userId, today),
+    getCompletionsByUserIdAndDate(userId, today),
+    getGoalsByUserId(userId),
+    getActiveStreaksByUserId(userId),
+  ]);
+
+  queryClient.setQueryData([...HABITS_KEY, today], habits ?? []);
+  queryClient.setQueryData([...COMPLETIONS_KEY, today], completions ?? []);
+  queryClient.setQueryData(GOALS_KEY, goals ?? []);
+  queryClient.setQueryData(STREAKS_KEY, streaks ?? []);
+
+  return {
+    habitCount: habits?.length ?? 0,
+    goalCount: goals?.length ?? 0,
+  };
+}
+
 export default async function Dashboard() {
   const session = await auth();
   const userId = session?.user?.id;
+
+  if (!userId) redirect("/login");
+
   const today = dateToIsoStr();
-
-  if (!userId) throw new Error("Unauthorized");
-
   const queryClient = new QueryClient();
 
-  await Promise.all([
-    queryClient.prefetchQuery({
-      queryKey: [...HABITS_KEY, today],
-      queryFn: () => getHabitsByUserIdAndDate(userId, today) ?? [],
-    }),
-    queryClient.prefetchQuery({
-      queryKey: [...COMPLETIONS_KEY, today],
-      queryFn: () => getCompletionsByUserIdAndDate(userId, today) ?? [],
-    }),
-    queryClient.prefetchQuery({
-      queryKey: GOALS_KEY,
-      queryFn: () => getGoalsByUserId(userId) ?? [],
-    }),
-    queryClient.prefetchQuery({
-      queryKey: STREAKS_KEY,
-      queryFn: () => getActiveStreaksByUserId(userId) ?? [],
-    }),
-  ]);
+  const { habitCount, goalCount } = await prefetchDashboardData(
+    queryClient,
+    userId,
+    today
+  );
+
+  const userName = session.user?.name ?? "Guest";
 
   return (
-    <DashboardLayout title={`Hello, ${session?.user?.name ?? "Guest"}!`}>
+    <DashboardLayout title={`Hello, ${userName}!`}>
       <Banner />
 
       <HydrationBoundary state={dehydrate(queryClient)}>
         <DashboardCard
           title="Today's Habits"
-          action={<SeeAllButton href="/dashboard/habits" />}
+          action={
+            habitCount > PREVIEW_LIMIT ? (
+              <SeeAllButton href="/dashboard/habits" />
+            ) : undefined
+          }
         >
-          <HabitsList date={today} isPreview={true} />
+          <HabitsList date={today} isPreview />
         </DashboardCard>
 
         <DashboardCard
           title="Your Goals"
-          action={<SeeAllButton href="/dashboard/goals" />}
+          action={
+            goalCount > PREVIEW_LIMIT ? (
+              <SeeAllButton href="/dashboard/goals" />
+            ) : undefined
+          }
         >
-          <GoalsList isPreview={true} />
+          <GoalsList isPreview />
         </DashboardCard>
       </HydrationBoundary>
+
       <CreateGoalButton />
     </DashboardLayout>
   );
