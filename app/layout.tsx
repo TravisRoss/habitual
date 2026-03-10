@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Nunito } from "next/font/google";
 import { Providers } from "@/components/providers";
+import { getLocale, getMessages } from "next-intl/server";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -28,17 +29,20 @@ export const viewport = {
   viewportFit: "cover",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${nunito.variable} antialiased`}
       >
-        <Providers>{children}</Providers>
+        <Providers locale={locale} messages={messages}>{children}</Providers>
       </body>
     </html>
   );

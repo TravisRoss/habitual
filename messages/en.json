@@ -1,0 +1,249 @@
+{
+  "auth": {
+    "login": {
+      "title": "Log In",
+      "description": "Enter your email and password to continue",
+      "button": "Log In",
+      "forgotPassword": "Forgot Password?",
+      "noAccount": "Don't have an account?",
+      "signUpLink": "Sign Up",
+      "errors": {
+        "invalidCredentials": "Invalid email or password."
+      },
+      "success": {
+        "passwordReset": "Password reset successfully. You can now log in."
+      }
+    },
+    "signup": {
+      "title": "Sign Up",
+      "description": "Create an account to get started",
+      "button": "Create Account",
+      "hasAccount": "Already have an account?",
+      "signInLink": "Sign In",
+      "errors": {
+        "emailExists": "An account with this email already exists."
+      }
+    },
+    "fields": {
+      "fullName": "Full Name",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "newPassword": "New Password",
+      "confirmNewPassword": "Confirm New Password",
+      "rememberMe": "Remember me"
+    },
+    "oauth": {
+      "loginWithGoogle": "Log in with Google",
+      "signupWithGoogle": "Sign up with Google",
+      "loginWithGitHub": "Log in with GitHub",
+      "signupWithGitHub": "Sign up with GitHub"
+    },
+    "forgotPassword": {
+      "title": "Forgot your password?",
+      "description": "Enter your email and we'll send you a reset link.",
+      "button": "Send Reset Link",
+      "sentTitle": "Check your email",
+      "sentDescription": "If an account exists for that email, we've sent a reset link. It expires in 1 hour.",
+      "backToLogin": "Back to Log In"
+    },
+    "resetPassword": {
+      "title": "Reset your password",
+      "description": "Enter a new password for your account.",
+      "button": "Reset Password",
+      "invalidLink": "This reset link is invalid or has already been used.",
+      "requestNewLink": "Request a new link"
+    },
+    "signOut": {
+      "title": "Sign out",
+      "confirmation": "Are you sure you want to sign out?",
+      "cancel": "Cancel",
+      "confirm": "Log out"
+    }
+  },
+  "nav": {
+    "brand": "Habitual",
+    "dashboard": "Dashboard",
+    "progress": "Progress",
+    "settings": "Settings",
+    "getStarted": "Get Started",
+    "logout": "Log out"
+  },
+  "dashboard": {
+    "greeting": "Hello, {name}!",
+    "todaysHabits": "Today's Habits",
+    "yourGoals": "Your Goals",
+    "seeAll": "See all"
+  },
+  "habits": {
+    "title": "Your Habits",
+    "empty": {
+      "noHabitsToday": "There aren't any habits on this day.",
+      "noHabitsEver": "No habits yet",
+      "noHabitsDescription": "Start building your routine by creating your first habit."
+    },
+    "createButton": "Create Habit",
+    "dialog": {
+      "createTitle": "Add Habit",
+      "editTitle": "Edit Habit"
+    },
+    "fields": {
+      "name": "Name",
+      "namePlaceholder": "e.g. Morning run",
+      "frequency": "Frequency",
+      "frequencyPlaceholder": "Select frequency",
+      "timesPerWeek": "Times per week",
+      "daysOfWeek": "Days of the week",
+      "color": "Color (optional)"
+    },
+    "frequency": {
+      "daily": "Daily",
+      "weekly": "Weekly",
+      "customDays": "Custom days",
+      "timesPerWeek": "{count, plural, one {# time per week} other {# times per week}}"
+    },
+    "delete": {
+      "title": "Are you sure you want to delete this habit?",
+      "description": "This will permanently delete the habit and all its completion history. This action cannot be undone.",
+      "confirm": "Delete"
+    },
+    "streak": "🔥 {count}"
+  },
+  "goals": {
+    "title": "Your Goals",
+    "empty": "No goals yet. Create some to stay motivated!",
+    "dialog": {
+      "createTitle": "Create New Habit Goal",
+      "editTitle": "Edit Goal",
+      "createButton": "Create New",
+      "saveButton": "Save"
+    },
+    "fields": {
+      "goal": "Your Goal",
+      "goalPlaceholder": "e.g. Run for 90 days",
+      "habitName": "Habit Name",
+      "habitNamePlaceholder": "e.g. Run",
+      "timePeriod": "Time Period",
+      "frequency": "Habit Frequency",
+      "frequencyPlaceholder": "Select habit type",
+      "dayOfWeek": "Day of the week",
+      "dayOfWeekPlaceholder": "Select a day",
+      "daysOfWeek": "Days of the week"
+    },
+    "timePeriods": {
+      "1week": "1 Week (7 Days)",
+      "2weeks": "2 Weeks (14 Days)",
+      "1month": "1 Month (30 Days)",
+      "3months": "3 Months (90 Days)",
+      "6months": "6 Months (180 Days)",
+      "1year": "1 Year (365 Days)"
+    },
+    "frequency": {
+      "everyday": "Everyday",
+      "weekly": "Weekly",
+      "customDays": "Custom days"
+    },
+    "progress": "{completions} of {target} completions",
+    "delete": {
+      "title": "Delete goal?",
+      "description": "This will permanently delete the goal and its associated habit. This action cannot be undone.",
+      "confirm": "Delete"
+    },
+    "status": {
+      "achieved": "Achieved",
+      "inProgress": "In Progress"
+    }
+  },
+  "progress": {
+    "title": "Progress Report",
+    "yourGoals": "Your Goals",
+    "yourProgress": "Your Progress",
+    "overallCompletion": "Overall completion rate",
+    "periods": {
+      "weekly": "Weekly",
+      "monthly": "Monthly",
+      "yearly": "Yearly"
+    },
+    "goalsPage": {
+      "filters": {
+        "all": "All",
+        "active": "Active",
+        "completed": "Completed"
+      },
+      "empty": "There are no {status} goals"
+    },
+    "goalDetail": {
+      "notFound": "Goal or habit not found.",
+      "backToGoals": "Back to Goals",
+      "startDate": "Start date",
+      "endDate": "End date"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "account": "Account",
+    "appearance": "Appearance",
+    "weekStartsOn": "Week Starts On",
+    "logout": "Log out",
+    "theme": {
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    },
+    "days": {
+      "sunday": "Sunday",
+      "monday": "Monday"
+    },
+    "version": "v{version}",
+    "accountPage": {
+      "title": "Account",
+      "back": "Back to Settings",
+      "saveButton": "Save Changes",
+      "success": "Profile updated successfully."
+    }
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "backToToday": "Back to today",
+    "backToDashboard": "Back to Dashboard"
+  },
+  "banner": {
+    "noCompletions": "No habits completed yet!",
+    "letsGetStarted": "Let's get started 💪",
+    "completedToday": "completed today!",
+    "progress": "{completed} of {total} habits"
+  },
+  "notFound": {
+    "title": "Page not found.",
+    "description": "The page you're looking for doesn't exist or has been moved.",
+    "goHome": "Go home"
+  },
+  "dates": {
+    "months": {
+      "january": "January",
+      "february": "February",
+      "march": "March",
+      "april": "April",
+      "may": "May",
+      "june": "June",
+      "july": "July",
+      "august": "August",
+      "september": "September",
+      "october": "October",
+      "november": "November",
+      "december": "December"
+    },
+    "days": {
+      "sun": "Sun",
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat"
+    }
+  }
+}

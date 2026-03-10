@@ -24,16 +24,17 @@ import SeeAllButton from "@/components/features/shared/SeeAllButton";
 import DashboardLayout from "@/components/features/shared/DashboardLayout";
 import DashboardCard from "@/components/features/shared/DashboardCard";
 import { PREVIEW_LIMIT } from "../_lib/constants";
+import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
 export const metadata = {
   title: "Dashboard",
 };
 
-
 async function prefetchDashboardData(
   queryClient: QueryClient,
   userId: string,
-  today: string
+  today: string,
 ): Promise<{ habitCount: number; goalCount: number }> {
   const [habits, completions, goals, streaks] = await Promise.all([
     getHabitsByUserIdAndDate(userId, today),
@@ -54,6 +55,7 @@ async function prefetchDashboardData(
 }
 
 export default async function Dashboard() {
+  const t = await getTranslations("dashboard");
   const session = await auth();
   const userId = session?.user?.id;
 
@@ -65,13 +67,13 @@ export default async function Dashboard() {
   const { habitCount, goalCount } = await prefetchDashboardData(
     queryClient,
     userId,
-    today
+    today,
   );
 
-  const userName = session.user?.name ?? "Guest";
+  const userName = session.user?.name ?? t("guest");
 
   return (
-    <DashboardLayout title={`Hello, ${userName}!`}>
+    <DashboardLayout title={t("greeting", { name: userName })}>
       <Banner />
 
       <HydrationBoundary state={dehydrate(queryClient)}>
