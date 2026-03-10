@@ -24,7 +24,6 @@ import SeeAllButton from "@/components/features/shared/SeeAllButton";
 import DashboardLayout from "@/components/features/shared/DashboardLayout";
 import DashboardCard from "@/components/features/shared/DashboardCard";
 import { PREVIEW_LIMIT } from "../_lib/constants";
-import { useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";
 
 export const metadata = {
@@ -70,7 +69,7 @@ export default async function Dashboard() {
     today,
   );
 
-  const userName = session.user?.name ?? t("guest");
+  const userName = session.user?.name ?? "";
 
   return (
     <DashboardLayout title={t("greeting", { name: userName })}>
@@ -89,7 +88,7 @@ export default async function Dashboard() {
         </DashboardCard>
 
         <DashboardCard
-          title={t('yourGoals')}
+          title={t("yourGoals")}
           action={
             goalCount > PREVIEW_LIMIT ? (
               <SeeAllButton href="/dashboard/goals" />
