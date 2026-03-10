@@ -10,6 +10,7 @@ import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { version } from "@/package.json";
 import SignOutDialog from "@/components/features/auth/SignOutDialog";
+import { getTranslations } from "next-intl/server";
 
 export default async function Page() {
   const session = await auth();
@@ -17,9 +18,10 @@ export default async function Page() {
     ? await getProfileById(session.user.id)
     : null;
   const weekStartsOn = (profile?.week_starts_on ?? 0) as 0 | 1;
+  const t = await getTranslations("settings");
 
   return (
-    <SubPageLayout title="Settings">
+    <SubPageLayout title={t("title")}>
       <div className="space-y-4">
         <DashboardCard>
           <div className="space-y-4">
@@ -41,7 +43,7 @@ export default async function Page() {
           </div>
         </DashboardCard>
 
-        <p className="px-1 text-xs text-muted-foreground">v{version}</p>
+        <p className="px-1 text-xs text-muted-foreground">{t("version", { version })}</p>
       </div>
     </SubPageLayout>
   );

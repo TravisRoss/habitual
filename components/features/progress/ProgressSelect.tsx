@@ -8,8 +8,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ReportPeriod } from "@/types";
-
-const ReportPeriods: ReportPeriod[] = ["Weekly", "Monthly", "Yearly"];
+import { useTranslations } from "next-intl";
 
 type ReportSelect = {
   value: ReportPeriod;
@@ -17,6 +16,14 @@ type ReportSelect = {
 };
 
 export function ReportSelect({ value, onChange }: ReportSelect) {
+  const t = useTranslations("progress.periods");
+
+  const ReportPeriods: { value: ReportPeriod; label: string }[] = [
+    { value: "Weekly", label: t("weekly") },
+    { value: "Monthly", label: t("monthly") },
+    { value: "Yearly", label: t("yearly") },
+  ];
+
   return (
     <Select value={value} onValueChange={onChange}>
       <SelectTrigger id="progressSelect" className="w-full max-w-[200px]">
@@ -24,8 +31,8 @@ export function ReportSelect({ value, onChange }: ReportSelect) {
       </SelectTrigger>
       <SelectContent className="w-full max-w-[200px]" position="popper">
         {ReportPeriods.map((option) => (
-          <SelectItem className="w-full max-w-[200px]" key={option} value={option}>
-            {option}
+          <SelectItem className="w-full max-w-[200px]" key={option.value} value={option.value}>
+            {option.label}
           </SelectItem>
         ))}
       </SelectContent>

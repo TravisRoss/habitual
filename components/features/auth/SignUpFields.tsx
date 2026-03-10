@@ -1,8 +1,11 @@
+"use client";
+
 import type { FieldErrors, UseFormRegister } from "react-hook-form";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/PasswordInput";
 import type { SignUpFormValues } from "@/lib/zod";
+import { useTranslations } from "next-intl";
 
 const inputClass =
   "bg-card border-border focus-visible:ring-brand focus-visible:border-brand text-foreground aria-invalid:border-red-400";
@@ -17,13 +20,15 @@ type Props = {
 export default function SignUpFields({
   register,
   errors,
-  passwordLabel = "Password",
-  confirmLabel = "Confirm Password",
+  passwordLabel,
+  confirmLabel,
 }: Props) {
+  const tFields = useTranslations("auth.fields");
+
   return (
     <>
       <Field>
-        <FieldLabel htmlFor="name">Full Name</FieldLabel>
+        <FieldLabel htmlFor="name">{tFields("fullName")}</FieldLabel>
         <Input
           id="name"
           type="text"
@@ -36,7 +41,7 @@ export default function SignUpFields({
       </Field>
 
       <Field>
-        <FieldLabel htmlFor="email">Email</FieldLabel>
+        <FieldLabel htmlFor="email">{tFields("email")}</FieldLabel>
         <Input
           id="email"
           type="email"
@@ -49,7 +54,7 @@ export default function SignUpFields({
       </Field>
 
       <Field>
-        <FieldLabel htmlFor="password">{passwordLabel}</FieldLabel>
+        <FieldLabel htmlFor="password">{passwordLabel ?? tFields("password")}</FieldLabel>
         <PasswordInput
           id="password"
           autoComplete="new-password"
@@ -61,7 +66,7 @@ export default function SignUpFields({
       </Field>
 
       <Field>
-        <FieldLabel htmlFor="confirm">{confirmLabel}</FieldLabel>
+        <FieldLabel htmlFor="confirm">{confirmLabel ?? tFields("confirmPassword")}</FieldLabel>
         <PasswordInput
           id="confirm"
           autoComplete="new-password"

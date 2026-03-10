@@ -20,15 +20,7 @@ import {
 import type { GoalFormValues } from "@/lib/zod";
 import { inputClass, DAYS } from "@/app/_lib/constants";
 import { TargetDaysCheckboxes } from "../shared/TargetDaysCheckboxes";
-
-const PERIOD_OPTIONS = [
-  { value: "7", label: "1 Week (7 Days)" },
-  { value: "14", label: "2 Weeks (14 Days)" },
-  { value: "30", label: "1 Month (30 Days)" },
-  { value: "90", label: "3 Months (90 Days)" },
-  { value: "180", label: "6 Months (180 Days)" },
-  { value: "365", label: "1 Year (365 Days)" },
-];
+import { useTranslations } from "next-intl";
 
 type GoalFieldsProps = {
   control: Control<GoalFormValues>;
@@ -47,15 +39,27 @@ export function GoalFields({
 }: GoalFieldsProps) {
   const frequency = watch("habit_frequency");
   const targetDays = watch("habit_target_days");
+  const tFields = useTranslations("goals.fields");
+  const tPeriods = useTranslations("goals.timePeriods");
+  const tFreq = useTranslations("goals.frequency");
+
+  const PERIOD_OPTIONS = [
+    { value: "7", label: tPeriods("1week") },
+    { value: "14", label: tPeriods("2weeks") },
+    { value: "30", label: tPeriods("1month") },
+    { value: "90", label: tPeriods("3months") },
+    { value: "180", label: tPeriods("6months") },
+    { value: "365", label: tPeriods("1year") },
+  ];
 
   return (
     <>
       <Field>
-        <FieldLabel htmlFor="name">Your Goal</FieldLabel>
+        <FieldLabel htmlFor="name">{tFields("goal")}</FieldLabel>
         <Input
           id="name"
           type="text"
-          placeholder="e.g. Run for 90 days"
+          placeholder={tFields("goalPlaceholder")}
           aria-invalid={!!errors.name}
           className={inputClass}
           {...register("name")}
@@ -64,11 +68,11 @@ export function GoalFields({
       </Field>
 
       <Field>
-        <FieldLabel htmlFor="habit_name">Habit Name</FieldLabel>
+        <FieldLabel htmlFor="habit_name">{tFields("habitName")}</FieldLabel>
         <Input
           id="habit_name"
           type="text"
-          placeholder="e.g. Run"
+          placeholder={tFields("habitNamePlaceholder")}
           aria-invalid={!!errors.habit_name}
           className={inputClass}
           {...register("habit_name")}
@@ -77,14 +81,14 @@ export function GoalFields({
       </Field>
 
       <Field>
-        <FieldLabel htmlFor="period">Time Period</FieldLabel>
+        <FieldLabel htmlFor="period">{tFields("timePeriod")}</FieldLabel>
         <Controller
           name="period"
           control={control}
           render={({ field }) => (
             <Select value={field.value} onValueChange={field.onChange}>
               <SelectTrigger id="period" className={inputClass}>
-                <SelectValue placeholder="Select period" />
+                <SelectValue placeholder={tFields("timePeriod")} />
               </SelectTrigger>
               <SelectContent>
                 {PERIOD_OPTIONS.map((o) => (
@@ -100,7 +104,7 @@ export function GoalFields({
       </Field>
 
       <Field>
-        <FieldLabel htmlFor="habit_frequency">Habit Frequency</FieldLabel>
+        <FieldLabel htmlFor="habit_frequency">{tFields("frequency")}</FieldLabel>
         <Controller
           name="habit_frequency"
           control={control}
@@ -113,12 +117,12 @@ export function GoalFields({
               }}
             >
               <SelectTrigger id="habit_frequency" className={inputClass}>
-                <SelectValue placeholder="Select habit type" />
+                <SelectValue placeholder={tFields("frequencyPlaceholder")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="daily">Everyday</SelectItem>
-                <SelectItem value="weekly">Weekly</SelectItem>
-                <SelectItem value="custom">Custom days</SelectItem>
+                <SelectItem value="daily">{tFreq("everyday")}</SelectItem>
+                <SelectItem value="weekly">{tFreq("weekly")}</SelectItem>
+                <SelectItem value="custom">{tFreq("customDays")}</SelectItem>
               </SelectContent>
             </Select>
           )}
@@ -129,7 +133,7 @@ export function GoalFields({
       {frequency === "weekly" && (
         <Field>
           <FieldLabel htmlFor="habit_target_days_weekly">
-            Day of the week
+            {tFields("dayOfWeek")}
           </FieldLabel>
           <Select
             value={targetDays?.length === 1 ? String(targetDays[0]) : ""}
@@ -138,7 +142,7 @@ export function GoalFields({
             }
           >
             <SelectTrigger id="habit_target_days_weekly" className={inputClass}>
-              <SelectValue placeholder="Select a day" />
+              <SelectValue placeholder={tFields("dayOfWeekPlaceholder")} />
             </SelectTrigger>
             <SelectContent>
               {DAYS.map(([index, label]) => (
@@ -154,7 +158,7 @@ export function GoalFields({
 
       {frequency === "custom" && (
         <Field>
-          <FieldLabel>Days of the week</FieldLabel>
+          <FieldLabel>{tFields("daysOfWeek")}</FieldLabel>
           <Controller
             name="habit_target_days"
             control={control}

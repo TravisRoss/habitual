@@ -11,10 +11,13 @@ import {
 } from "@/components/ui/select";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export default function Page() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const t = useTranslations("progress.goalsPage.filters");
+  const tDetail = useTranslations("progress.goalDetail");
 
   function handleSelectChange(value: string) {
     const params = new URLSearchParams(searchParams);
@@ -29,18 +32,18 @@ export default function Page() {
   return (
     <>
       <div className="flex justify-between items-center mb-2">
-        <BackButton label={"Back to Progress"} href="/dashboard/progress" />
+        <BackButton label={tDetail("backToProgress")} href="/dashboard/progress" />
         <Select
           value={searchParams.get("status") || "all"}
           onValueChange={handleSelectChange}
         >
           <SelectTrigger>
-            <SelectValue placeholder="All" />
+            <SelectValue placeholder={t("all")} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All</SelectItem>
-            <SelectItem value="active">Active</SelectItem>
-            <SelectItem value="completed">Completed</SelectItem>
+            <SelectItem value="all">{t("all")}</SelectItem>
+            <SelectItem value="active">{t("active")}</SelectItem>
+            <SelectItem value="completed">{t("completed")}</SelectItem>
           </SelectContent>
         </Select>
       </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import CircularProgress from "../progress/CircularProgress";
 
 type BannerProps = {
@@ -8,6 +9,8 @@ type BannerProps = {
 };
 
 export default function Banner({ habitsCount, completionsCount }: BannerProps) {
+  const t = useTranslations("banner");
+
   const percentage =
     habitsCount === 0 ? 0 : Math.round((completionsCount / habitsCount) * 100);
 
@@ -22,16 +25,19 @@ export default function Banner({ habitsCount, completionsCount }: BannerProps) {
         {completionsCount === 0 ? (
           <>
             <p className="md:text-2xl text-sm font-bold">
-              No habits completed yet!
+              {t("noCompletions")}
             </p>
-            <p className="md:text-lg text-xs">Let's get started 💪</p>
+            <p className="md:text-lg text-xs">{t("noCompletions")} 💪</p>
           </>
         ) : (
           <>
             <p className="text-2xl font-bold">
-              {completionsCount} of {habitsCount} habits
+              {t("progress", {
+                completed: String(completionsCount),
+                total: String(habitsCount),
+              })}
             </p>
-            <p className="text-lg">completed today!</p>
+            <p className="text-lg">{t("completedToday")}</p>
           </>
         )}
       </div>

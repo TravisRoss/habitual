@@ -3,10 +3,13 @@ import { redirect } from "next/navigation";
 import { auth } from "./_lib/auth";
 import { Button } from "@/components/ui/button";
 import { Flame } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 
 export default async function Home() {
   const session = await auth();
   if (session) redirect("/dashboard");
+
+  const t = await getTranslations("landing");
 
   return (
     <main className="min-h-screen bg-page-bg flex items-center justify-center px-6">
@@ -17,10 +20,10 @@ export default async function Home() {
         {/* Heading */}
         <div className="flex flex-col gap-3">
           <h1 className="font-nunito font-bold text-[44px] leading-tight text-foreground">
-            Build better habits.
+            {t("heading")}
           </h1>
           <p className="font-nunito font-semibold text-sm text-muted-foreground max-w-70">
-            Track your progress and stay consistent, one day at a time.
+            {t("subheading")}
           </p>
         </div>
 
@@ -30,7 +33,7 @@ export default async function Home() {
             asChild
             className="w-full h-12.25 font-nunito font-extrabold text-sm text-white border-0 btn-primary"
           >
-            <Link href="/signup">Get started</Link>
+            <Link href="/signup">{t("getStarted")}</Link>
           </Button>
 
           <Button
@@ -39,13 +42,13 @@ export default async function Home() {
             className="w-full h-12.25 bg-card border-border font-nunito font-extrabold text-sm text-brand"
             style={{ boxShadow: "1px 1px 14px 6px rgba(124,58,237,0.08)" }}
           >
-            <Link href="/login">Log in</Link>
+            <Link href="/login">{t("logIn")}</Link>
           </Button>
         </div>
 
         {/* Footer note */}
         <p className="font-nunito text-sm text-muted-foreground text-center">
-          Free to use. No credit card required.
+          {t("footer")}
         </p>
       </div>
     </main>

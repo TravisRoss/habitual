@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 import { useCompletionsForHabit } from "@/hooks/useCompletions";
 import { calcPercentage } from "@/app/_lib/utils";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
+import { useTranslations } from "next-intl";
 
 type GoalItemProps = {
   goal: Goal;
@@ -27,6 +28,8 @@ export default function GoalItem({
 }: GoalItemProps) {
   const [editOpen, setEditOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const tDelete = useTranslations("goals.delete");
+  const tGoals = useTranslations("goals");
 
   const habitCompletions = useCompletionsForHabit(goal.habit_id);
   const completionCount = habitCompletions.data?.length ?? 0;
@@ -47,7 +50,7 @@ export default function GoalItem({
         <Progress value={completionPercentage} />
         <ItemDescription>
           <span>
-            {completionCount} of {goal.target} completions
+            {tGoals("progress", { completions: String(completionCount), target: String(goal.target) })}
           </span>
         </ItemDescription>
       </ItemContent>
@@ -56,9 +59,9 @@ export default function GoalItem({
         <ConfirmDialog
           open={deleteOpen}
           onOpenChange={setDeleteOpen}
-          title="Delete goal?"
-          description="This will permanently delete the goal and its associated habit. This action cannot be undone."
-          confirmLabel="Delete"
+          title={tDelete("title")}
+          description={tDelete("description")}
+          confirmLabel={tDelete("confirm")}
           onConfirm={onDelete}
         />
         <GoalDialog

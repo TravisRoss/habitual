@@ -9,12 +9,16 @@ import { signUpSchema, type SignUpFormValues } from "@/lib/zod";
 import SignUpFields from "@/components/features/auth/SignUpFields";
 import { updateProfileAction } from "@/app/_lib/actions";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 type Props = {
   defaultValues: Pick<SignUpFormValues, "name" | "email">;
 };
 
 export default function AccountForm({ defaultValues }: Props) {
+  const t = useTranslations("settings.accountPage");
+  const tFields = useTranslations("auth.fields");
+
   const {
     register,
     handleSubmit,
@@ -31,7 +35,7 @@ export default function AccountForm({ defaultValues }: Props) {
       setError("root", { message: result.error });
     }
 
-    toast.success("Profile updated successfully.");
+    toast.success(t("success"));
   }
 
   return (
@@ -40,8 +44,8 @@ export default function AccountForm({ defaultValues }: Props) {
         <SignUpFields
           register={register}
           errors={errors}
-          passwordLabel="New Password"
-          confirmLabel="Confirm New Password"
+          passwordLabel={tFields("newPassword")}
+          confirmLabel={tFields("confirmNewPassword")}
         />
 
         {errors.root && (
@@ -58,7 +62,7 @@ export default function AccountForm({ defaultValues }: Props) {
           disabled={isSubmitting}
           className="w-full h-[49px] font-nunito font-extrabold text-sm text-white border-0 btn-primary"
         >
-          {isSubmitting ? <Spinner className="size-4" /> : "Save Changes"}
+          {isSubmitting ? <Spinner className="size-4" /> : t("saveButton")}
         </Button>
       </FieldGroup>
     </form>

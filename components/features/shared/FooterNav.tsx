@@ -4,14 +4,17 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { navLinks } from "@/app/_config/nav";
+import { useTranslations } from "next-intl";
+import { NAV_LABEL_KEYS } from "@/app/_lib/constants";
 
 export default function FooterNav() {
   const pathname = usePathname();
+  const t = useTranslations("nav");
 
   return (
     <nav className="md:hidden bg-card border-t border-border pb-[env(safe-area-inset-bottom)]">
       <ul className="flex justify-around p-2">
-        {navLinks.map(({ href, label, icon: Icon }) => {
+        {navLinks.map(({ href, icon: Icon }) => {
           const isActive = pathname === href;
           return (
             <li key={href}>
@@ -25,7 +28,7 @@ export default function FooterNav() {
                 )}
               >
                 <Icon className={cn("h-5 w-5", isActive && "stroke-[2.5]")} />
-                {label}
+                {t(NAV_LABEL_KEYS[href] ?? (href as never))}
               </Link>
             </li>
           );

@@ -1,8 +1,11 @@
 import Link from "next/link";
 import { TriangleAlert } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { getTranslations } from "next-intl/server";
 
-export default function NotFound() {
+export default async function NotFound() {
+  const t = await getTranslations("notFound");
+
   return (
     <main className="min-h-screen bg-page-bg flex items-center justify-center px-6">
       <div className="w-full max-w-[375px] flex flex-col gap-8 py-12">
@@ -12,15 +15,15 @@ export default function NotFound() {
 
         <div className="flex flex-col gap-3">
           <h1 className="font-nunito font-bold text-[44px] leading-tight text-foreground">
-            Page not found.
+            {t("title")}
           </h1>
           <p className="font-nunito font-semibold text-sm text-muted-foreground max-w-[280px]">
-            The page you&apos;re looking for doesn&apos;t exist or has been moved.
+            {t("description")}
           </p>
         </div>
 
         <Button asChild className="w-full h-[49px] font-nunito font-extrabold text-sm text-white border-0 btn-primary">
-          <Link href="/">Go home</Link>
+          <Link href="/">{t("goHome")}</Link>
         </Button>
       </div>
     </main>

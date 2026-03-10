@@ -16,12 +16,15 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { DarkModeToggle } from "@/components/features/shared/DarkModeToggle";
 import { Flame } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { NAV_LABEL_KEYS } from "@/app/_lib/constants";
 
 const linkClass =
   "font-nunito font-semibold text-muted-foreground hover:text-brand transition-colors bg-transparent";
 
 export default function Navigation({ session }: { session: Session | null }) {
   const pathName = usePathname();
+  const t = useTranslations("nav");
 
   return (
     <nav className="hidden md:block bg-card border-b border-border">
@@ -31,7 +34,7 @@ export default function Navigation({ session }: { session: Session | null }) {
           className="font-nunito font-extrabold text-lg text-brand mr-4 flex items-center gap-1 cursor-pointer"
         >
           <Flame className="h-5 w-5" />
-          Habitual
+          {t("brand")}
         </Link>
 
         {session && (
@@ -47,7 +50,9 @@ export default function Navigation({ session }: { session: Session | null }) {
                       link.href === pathName && "text-brand",
                     )}
                   >
-                    <Link href={link.href}>{link.label}</Link>
+                    <Link href={link.href}>
+                      {t(NAV_LABEL_KEYS[link.href] ?? (link.label as never))}
+                    </Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
               ))}
@@ -65,7 +70,7 @@ export default function Navigation({ session }: { session: Session | null }) {
               size="sm"
               className="font-nunito font-extrabold text-white border-0 btn-primary"
             >
-              <Link href="/login">Get Started</Link>
+              <Link href="/login">{t("getStarted")}</Link>
             </Button>
           )}
         </div>

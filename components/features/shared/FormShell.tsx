@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
+import { useTranslations } from "next-intl";
 
 type FormShellProps = {
   onSubmit: NonNullable<React.ComponentProps<"form">["onSubmit"]>;
@@ -18,11 +19,13 @@ export function FormShell({
   onSubmit,
   isSubmitting,
   rootError,
-  submitLabel = "Save",
+  submitLabel,
   onCancel,
   cancelHref = "/dashboard",
   children,
 }: FormShellProps) {
+  const t = useTranslations("common");
+
   return (
     <form onSubmit={onSubmit} noValidate>
       {children}
@@ -42,7 +45,7 @@ export function FormShell({
           disabled={isSubmitting}
           className="btn-primary border-0 font-nunito text-sm font-extrabold text-white"
         >
-          {isSubmitting ? <Spinner className="size-4" /> : submitLabel}
+          {isSubmitting ? <Spinner className="size-4" /> : (submitLabel ?? t("save"))}
         </Button>
         {onCancel ? (
           <Button
@@ -51,7 +54,7 @@ export function FormShell({
             onClick={onCancel}
             className="font-nunito text-sm font-semibold"
           >
-            Cancel
+            {t("cancel")}
           </Button>
         ) : (
           <Button
@@ -59,7 +62,7 @@ export function FormShell({
             asChild
             className="font-nunito text-sm font-semibold"
           >
-            <Link href={cancelHref}>Cancel</Link>
+            <Link href={cancelHref}>{t("cancel")}</Link>
           </Button>
         )}
       </div>

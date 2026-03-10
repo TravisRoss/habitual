@@ -17,6 +17,7 @@ import { HabitDialog } from "./HabitDialog";
 import BurgerMenu from "../shared/BurgerMenu";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { HabitCheckbox } from "./HabitCheckbox";
+import { useTranslations } from "next-intl";
 
 type HabitItemProps = {
   habit: Habit;
@@ -38,6 +39,8 @@ export default function HabitItem({
   const [completed, setCompleted] = useState(isCompleted);
   const [editOpen, setEditOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const tDelete = useTranslations("habits.delete");
+  const tStreak = useTranslations("habits");
 
   useEffect(() => {
     setCompleted(isCompleted);
@@ -73,7 +76,7 @@ export default function HabitItem({
           </Badge>
           {streak && streak.streak_length >= 2 && (
             <span className="text-xs text-muted-foreground">
-              🔥 {streak.streak_length}
+              {tStreak("streak", { count: String(streak.streak_length) })}
             </span>
           )}
         </ItemDescription>
@@ -91,9 +94,9 @@ export default function HabitItem({
         <ConfirmDialog
           open={deleteOpen}
           onOpenChange={setDeleteOpen}
-          title="Are you sure you want to delete this habit?"
-          description="This will permanently delete the habit and all its completion history. This action cannot be undone."
-          confirmLabel="Delete"
+          title={tDelete("title")}
+          description={tDelete("description")}
+          confirmLabel={tDelete("confirm")}
           onConfirm={onDelete}
         />
         <HabitDialog

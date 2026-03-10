@@ -11,6 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { useTranslations } from "next-intl";
 
 const inputClass = "bg-card border-border focus-visible:ring-brand focus-visible:border-brand text-foreground aria-invalid:border-red-400";
 
@@ -18,6 +19,8 @@ type Props = { token: string };
 
 export default function ResetPasswordForm({ token }: Props) {
   const router = useRouter();
+  const t = useTranslations("auth.resetPassword");
+  const tFields = useTranslations("auth.fields");
 
   const {
     register,
@@ -38,14 +41,14 @@ export default function ResetPasswordForm({ token }: Props) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="font-nunito text-2xl">Reset your password</CardTitle>
-        <CardDescription>Enter a new password for your account.</CardDescription>
+        <CardTitle className="font-nunito text-2xl">{t("title")}</CardTitle>
+        <CardDescription>{t("description")}</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-6">
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <FieldGroup>
             <Field>
-              <FieldLabel htmlFor="password">New Password</FieldLabel>
+              <FieldLabel htmlFor="password">{tFields("newPassword")}</FieldLabel>
               <PasswordInput
                 id="password"
                 autoComplete="new-password"
@@ -57,7 +60,7 @@ export default function ResetPasswordForm({ token }: Props) {
             </Field>
 
             <Field>
-              <FieldLabel htmlFor="confirm">Confirm Password</FieldLabel>
+              <FieldLabel htmlFor="confirm">{tFields("confirmPassword")}</FieldLabel>
               <PasswordInput
                 id="confirm"
                 autoComplete="new-password"
@@ -79,14 +82,14 @@ export default function ResetPasswordForm({ token }: Props) {
               disabled={isSubmitting}
               className="w-full font-nunito font-extrabold text-sm text-white border-0 btn-primary"
             >
-              {isSubmitting ? <Spinner className="size-4" /> : "Reset Password"}
+              {isSubmitting ? <Spinner className="size-4" /> : t("button")}
             </Button>
           </FieldGroup>
         </form>
 
         <p className="font-nunito text-sm text-muted-foreground text-center">
           <Link href="/login" className="font-extrabold text-brand hover:text-brand-dim hover:underline transition-colors">
-            Back to Log In
+            {t("requestNewLink")}
           </Link>
         </p>
       </CardContent>

@@ -8,6 +8,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { inputClass } from "@/app/_lib/constants";
+import { useTranslations } from "next-intl";
 
 type WeeklyTargetSelectProps = {
   value?: number;
@@ -18,6 +19,8 @@ export function WeeklyTargetSelect({
   value,
   onChange,
 }: WeeklyTargetSelectProps) {
+  const t = useTranslations("habits.frequency");
+
   return (
     <Select
       value={value != null ? String(value) : ""}
@@ -29,7 +32,7 @@ export function WeeklyTargetSelect({
       <SelectContent>
         {[1, 2, 3, 4, 5, 6, 7].map((n) => (
           <SelectItem key={n} value={String(n)}>
-            {n} {n === 1 ? "time" : "times"} per week
+            {t("timesPerWeek", { count: n })}
           </SelectItem>
         ))}
       </SelectContent>

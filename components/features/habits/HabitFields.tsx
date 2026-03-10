@@ -26,6 +26,7 @@ import { TargetDaysCheckboxes } from "../shared/TargetDaysCheckboxes";
 import { WeeklyTargetSelect } from "../shared/WeeklyTargetSelect";
 import { inputClass } from "@/app/_lib/constants";
 import type { HabitFormValues } from "@/lib/zod";
+import { useTranslations } from "next-intl";
 
 type HabitFieldsProps = {
   control: Control<HabitFormValues>;
@@ -41,11 +42,13 @@ export function HabitFields({
   setValue,
 }: HabitFieldsProps) {
   const frequency = watch("frequency");
+  const tFields = useTranslations("habits.fields");
+  const tFreq = useTranslations("habits.frequency");
 
   return (
     <FieldGroup>
       <Field>
-        <FieldLabel htmlFor="name">Name</FieldLabel>
+        <FieldLabel htmlFor="name">{tFields("name")}</FieldLabel>
         <Controller
           name="name"
           control={control}
@@ -53,7 +56,7 @@ export function HabitFields({
             <Input
               id="name"
               type="text"
-              placeholder="e.g. Morning run"
+              placeholder={tFields("namePlaceholder")}
               aria-invalid={!!errors.name}
               className={inputClass}
               {...f}
@@ -64,7 +67,7 @@ export function HabitFields({
       </Field>
 
       <Field>
-        <FieldLabel htmlFor="frequency">Frequency</FieldLabel>
+        <FieldLabel htmlFor="frequency">{tFields("frequency")}</FieldLabel>
         <Controller
           name="frequency"
           control={control}
@@ -78,12 +81,12 @@ export function HabitFields({
               }}
             >
               <SelectTrigger id="frequency" className={inputClass}>
-                <SelectValue placeholder="Select frequency" />
+                <SelectValue placeholder={tFields("frequencyPlaceholder")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="daily">Daily</SelectItem>
-                <SelectItem value="weekly">Weekly</SelectItem>
-                <SelectItem value="custom">Custom days</SelectItem>
+                <SelectItem value="daily">{tFreq("daily")}</SelectItem>
+                <SelectItem value="weekly">{tFreq("weekly")}</SelectItem>
+                <SelectItem value="custom">{tFreq("customDays")}</SelectItem>
               </SelectContent>
             </Select>
           )}
@@ -93,7 +96,7 @@ export function HabitFields({
 
       {frequency === "weekly" && (
         <Field>
-          <FieldLabel htmlFor="weekly_target">Times per week</FieldLabel>
+          <FieldLabel htmlFor="weekly_target">{tFields("timesPerWeek")}</FieldLabel>
           <Controller
             name="weekly_target"
             control={control}
@@ -107,7 +110,7 @@ export function HabitFields({
 
       {frequency === "custom" && (
         <Field>
-          <FieldLabel>Days of the week</FieldLabel>
+          <FieldLabel>{tFields("daysOfWeek")}</FieldLabel>
           <Controller
             name="target_days"
             control={control}
@@ -123,7 +126,7 @@ export function HabitFields({
       )}
 
       <Field>
-        <FieldLabel>Color (optional)</FieldLabel>
+        <FieldLabel>{tFields("color")}</FieldLabel>
         <Controller
           name="color"
           control={control}

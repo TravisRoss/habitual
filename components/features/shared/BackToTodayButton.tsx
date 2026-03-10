@@ -1,7 +1,9 @@
-import React from "react";
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { CalendarDays } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 type BackToTodayButtonProps = {
   isViewingToday: boolean;
@@ -12,6 +14,8 @@ export default function BackToTodayButton({
   isViewingToday,
   onClick,
 }: BackToTodayButtonProps) {
+  const t = useTranslations("common");
+
   return (
     <Button
       variant="outline"
@@ -24,7 +28,7 @@ export default function BackToTodayButton({
       tabIndex={isViewingToday ? -1 : 0}
     >
       <CalendarDays />
-      Back to today
+      {t("backToToday")}
     </Button>
   );
 }

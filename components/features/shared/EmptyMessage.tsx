@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { PlusCircle, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -9,8 +11,12 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty";
+import { useTranslations } from "next-intl";
 
 export default function EmptyMessage() {
+  const t = useTranslations("habits.empty");
+  const tHabits = useTranslations("habits");
+
   return (
     <Empty>
       <EmptyHeader>
@@ -21,10 +27,10 @@ export default function EmptyMessage() {
           <Sparkles className="h-7 w-7" />
         </EmptyMedia>
         <EmptyTitle className="font-nunito font-bold text-xl text-foreground">
-          No habits yet
+          {t("noHabitsEver")}
         </EmptyTitle>
         <EmptyDescription className="font-nunito text-muted-foreground max-w-60">
-          Start building your routine by creating your first habit.
+          {t("noHabitsDescription")}
         </EmptyDescription>
       </EmptyHeader>
 
@@ -35,7 +41,7 @@ export default function EmptyMessage() {
         >
           <Link href="/dashboard/habits/new">
             <PlusCircle className="h-4 w-4" />
-            Create Habit
+            {tHabits("createButton")}
           </Link>
         </Button>
       </EmptyContent>

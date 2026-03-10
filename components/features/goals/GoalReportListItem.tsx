@@ -14,6 +14,7 @@ import { calcPercentage } from "@/app/_lib/utils";
 import { Badge } from "@/components/ui/badge";
 import CircularProgress from "../progress/CircularProgress";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 type GoalReportListItemProps = {
   goal: Goal;
@@ -25,6 +26,8 @@ export default function GoalReportListItem({ goal }: GoalReportListItemProps) {
     goal.habit_id,
   );
   const completionPercentage = calcPercentage(completionCount, goal.target);
+  const tStatus = useTranslations("goals.status");
+  const tGoals = useTranslations("goals");
 
   const isAchieved = completionCount >= goal.target;
 
@@ -41,7 +44,7 @@ export default function GoalReportListItem({ goal }: GoalReportListItemProps) {
         <ItemContent>
           <ItemTitle>{goal.name}</ItemTitle>
           <ItemDescription>
-            {completionCount} of {goal.target} completions
+            {tGoals("progress", { completions: String(completionCount), target: String(goal.target) })}
           </ItemDescription>
         </ItemContent>
         <ItemActions>
@@ -49,7 +52,7 @@ export default function GoalReportListItem({ goal }: GoalReportListItemProps) {
             variant="outline"
             className={isAchieved ? "bg-green-500 text-white" : ""}
           >
-            {isAchieved ? "Achieved" : "In Progress"}
+            {isAchieved ? tStatus("achieved") : tStatus("inProgress")}
           </Badge>
         </ItemActions>
       </Item>

@@ -15,11 +15,14 @@ import { Spinner } from "@/components/ui/spinner";
 import { PasswordInput } from "@/components/ui/PasswordInput";
 import { OAuthSection } from "@/components/features/auth/OAuthSection";
 import { loginSchema, type LoginFormValues } from "@/lib/zod";
+import { useTranslations } from "next-intl";
 
 const inputClass = "bg-card border-border focus-visible:ring-brand focus-visible:border-brand text-foreground aria-invalid:border-red-400";
 
 export default function LoginForm({ resetSuccess }: { resetSuccess?: boolean }) {
   const router = useRouter();
+  const t = useTranslations("auth.login");
+  const tFields = useTranslations("auth.fields");
   const {
     register,
     control,
@@ -36,7 +39,7 @@ export default function LoginForm({ resetSuccess }: { resetSuccess?: boolean }) 
     });
 
     if (result?.error) {
-      setError("root", { message: "Invalid email or password." });
+      setError("root", { message: t("errors.invalidCredentials") });
       return;
     }
 
@@ -46,20 +49,20 @@ export default function LoginForm({ resetSuccess }: { resetSuccess?: boolean }) 
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="font-nunito text-2xl">Log In</CardTitle>
-        <CardDescription>Enter your email and password to continue</CardDescription>
+        <CardTitle className="font-nunito text-2xl">{t("title")}</CardTitle>
+        <CardDescription>{t("description")}</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-6">
         {resetSuccess && (
           <p className="text-sm text-green-600 font-nunito text-center bg-green-50 dark:bg-green-950 rounded-md p-3">
-            Password reset successfully. You can now log in.
+            {t("success.passwordReset")}
           </p>
         )}
 
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <FieldGroup>
             <Field>
-              <FieldLabel htmlFor="email">Email</FieldLabel>
+              <FieldLabel htmlFor="email">{tFields("email")}</FieldLabel>
               <Input
                 id="email"
                 type="email"
@@ -72,7 +75,7 @@ export default function LoginForm({ resetSuccess }: { resetSuccess?: boolean }) 
             </Field>
 
             <Field>
-              <FieldLabel htmlFor="password">Password</FieldLabel>
+              <FieldLabel htmlFor="password">{tFields("password")}</FieldLabel>
               <PasswordInput
                 id="password"
                 autoComplete="current-password"
@@ -98,11 +101,11 @@ export default function LoginForm({ resetSuccess }: { resetSuccess?: boolean }) 
                   )}
                 />
                 <Label htmlFor="remember" className="font-nunito text-muted-foreground cursor-pointer">
-                  Remember me
+                  {tFields("rememberMe")}
                 </Label>
               </div>
               <Link href="/login/forgot-password" className="font-nunito font-semibold text-sm text-brand hover:text-brand-dim hover:underline transition-colors">
-                Forgot Password?
+                {t("forgotPassword")}
               </Link>
             </div>
 
@@ -117,7 +120,7 @@ export default function LoginForm({ resetSuccess }: { resetSuccess?: boolean }) 
               disabled={isSubmitting}
               className="w-full h-49px font-nunito font-extrabold text-sm text-white border-0 btn-primary"
             >
-              {isSubmitting ? <Spinner className="size-4" /> : "Log In"}
+              {isSubmitting ? <Spinner className="size-4" /> : t("button")}
             </Button>
           </FieldGroup>
         </form>
@@ -125,9 +128,9 @@ export default function LoginForm({ resetSuccess }: { resetSuccess?: boolean }) 
         <OAuthSection verb="Log in" />
 
         <p className="font-nunito text-sm text-muted-foreground text-center">
-          Don&apos;t have an account?{" "}
+          {t("noAccount")}{" "}
           <Link href="/signup" className="font-extrabold text-brand hover:text-brand-dim hover:underline transition-colors">
-            Sign Up
+            {t("signUpLink")}
           </Link>
         </p>
 

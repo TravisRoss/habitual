@@ -1,7 +1,10 @@
+"use client";
+
 import { useGoals } from "@/hooks/useGoals";
 import GoalReportListItem from "./GoalReportListItem";
 import { useSearchParams } from "next/navigation";
 import { useCompletions } from "@/hooks/useCompletions";
+import { useTranslations } from "next-intl";
 
 type GoalReportListProps = {
   isPreview?: boolean;
@@ -11,6 +14,7 @@ export default function GoalReportList({ isPreview }: GoalReportListProps) {
   const { data: goals } = useGoals();
   const { data: completions = [] } = useCompletions();
   const filteredStatus = useSearchParams().get("status");
+  const t = useTranslations("progress.goalsPage");
 
   const filteredGoals = goals?.filter((goal) => {
     if (!filteredStatus || filteredStatus === "all") return true;
@@ -30,7 +34,7 @@ export default function GoalReportList({ isPreview }: GoalReportListProps) {
     <ul className="flex flex-col gap-2">
       {filteredGoals?.length === 0 && (
         <li className="text-sm text-muted-foreground">
-          There are no {filteredStatus} goals
+          {t("empty", { status: filteredStatus ?? "" })}
         </li>
       )}
       {goalList?.map((goal) => (

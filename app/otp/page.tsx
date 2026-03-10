@@ -7,9 +7,11 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 export default function OTPPage() {
   const [value, setValue] = useState("");
+  const t = useTranslations("otp");
 
   return (
     <main className="min-h-screen bg-page-bg flex items-center justify-center px-6">
@@ -17,10 +19,10 @@ export default function OTPPage() {
 
         <div className="flex flex-col gap-3">
           <h1 className="font-nunito font-bold text-[44px] leading-tight text-foreground">
-            Verify
+            {t("title")}
           </h1>
           <p className="font-nunito font-semibold text-sm text-muted-foreground max-w-[259px]">
-            Enter the One Time Password (OTP) code we&apos;ve sent to your email
+            {t("description")}
           </p>
         </div>
 
@@ -40,7 +42,7 @@ export default function OTPPage() {
           className="w-full h-[49px] font-nunito font-extrabold text-sm text-white border-0 btn-primary"
           disabled={value.length < 5}
         >
-          Submit
+          {t("submit")}
         </Button>
 
       </div>

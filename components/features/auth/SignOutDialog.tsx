@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dialog";
 import { signOutAction } from "@/app/_lib/actions";
 import SettingItem from "../settings/SettingItem";
+import { useTranslations } from "next-intl";
 
 type SignOutDialogProps = {
   isSetting?: true;
@@ -21,12 +22,13 @@ type SignOutDialogProps = {
 
 export default function SignOutDialog({ isSetting }: SignOutDialogProps) {
   const [open, setOpen] = useState(false);
+  const t = useTranslations("auth.signOut");
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       {isSetting ? (
         <DialogTrigger asChild>
-          <SettingItem icon={LogOut} label="Log out" />
+          <SettingItem icon={LogOut} label={t("title")} />
         </DialogTrigger>
       ) : (
         <DialogTrigger asChild>
@@ -36,26 +38,26 @@ export default function SignOutDialog({ isSetting }: SignOutDialogProps) {
             className="font-nunito font-semibold text-muted-foreground hover:text-brand hover:bg-transparent gap-1.5"
           >
             <LogOut className="h-3.5 w-3.5" />
-            Logout
+            {t("title")}
           </Button>
         </DialogTrigger>
       )}
 
       <DialogContent className="sm:max-w-sm">
         <DialogHeader>
-          <DialogTitle>Sign out</DialogTitle>
+          <DialogTitle>{t("title")}</DialogTitle>
           <DialogDescription>
-            Are you sure you want to sign out?
+            {t("confirmation")}
           </DialogDescription>
         </DialogHeader>
 
         <DialogFooter className="gap-2">
           <Button variant="outline" onClick={() => setOpen(false)} className="w-full">
-            Cancel
+            {t("cancel")}
           </Button>
           <form action={signOutAction}>
             <Button type="submit" variant="destructive" className="w-full">
-              Sign out
+              {t("confirm")}
             </Button>
           </form>
         </DialogFooter>

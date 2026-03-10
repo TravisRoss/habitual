@@ -11,6 +11,7 @@ import type { GoalFormValues } from "@/lib/zod";
 import type { UseFormReturn } from "react-hook-form";
 import { GoalForm } from "./GoalForm";
 import { goalToFormValues } from "@/app/_lib/mappers";
+import { useTranslations } from "next-intl";
 
 type GoalDialogProps = {
   action: "create" | "edit";
@@ -31,6 +32,8 @@ export function GoalDialog({
   onOpenChange,
   onSubmit,
 }: GoalDialogProps) {
+  const t = useTranslations("goals.dialog");
+
   async function handleOnSubmit(data: GoalFormValues) {
     const result = await onSubmit(data);
     if (!result.error) onOpenChange(false);
@@ -42,14 +45,14 @@ export function GoalDialog({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            {action === "edit" ? "Edit Goal" : "Create New Habit Goal"}
+            {action === "edit" ? t("editTitle") : t("createTitle")}
           </DialogTitle>
         </DialogHeader>
         <GoalForm
           form={form}
           defaultValues={goal ? goalToFormValues(goal, habits?.find((h) => h.id === goal.habit_id)) : undefined}
           onSubmit={handleOnSubmit}
-          submitLabel={action === "create" ? "Create New" : "Save"}
+          submitLabel={action === "create" ? t("createButton") : t("saveButton")}
           onCancel={() => onOpenChange(false)}
         />
       </DialogContent>

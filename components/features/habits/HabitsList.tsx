@@ -13,6 +13,7 @@ import {
 import { useCompletionsForDate } from "@/hooks/useCompletions";
 import { useStreakMap } from "@/hooks/useStreaks";
 import ListSkeleton from "../shared/ListSkeleton";
+import { useTranslations } from "next-intl";
 
 type HabitsListProps = {
   date: string;
@@ -40,6 +41,8 @@ export default function HabitsList({
   const previewHabits = habits.slice(0, 3);
   const habitList = isPreview ? previewHabits : habits;
 
+  const t = useTranslations("habits.empty");
+
   if (isLoading) {
     return <ListSkeleton count={habits.length} />;
   }
@@ -48,7 +51,7 @@ export default function HabitsList({
     <ul className="flex flex-col gap-2">
       {habits.length === 0 && (
         <p className="text-sm text-muted-foreground">
-          There aren&apos;t any habits on this day.
+          {t("noHabitsToday")}
         </p>
       )}
       {habitList.map((habit) => (

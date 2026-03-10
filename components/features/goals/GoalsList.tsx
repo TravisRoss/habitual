@@ -4,6 +4,7 @@ import GoalItem from "./GoalItem";
 import { useDeleteGoal, useEditGoal, useGoals } from "@/hooks/useGoals";
 import { useHabits } from "@/hooks/useHabits";
 import ListSkeleton from "../shared/ListSkeleton";
+import { useTranslations } from "next-intl";
 
 type GoalsListProps = {
   isPreview?: boolean;
@@ -16,6 +17,7 @@ export default function GoalsList({ isPreview = false }: GoalsListProps) {
   const deleteMutation = useDeleteGoal();
   const goalsPreview = goals.slice(0, 3);
   const goalList = isPreview ? goalsPreview : goals;
+  const t = useTranslations("goals");
 
   if (isLoading) {
     return <ListSkeleton count={goals.length} />;
@@ -25,7 +27,7 @@ export default function GoalsList({ isPreview = false }: GoalsListProps) {
     <ul className="flex flex-col gap-2">
       {goals.length === 0 && (
         <li className="text-sm text-muted-foreground">
-          No goals yet. Create some to stay motivated!
+          {t("empty")}
         </li>
       )}
       {goalList.map((goal) => (

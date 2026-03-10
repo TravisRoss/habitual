@@ -12,33 +12,39 @@ import {
 import { Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import SettingItem from "./SettingItem";
-
-const THEMES = ["Light", "Dark", "System"] as const;
+import { useTranslations } from "next-intl";
 
 const itemCls =
   "flex h-auto w-full items-center justify-between rounded-md bg-muted/50 p-4 text-sm font-normal transition-colors hover:bg-accent hover:text-brand active:opacity-90";
 
 export function AppearanceDialog() {
   const { theme, setTheme } = useTheme();
+  const t = useTranslations("settings");
+
+  const THEMES = [
+    { key: "light", label: t("theme.light") },
+    { key: "dark", label: t("theme.dark") },
+    { key: "system", label: t("theme.system") },
+  ] as const;
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <SettingItem icon={Sun} label="Appearance" value={theme} />
+        <SettingItem icon={Sun} label={t("appearance")} value={theme} />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Appearance</DialogTitle>
+          <DialogTitle>{t("appearance")}</DialogTitle>
         </DialogHeader>
         <DialogDescription className="space-y-2">
-          {THEMES.map((theme) => (
+          {THEMES.map(({ key, label }) => (
             <Button
-              key={theme}
+              key={key}
               variant="ghost"
-              onClick={() => setTheme(theme.toLowerCase())}
+              onClick={() => setTheme(key)}
               className={itemCls}
             >
-              {theme}
+              {label}
             </Button>
           ))}
         </DialogDescription>

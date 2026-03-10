@@ -1,5 +1,8 @@
+"use client";
+
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { MoreVertical, Pencil, Trash2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 type BurgerMenuProps = {
   onEdit: () => void;
@@ -7,6 +10,8 @@ type BurgerMenuProps = {
 };
 
 export default function BurgerMenu({ onEdit, onDelete }: BurgerMenuProps) {
+  const t = useTranslations("common");
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -17,11 +22,11 @@ export default function BurgerMenu({ onEdit, onDelete }: BurgerMenuProps) {
       <DropdownMenuContent align="end">
         <DropdownMenuItem onSelect={onEdit}>
           <Pencil className="h-4 w-4 mr-2" />
-          <span>Edit</span>
+          <span>{t("edit")}</span>
         </DropdownMenuItem>
         <DropdownMenuItem className="text-destructive" onSelect={onDelete}>
           <Trash2 className="h-4 w-4 mr-2" />
-          <span>Delete</span>
+          <span>{t("delete")}</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

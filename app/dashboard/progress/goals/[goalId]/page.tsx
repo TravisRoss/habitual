@@ -14,6 +14,7 @@ import { useGoals } from "@/hooks/useGoals";
 import { useHabits } from "@/hooks/useHabits";
 import { cn } from "@/lib/utils";
 import { use } from "react";
+import { useTranslations } from "next-intl";
 
 export default function Page({
   params,
@@ -29,6 +30,9 @@ export default function Page({
 
   const { data: completions = [] } = useCompletionsForHabit(habit?.id || "");
 
+  const tDetail = useTranslations("progress.goalDetail");
+  const tStatus = useTranslations("goals.status");
+
   if (goalsLoading || habitsLoading) {
     return <Spinner />;
   }
@@ -36,8 +40,8 @@ export default function Page({
   if (!goal || !habit) {
     return (
       <>
-        <h1>Goal or habit not found.</h1>
-        <BackButton label="Back to Goals" href="/dashboard/progress/goals" />
+        <h1>{tDetail("notFound")}</h1>
+        <BackButton label={tDetail("backToGoals")} href="/dashboard/progress/goals" />
       </>
     );
   }
@@ -51,24 +55,24 @@ export default function Page({
       variant="outline"
       className={cn(isAchieved && "border-green-500 bg-green-500 text-white")}
     >
-      {isAchieved ? "Achieved" : "In Progress"}
+      {isAchieved ? tStatus("achieved") : tStatus("inProgress")}
     </Badge>
   );
 
   return (
     <DashboardLayout title={goal.name}>
-      <BackButton label="Back to goals" href="/dashboard/progress/goals" />
+      <BackButton label={tDetail("backToGoals")} href="/dashboard/progress/goals" />
       <DashboardCard>
         <div className="flex flex-col gap-3">
           <div className="flex justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">Start date</p>
+              <p className="text-sm text-muted-foreground">{tDetail("startDate")}</p>
               <time className="text-sm font-medium" dateTime={goal.start_date}>
                 {formatIsoDate(goal.start_date)}
               </time>
             </div>
             <div className="text-right">
-              <p className="text-sm text-muted-foreground">End date</p>
+              <p className="text-sm text-muted-foreground">{tDetail("endDate")}</p>
               <time className="text-sm font-medium" dateTime={endDate}>
                 {formatIsoDate(endDate)}
               </time>

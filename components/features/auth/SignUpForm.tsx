@@ -13,10 +13,12 @@ import { OAuthSection } from "./OAuthSection";
 import SignUpFields from "./SignUpFields";
 import { signUpWithCredentials } from "@/app/_lib/actions";
 import { signUpSchema, type SignUpFormValues } from "@/lib/zod";
+import { useTranslations } from "next-intl";
 
 
 export default function SignUpForm() {
   const router = useRouter();
+  const t = useTranslations("auth.signup");
   const {
     register,
     handleSubmit,
@@ -47,8 +49,8 @@ export default function SignUpForm() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="font-nunito text-2xl">Sign Up</CardTitle>
-        <CardDescription>Create an account to get started</CardDescription>
+        <CardTitle className="font-nunito text-2xl">{t("title")}</CardTitle>
+        <CardDescription>{t("description")}</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-6">
 
@@ -67,7 +69,7 @@ export default function SignUpForm() {
               disabled={isSubmitting}
               className="w-full h-[49px] font-nunito font-extrabold text-sm text-white border-0 btn-primary"
             >
-              {isSubmitting ? <Spinner className="size-4" /> : "Create Account"}
+              {isSubmitting ? <Spinner className="size-4" /> : t("button")}
             </Button>
           </FieldGroup>
           </form>
@@ -75,9 +77,9 @@ export default function SignUpForm() {
           <OAuthSection verb="Sign up" />
 
         <p className="font-nunito text-sm text-muted-foreground text-center">
-          Already have an account?{" "}
+          {t("hasAccount")}{" "}
           <Link href="/login" className="font-extrabold text-brand underline hover:bg-blend-color-burn">
-            Sign In
+            {t("signInLink")}
           </Link>
         </p>
 

@@ -11,11 +11,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslations } from "next-intl";
 
 const inputClass = "bg-card border-border focus-visible:ring-brand focus-visible:border-brand text-foreground aria-invalid:border-red-400";
 
 export default function ForgotPasswordForm() {
   const [sent, setSent] = useState(false);
+  const t = useTranslations("auth.forgotPassword");
+  const tFields = useTranslations("auth.fields");
 
   const {
     register,
@@ -37,9 +40,9 @@ export default function ForgotPasswordForm() {
     return (
       <Card>
         <CardHeader>
-          <CardTitle className="font-nunito text-2xl">Check your email</CardTitle>
+          <CardTitle className="font-nunito text-2xl">{t("sentTitle")}</CardTitle>
           <CardDescription>
-            If an account exists for that email, we&apos;ve sent a reset link. It expires in 1 hour.
+            {t("sentDescription")}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -47,7 +50,7 @@ export default function ForgotPasswordForm() {
             href="/login"
             className="font-nunito font-semibold text-sm text-brand hover:text-brand-dim hover:underline transition-colors"
           >
-            Back to Log In
+            {t("backToLogin")}
           </Link>
         </CardContent>
       </Card>
@@ -57,14 +60,14 @@ export default function ForgotPasswordForm() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="font-nunito text-2xl">Forgot your password?</CardTitle>
-        <CardDescription>Enter your email and we&apos;ll send you a reset link.</CardDescription>
+        <CardTitle className="font-nunito text-2xl">{t("title")}</CardTitle>
+        <CardDescription>{t("description")}</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-6">
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <FieldGroup>
             <Field>
-              <FieldLabel htmlFor="email">Email</FieldLabel>
+              <FieldLabel htmlFor="email">{tFields("email")}</FieldLabel>
               <Input
                 id="email"
                 type="email"
@@ -87,14 +90,14 @@ export default function ForgotPasswordForm() {
               disabled={isSubmitting}
               className="w-full font-nunito font-extrabold text-sm text-white border-0 btn-primary"
             >
-              {isSubmitting ? <Spinner className="size-4" /> : "Send Reset Link"}
+              {isSubmitting ? <Spinner className="size-4" /> : t("button")}
             </Button>
           </FieldGroup>
         </form>
 
         <p className="font-nunito text-sm text-muted-foreground text-center">
           <Link href="/login" className="font-extrabold text-brand hover:text-brand-dim hover:underline transition-colors">
-            Back to Log In
+            {t("backToLogin")}
           </Link>
         </p>
       </CardContent>

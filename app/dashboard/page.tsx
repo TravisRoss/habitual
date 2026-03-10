@@ -78,7 +78,7 @@ export default async function Dashboard() {
 
       <HydrationBoundary state={dehydrate(queryClient)}>
         <DashboardCard
-          title="Today's Habits"
+          title={t("todaysHabits")}
           action={
             habitCount > PREVIEW_LIMIT ? (
               <SeeAllButton href="/dashboard/habits" />
@@ -89,7 +89,7 @@ export default async function Dashboard() {
         </DashboardCard>
 
         <DashboardCard
-          title="Your Goals"
+          title={t('yourGoals')}
           action={
             goalCount > PREVIEW_LIMIT ? (
               <SeeAllButton href="/dashboard/goals" />
