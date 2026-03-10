@@ -1,7 +1,6 @@
 import { expect, userEvent, within } from "@storybook/test";
 import type { Meta, StoryObj } from "@storybook/react";
 import MonthNavigator from "./MonthNavigator";
-import { MONTH_NAMES } from "@/app/_lib/constants";
 
 const meta: Meta<typeof MonthNavigator> = {
   title: "Components/MonthNavigator",
@@ -72,7 +71,7 @@ export const QuarterMonths: Story = {
 
 export const TwoMonths: Story = {
   args: {
-    monthIndexes: [5,6],
+    monthIndexes: [5, 6],
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
