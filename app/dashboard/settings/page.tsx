@@ -10,8 +10,9 @@ import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { version } from "@/package.json";
 import SignOutDialog from "@/components/features/auth/SignOutDialog";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { SETTINGS_LABEL_KEYS } from "@/app/_lib/constants";
+import { LanguageDialog } from "@/components/features/settings/LanguageDialog";
 
 export default async function Page() {
   const session = await auth();
@@ -20,6 +21,7 @@ export default async function Page() {
     : null;
   const weekStartsOn = (profile?.week_starts_on ?? 0) as 0 | 1;
   const t = await getTranslations("settings");
+  const locale = await getLocale();
 
   return (
     <SubPageLayout title={t("title")}>
@@ -41,6 +43,7 @@ export default async function Page() {
             <AppearanceDialog />
             <WeekStartsOnDialog defaultValue={weekStartsOn} />
             <SignOutDialog isSetting={true} />
+            <LanguageDialog currentLocale={locale} />
           </div>
         </DashboardCard>
 

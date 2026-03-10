@@ -195,6 +195,13 @@
     "title": "Ajustes",
     "account": "Cuenta",
     "appearance": "Apariencia",
+    "language": "Idioma",
+    "languages": {
+      "en": "Inglés",
+      "de": "Alemán",
+      "es": "Español",
+      "ja": "Japonés"
+    },
     "weekStartsOn": "La semana empieza el",
     "logout": "Cerrar sesión",
     "theme": {

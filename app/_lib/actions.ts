@@ -34,6 +34,7 @@ import type { Completion, Habit, Streak } from "@/types";
 import { revalidatePath } from "next/cache";
 import { GoalFormValues } from "@/lib/zod";
 import { dateToIsoStr } from "@/app/_lib/utils";
+import { cookies } from "next/headers";
 
 export async function signInWithGoogle() {
   await signIn("google", { redirectTo: "/dashboard" });
@@ -424,4 +425,9 @@ export async function resetPasswordAction(
 
   await deletePasswordResetToken(token);
   return {};
+}
+
+export async function setLocale(locale: string) {
+  const store = await cookies();
+  store.set("locale", locale, { path: "/", maxAge: 60 * 60 * 24 * 365 });
 }

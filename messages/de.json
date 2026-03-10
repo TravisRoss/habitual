@@ -195,6 +195,13 @@
     "title": "Einstellungen",
     "account": "Konto",
     "appearance": "Erscheinungsbild",
+    "language": "Sprache",
+    "languages": {
+      "en": "Englisch",
+      "de": "Deutsch",
+      "es": "Spanisch",
+      "ja": "Japanisch"
+    },
     "weekStartsOn": "Woche beginnt am",
     "logout": "Abmelden",
     "theme": {

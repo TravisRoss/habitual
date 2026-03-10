@@ -195,6 +195,13 @@
     "title": "設定",
     "account": "アカウント",
     "appearance": "外観",
+    "language": "言語",
+    "languages": {
+      "en": "英語",
+      "de": "ドイツ語",
+      "es": "スペイン語",
+      "ja": "日本語"
+    },
     "weekStartsOn": "週の開始日",
     "logout": "ログアウト",
     "theme": {
