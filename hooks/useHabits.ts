@@ -7,7 +7,7 @@ import {
   fetchHabitsForDateAction,
 } from "@/app/_lib/actions";
 import type { HabitFormValues } from "@/lib/zod";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 export const HABITS_KEY = ["habits"];
 

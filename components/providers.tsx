@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { Toaster } from "react-hot-toast";
+import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "./theme-providers";
 
 export function Providers({ children }: { children: React.ReactNode }) {
@@ -13,10 +13,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
       <QueryClientProvider client={queryClient}>
         <Toaster
           position="top-center"
-          gutter={8}
-          containerStyle={{ zIndex: 1000 }}
           toastOptions={{
-            duration: 1000,
+            duration: 2000,
             style: { fontFamily: "var(--font-nunito)" },
           }}
         />

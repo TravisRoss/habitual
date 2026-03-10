@@ -6,8 +6,8 @@ import {
 } from "@/app/_lib/actions";
 import { GoalFormValues } from "@/lib/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
 import { HABITS_KEY } from "./useHabits";
+import { toast } from "sonner";
 
 export const GOALS_KEY = ["goals"];
 
@@ -55,7 +55,11 @@ export function useEditGoal() {
       habit_id,
       start_date,
       ...data
-    }: { goal_id: string; habit_id: string; start_date: string } & GoalFormValues) =>
+    }: {
+      goal_id: string;
+      habit_id: string;
+      start_date: string;
+    } & GoalFormValues) =>
       updateGoalAction(goal_id, habit_id, start_date, data),
     onSuccess: () => {
       toast.success("Goal updated successfully!");

@@ -8,7 +8,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { signUpSchema, type SignUpFormValues } from "@/lib/zod";
 import SignUpFields from "@/components/features/auth/SignUpFields";
 import { updateProfileAction } from "@/app/_lib/actions";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 type Props = {
   defaultValues: Pick<SignUpFormValues, "name" | "email">;

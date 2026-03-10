@@ -18,8 +18,8 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
-import toast from "react-hot-toast";
 import { fetchCompletionsForUser } from "@/app/_lib/actions";
+import { toast } from "sonner";
 
 export const COMPLETIONS_KEY = ["completions"];
 
