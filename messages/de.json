@@ -1,0 +1,249 @@
+{
+  "auth": {
+    "login": {
+      "title": "Anmelden",
+      "description": "Gib deine E-Mail-Adresse und dein Passwort ein, um fortzufahren",
+      "button": "Anmelden",
+      "forgotPassword": "Passwort vergessen?",
+      "noAccount": "Noch kein Konto?",
+      "signUpLink": "Registrieren",
+      "errors": {
+        "invalidCredentials": "Ungültige E-Mail-Adresse oder falsches Passwort."
+      },
+      "success": {
+        "passwordReset": "Passwort erfolgreich zurückgesetzt. Du kannst dich jetzt anmelden."
+      }
+    },
+    "signup": {
+      "title": "Registrieren",
+      "description": "Erstelle ein Konto, um loszulegen",
+      "button": "Konto erstellen",
+      "hasAccount": "Bereits ein Konto?",
+      "signInLink": "Anmelden",
+      "errors": {
+        "emailExists": "Ein Konto mit dieser E-Mail-Adresse existiert bereits."
+      }
+    },
+    "fields": {
+      "fullName": "Vollständiger Name",
+      "email": "E-Mail",
+      "password": "Passwort",
+      "confirmPassword": "Passwort bestätigen",
+      "newPassword": "Neues Passwort",
+      "confirmNewPassword": "Neues Passwort bestätigen",
+      "rememberMe": "Angemeldet bleiben"
+    },
+    "oauth": {
+      "loginWithGoogle": "Mit Google anmelden",
+      "signupWithGoogle": "Mit Google registrieren",
+      "loginWithGitHub": "Mit GitHub anmelden",
+      "signupWithGitHub": "Mit GitHub registrieren"
+    },
+    "forgotPassword": {
+      "title": "Passwort vergessen?",
+      "description": "Gib deine E-Mail-Adresse ein und wir schicken dir einen Reset-Link.",
+      "button": "Reset-Link senden",
+      "sentTitle": "Überprüfe deine E-Mails",
+      "sentDescription": "Falls ein Konto mit dieser E-Mail existiert, haben wir einen Reset-Link gesendet. Er läuft in 1 Stunde ab.",
+      "backToLogin": "Zurück zur Anmeldung"
+    },
+    "resetPassword": {
+      "title": "Passwort zurücksetzen",
+      "description": "Gib ein neues Passwort für dein Konto ein.",
+      "button": "Passwort zurücksetzen",
+      "invalidLink": "Dieser Reset-Link ist ungültig oder wurde bereits verwendet.",
+      "requestNewLink": "Neuen Link anfordern"
+    },
+    "signOut": {
+      "title": "Abmelden",
+      "confirmation": "Möchtest du dich wirklich abmelden?",
+      "cancel": "Abbrechen",
+      "confirm": "Abmelden"
+    }
+  },
+  "nav": {
+    "brand": "Habitual",
+    "dashboard": "Dashboard",
+    "progress": "Fortschritt",
+    "settings": "Einstellungen",
+    "getStarted": "Loslegen",
+    "logout": "Abmelden"
+  },
+  "dashboard": {
+    "greeting": "Hallo, {name}!",
+    "todaysHabits": "Heutige Gewohnheiten",
+    "yourGoals": "Deine Ziele",
+    "seeAll": "Alle anzeigen"
+  },
+  "habits": {
+    "title": "Deine Gewohnheiten",
+    "empty": {
+      "noHabitsToday": "An diesem Tag gibt es keine Gewohnheiten.",
+      "noHabitsEver": "Noch keine Gewohnheiten",
+      "noHabitsDescription": "Beginne mit dem Aufbau deiner Routine, indem du deine erste Gewohnheit erstellst."
+    },
+    "createButton": "Gewohnheit erstellen",
+    "dialog": {
+      "createTitle": "Gewohnheit hinzufügen",
+      "editTitle": "Gewohnheit bearbeiten"
+    },
+    "fields": {
+      "name": "Name",
+      "namePlaceholder": "z. B. Morgenlauf",
+      "frequency": "Häufigkeit",
+      "frequencyPlaceholder": "Häufigkeit auswählen",
+      "timesPerWeek": "Mal pro Woche",
+      "daysOfWeek": "Wochentage",
+      "color": "Farbe (optional)"
+    },
+    "frequency": {
+      "daily": "Täglich",
+      "weekly": "Wöchentlich",
+      "customDays": "Benutzerdefinierte Tage",
+      "timesPerWeek": "{count, plural, one {# Mal pro Woche} other {# Mal pro Woche}}"
+    },
+    "delete": {
+      "title": "Möchtest du diese Gewohnheit wirklich löschen?",
+      "description": "Dadurch wird die Gewohnheit und der gesamte Verlauf dauerhaft gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
+      "confirm": "Löschen"
+    },
+    "streak": "🔥 {count}"
+  },
+  "goals": {
+    "title": "Deine Ziele",
+    "empty": "Noch keine Ziele. Erstelle welche, um motiviert zu bleiben!",
+    "dialog": {
+      "createTitle": "Neues Gewohnheitsziel erstellen",
+      "editTitle": "Ziel bearbeiten",
+      "createButton": "Neu erstellen",
+      "saveButton": "Speichern"
+    },
+    "fields": {
+      "goal": "Dein Ziel",
+      "goalPlaceholder": "z. B. 90 Tage laufen",
+      "habitName": "Name der Gewohnheit",
+      "habitNamePlaceholder": "z. B. Laufen",
+      "timePeriod": "Zeitraum",
+      "frequency": "Häufigkeit der Gewohnheit",
+      "frequencyPlaceholder": "Gewohnheitstyp auswählen",
+      "dayOfWeek": "Wochentag",
+      "dayOfWeekPlaceholder": "Tag auswählen",
+      "daysOfWeek": "Wochentage"
+    },
+    "timePeriods": {
+      "1week": "1 Woche (7 Tage)",
+      "2weeks": "2 Wochen (14 Tage)",
+      "1month": "1 Monat (30 Tage)",
+      "3months": "3 Monate (90 Tage)",
+      "6months": "6 Monate (180 Tage)",
+      "1year": "1 Jahr (365 Tage)"
+    },
+    "frequency": {
+      "everyday": "Täglich",
+      "weekly": "Wöchentlich",
+      "customDays": "Benutzerdefinierte Tage"
+    },
+    "progress": "{completions} von {target} Erledigungen",
+    "delete": {
+      "title": "Ziel löschen?",
+      "description": "Dadurch wird das Ziel und die zugehörige Gewohnheit dauerhaft gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
+      "confirm": "Löschen"
+    },
+    "status": {
+      "achieved": "Erreicht",
+      "inProgress": "In Bearbeitung"
+    }
+  },
+  "progress": {
+    "title": "Fortschrittsbericht",
+    "yourGoals": "Deine Ziele",
+    "yourProgress": "Dein Fortschritt",
+    "overallCompletion": "Gesamte Erledigungsrate",
+    "periods": {
+      "weekly": "Wöchentlich",
+      "monthly": "Monatlich",
+      "yearly": "Jährlich"
+    },
+    "goalsPage": {
+      "filters": {
+        "all": "Alle",
+        "active": "Aktiv",
+        "completed": "Abgeschlossen"
+      },
+      "empty": "Es gibt keine {status} Ziele"
+    },
+    "goalDetail": {
+      "notFound": "Ziel oder Gewohnheit nicht gefunden.",
+      "backToGoals": "Zurück zu den Zielen",
+      "startDate": "Startdatum",
+      "endDate": "Enddatum"
+    }
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "account": "Konto",
+    "appearance": "Erscheinungsbild",
+    "weekStartsOn": "Woche beginnt am",
+    "logout": "Abmelden",
+    "theme": {
+      "light": "Hell",
+      "dark": "Dunkel",
+      "system": "System"
+    },
+    "days": {
+      "sunday": "Sonntag",
+      "monday": "Montag"
+    },
+    "version": "v{version}",
+    "accountPage": {
+      "title": "Konto",
+      "back": "Zurück zu den Einstellungen",
+      "saveButton": "Änderungen speichern",
+      "success": "Profil erfolgreich aktualisiert."
+    }
+  },
+  "common": {
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "backToToday": "Zurück zu heute",
+    "backToDashboard": "Zurück zum Dashboard"
+  },
+  "banner": {
+    "noCompletions": "Noch keine Gewohnheiten erledigt!",
+    "letsGetStarted": "Lass uns anfangen 💪",
+    "completedToday": "heute erledigt!",
+    "progress": "{completed} von {total} Gewohnheiten"
+  },
+  "notFound": {
+    "title": "Seite nicht gefunden.",
+    "description": "Die gesuchte Seite existiert nicht oder wurde verschoben.",
+    "goHome": "Zur Startseite"
+  },
+  "dates": {
+    "months": {
+      "january": "Januar",
+      "february": "Februar",
+      "march": "März",
+      "april": "April",
+      "may": "Mai",
+      "june": "Juni",
+      "july": "Juli",
+      "august": "August",
+      "september": "September",
+      "october": "Oktober",
+      "november": "November",
+      "december": "Dezember"
+    },
+    "days": {
+      "sun": "So",
+      "mon": "Mo",
+      "tue": "Di",
+      "wed": "Mi",
+      "thu": "Do",
+      "fri": "Fr",
+      "sat": "Sa"
+    }
+  }
+}
