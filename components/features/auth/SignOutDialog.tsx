@@ -52,11 +52,11 @@ export default function SignOutDialog({ isSetting }: SignOutDialogProps) {
         </DialogHeader>
 
         <DialogFooter className="gap-2">
-          <Button variant="outline" onClick={() => setOpen(false)} className="w-full">
+          <Button variant="outline" onClick={() => setOpen(false)} className="md:w-25 w-full">
             {t("cancel")}
           </Button>
           <form action={signOutAction}>
-            <Button type="submit" variant="destructive" className="w-full">
+            <Button type="submit" variant="destructive" className="md:w-25 w-full">
               {t("confirm")}
             </Button>
           </form>
