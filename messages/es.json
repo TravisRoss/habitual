@@ -1,0 +1,273 @@
+{
+  "auth": {
+    "login": {
+      "title": "Iniciar sesión",
+      "description": "Introduce tu correo y contraseña para continuar",
+      "button": "Iniciar sesión",
+      "forgotPassword": "¿Olvidaste tu contraseña?",
+      "noAccount": "¿No tienes una cuenta?",
+      "signUpLink": "Regístrate",
+      "errors": {
+        "invalidCredentials": "Correo o contraseña incorrectos."
+      },
+      "success": {
+        "passwordReset": "Contraseña restablecida correctamente. Ya puedes iniciar sesión."
+      }
+    },
+    "signup": {
+      "title": "Registrarse",
+      "description": "Crea una cuenta para empezar",
+      "button": "Crear cuenta",
+      "hasAccount": "¿Ya tienes una cuenta?",
+      "signInLink": "Iniciar sesión",
+      "errors": {
+        "emailExists": "Ya existe una cuenta con este correo electrónico."
+      }
+    },
+    "fields": {
+      "fullName": "Nombre completo",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "confirmPassword": "Confirmar contraseña",
+      "newPassword": "Nueva contraseña",
+      "confirmNewPassword": "Confirmar nueva contraseña",
+      "rememberMe": "Recuérdame"
+    },
+    "oauth": {
+      "loginWithGoogle": "Iniciar sesión con Google",
+      "signupWithGoogle": "Registrarse con Google",
+      "loginWithGitHub": "Iniciar sesión con GitHub",
+      "signupWithGitHub": "Registrarse con GitHub"
+    },
+    "forgotPassword": {
+      "title": "¿Olvidaste tu contraseña?",
+      "description": "Introduce tu correo y te enviaremos un enlace para restablecerla.",
+      "button": "Enviar enlace",
+      "sentTitle": "Revisa tu correo",
+      "sentDescription": "Si existe una cuenta con ese correo, hemos enviado un enlace de restablecimiento. Expira en 1 hora.",
+      "backToLogin": "Volver al inicio de sesión"
+    },
+    "resetPassword": {
+      "title": "Restablecer contraseña",
+      "description": "Introduce una nueva contraseña para tu cuenta.",
+      "button": "Restablecer contraseña",
+      "invalidLink": "Este enlace de restablecimiento no es válido o ya ha sido utilizado.",
+      "requestNewLink": "Solicitar un nuevo enlace"
+    },
+    "signOut": {
+      "title": "Cerrar sesión",
+      "confirmation": "¿Seguro que quieres cerrar sesión?",
+      "cancel": "Cancelar",
+      "confirm": "Cerrar sesión"
+    }
+  },
+  "nav": {
+    "brand": "Habitual",
+    "dashboard": "Inicio",
+    "progress": "Progreso",
+    "settings": "Ajustes",
+    "getStarted": "Empezar",
+    "logout": "Cerrar sesión"
+  },
+  "dashboard": {
+    "greeting": "¡Hola, {name}!",
+    "todaysHabits": "Hábitos de hoy",
+    "yourGoals": "Tus objetivos",
+    "seeAll": "Ver todos"
+  },
+  "habits": {
+    "title": "Tus hábitos",
+    "empty": {
+      "noHabitsToday": "No hay hábitos para este día.",
+      "noHabitsEver": "Aún no hay hábitos",
+      "noHabitsDescription": "Empieza a construir tu rutina creando tu primer hábito."
+    },
+    "createButton": "Crear hábito",
+    "dialog": {
+      "createTitle": "Añadir hábito",
+      "editTitle": "Editar hábito"
+    },
+    "fields": {
+      "name": "Nombre",
+      "namePlaceholder": "p. ej. Correr por la mañana",
+      "frequency": "Frecuencia",
+      "frequencyPlaceholder": "Selecciona la frecuencia",
+      "timesPerWeek": "Veces por semana",
+      "daysOfWeek": "Días de la semana",
+      "color": "Color (opcional)"
+    },
+    "frequency": {
+      "daily": "Diario",
+      "weekly": "Semanal",
+      "customDays": "Días personalizados",
+      "timesPerWeek": "{count, plural, one {# vez por semana} other {# veces por semana}}"
+    },
+    "delete": {
+      "title": "¿Seguro que quieres eliminar este hábito?",
+      "description": "Esto eliminará permanentemente el hábito y todo su historial. Esta acción no se puede deshacer.",
+      "confirm": "Eliminar"
+    },
+    "streak": "🔥 {count}"
+  },
+  "goals": {
+    "title": "Tus objetivos",
+    "empty": "Aún no hay objetivos. ¡Crea algunos para mantenerte motivado!",
+    "dialog": {
+      "createTitle": "Crear nuevo objetivo de hábito",
+      "editTitle": "Editar objetivo",
+      "createButton": "Crear nuevo",
+      "saveButton": "Guardar"
+    },
+    "fields": {
+      "goal": "Tu objetivo",
+      "goalPlaceholder": "p. ej. Correr durante 90 días",
+      "habitName": "Nombre del hábito",
+      "habitNamePlaceholder": "p. ej. Correr",
+      "timePeriod": "Período de tiempo",
+      "frequency": "Frecuencia del hábito",
+      "frequencyPlaceholder": "Selecciona el tipo de hábito",
+      "dayOfWeek": "Día de la semana",
+      "dayOfWeekPlaceholder": "Selecciona un día",
+      "daysOfWeek": "Días de la semana"
+    },
+    "timePeriods": {
+      "1week": "1 semana (7 días)",
+      "2weeks": "2 semanas (14 días)",
+      "1month": "1 mes (30 días)",
+      "3months": "3 meses (90 días)",
+      "6months": "6 meses (180 días)",
+      "1year": "1 año (365 días)"
+    },
+    "frequency": {
+      "everyday": "Todos los días",
+      "weekly": "Semanal",
+      "customDays": "Días personalizados"
+    },
+    "progress": "{completions} de {target} completados",
+    "delete": {
+      "title": "¿Eliminar objetivo?",
+      "description": "Esto eliminará permanentemente el objetivo y su hábito asociado. Esta acción no se puede deshacer.",
+      "confirm": "Eliminar"
+    },
+    "status": {
+      "achieved": "Conseguido",
+      "inProgress": "En progreso"
+    },
+    "table": {
+      "habitName": "Nombre del hábito:",
+      "target": "Objetivo:",
+      "daysComplete": "Días completados:",
+      "daysRemaining": "Días restantes:",
+      "habitType": "Tipo de hábito:",
+      "createdOn": "Creado el:",
+      "na": "N/D",
+      "daysCompleteValue": "{completionCount} de {target}",
+      "pluralDays": "{count, plural, one {# día} other {# días}}"
+    }
+  },
+  "progress": {
+    "title": "Informe de progreso",
+    "yourGoals": "Tus objetivos",
+    "yourProgress": "Tu progreso",
+    "overallCompletion": "Tasa de completado general",
+    "periods": {
+      "weekly": "Semanal",
+      "monthly": "Mensual",
+      "yearly": "Anual"
+    },
+    "goalsPage": {
+      "filters": {
+        "all": "Todos",
+        "active": "Activos",
+        "completed": "Completados"
+      },
+      "empty": "No hay objetivos {status}"
+    },
+    "goalDetail": {
+      "notFound": "Objetivo o hábito no encontrado.",
+      "backToGoals": "Volver a objetivos",
+      "backToProgress": "Volver al progreso",
+      "startDate": "Fecha de inicio",
+      "endDate": "Fecha de fin"
+    }
+  },
+  "settings": {
+    "title": "Ajustes",
+    "account": "Cuenta",
+    "appearance": "Apariencia",
+    "weekStartsOn": "La semana empieza el",
+    "logout": "Cerrar sesión",
+    "theme": {
+      "light": "Claro",
+      "dark": "Oscuro",
+      "system": "Sistema"
+    },
+    "days": {
+      "sunday": "Domingo",
+      "monday": "Lunes"
+    },
+    "version": "v{version}",
+    "accountPage": {
+      "title": "Cuenta",
+      "back": "Volver a ajustes",
+      "saveButton": "Guardar cambios",
+      "success": "Perfil actualizado correctamente."
+    }
+  },
+  "common": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "backToToday": "Volver a hoy",
+    "backToDashboard": "Volver al inicio"
+  },
+  "banner": {
+    "noCompletions": "¡Aún no has completado ningún hábito!",
+    "letsGetStarted": "¡Vamos a empezar! 💪",
+    "completedToday": "completados hoy.",
+    "progress": "{completed} de {total} hábitos"
+  },
+  "notFound": {
+    "title": "Página no encontrada.",
+    "description": "La página que buscas no existe o ha sido movida.",
+    "goHome": "Ir al inicio"
+  },
+  "landing": {
+    "heading": "Construye mejores hábitos.",
+    "subheading": "Sigue tu progreso y mantén la constancia, un día a la vez.",
+    "getStarted": "Empezar",
+    "logIn": "Iniciar sesión",
+    "footer": "Gratis. Sin tarjeta de crédito."
+  },
+  "otp": {
+    "title": "Verificar",
+    "description": "Introduce el código de un solo uso (OTP) que hemos enviado a tu correo",
+    "submit": "Enviar"
+  },
+  "dates": {
+    "months": {
+      "january": "enero",
+      "february": "febrero",
+      "march": "marzo",
+      "april": "abril",
+      "may": "mayo",
+      "june": "junio",
+      "july": "julio",
+      "august": "agosto",
+      "september": "septiembre",
+      "october": "octubre",
+      "november": "noviembre",
+      "december": "diciembre"
+    },
+    "days": {
+      "sun": "dom",
+      "mon": "lun",
+      "tue": "mar",
+      "wed": "mié",
+      "thu": "jue",
+      "fri": "vie",
+      "sat": "sáb"
+    }
+  }
+}

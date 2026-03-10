@@ -1,0 +1,273 @@
+{
+  "auth": {
+    "login": {
+      "title": "ログイン",
+      "description": "続けるにはメールアドレスとパスワードを入力してください",
+      "button": "ログイン",
+      "forgotPassword": "パスワードをお忘れですか？",
+      "noAccount": "アカウントをお持ちでないですか？",
+      "signUpLink": "新規登録",
+      "errors": {
+        "invalidCredentials": "メールアドレスまたはパスワードが正しくありません。"
+      },
+      "success": {
+        "passwordReset": "パスワードが正常にリセットされました。ログインしてください。"
+      }
+    },
+    "signup": {
+      "title": "新規登録",
+      "description": "アカウントを作成して始めましょう",
+      "button": "アカウントを作成",
+      "hasAccount": "すでにアカウントをお持ちですか？",
+      "signInLink": "ログイン",
+      "errors": {
+        "emailExists": "このメールアドレスのアカウントはすでに存在します。"
+      }
+    },
+    "fields": {
+      "fullName": "氏名",
+      "email": "メールアドレス",
+      "password": "パスワード",
+      "confirmPassword": "パスワードの確認",
+      "newPassword": "新しいパスワード",
+      "confirmNewPassword": "新しいパスワードの確認",
+      "rememberMe": "ログイン状態を保持する"
+    },
+    "oauth": {
+      "loginWithGoogle": "Googleでログイン",
+      "signupWithGoogle": "Googleで登録",
+      "loginWithGitHub": "GitHubでログイン",
+      "signupWithGitHub": "GitHubで登録"
+    },
+    "forgotPassword": {
+      "title": "パスワードをお忘れですか？",
+      "description": "メールアドレスを入力するとリセットリンクをお送りします。",
+      "button": "リセットリンクを送信",
+      "sentTitle": "メールを確認してください",
+      "sentDescription": "そのメールアドレスのアカウントが存在する場合、リセットリンクをお送りしました。有効期限は1時間です。",
+      "backToLogin": "ログインに戻る"
+    },
+    "resetPassword": {
+      "title": "パスワードをリセット",
+      "description": "アカウントの新しいパスワードを入力してください。",
+      "button": "パスワードをリセット",
+      "invalidLink": "このリセットリンクは無効か、すでに使用されています。",
+      "requestNewLink": "新しいリンクをリクエスト"
+    },
+    "signOut": {
+      "title": "ログアウト",
+      "confirmation": "本当にログアウトしますか？",
+      "cancel": "キャンセル",
+      "confirm": "ログアウト"
+    }
+  },
+  "nav": {
+    "brand": "Habitual",
+    "dashboard": "ホーム",
+    "progress": "進捗",
+    "settings": "設定",
+    "getStarted": "始める",
+    "logout": "ログアウト"
+  },
+  "dashboard": {
+    "greeting": "{name}さん、こんにちは！",
+    "todaysHabits": "今日の習慣",
+    "yourGoals": "目標",
+    "seeAll": "すべて見る"
+  },
+  "habits": {
+    "title": "習慣一覧",
+    "empty": {
+      "noHabitsToday": "この日に習慣はありません。",
+      "noHabitsEver": "習慣がまだありません",
+      "noHabitsDescription": "最初の習慣を作成してルーティンを始めましょう。"
+    },
+    "createButton": "習慣を作成",
+    "dialog": {
+      "createTitle": "習慣を追加",
+      "editTitle": "習慣を編集"
+    },
+    "fields": {
+      "name": "名前",
+      "namePlaceholder": "例：朝のランニング",
+      "frequency": "頻度",
+      "frequencyPlaceholder": "頻度を選択",
+      "timesPerWeek": "週あたりの回数",
+      "daysOfWeek": "曜日",
+      "color": "色（任意）"
+    },
+    "frequency": {
+      "daily": "毎日",
+      "weekly": "毎週",
+      "customDays": "カスタム日",
+      "timesPerWeek": "{count, plural, other {週#回}}"
+    },
+    "delete": {
+      "title": "この習慣を削除しますか？",
+      "description": "習慣とそのすべての完了履歴が完全に削除されます。この操作は元に戻せません。",
+      "confirm": "削除"
+    },
+    "streak": "🔥 {count}"
+  },
+  "goals": {
+    "title": "目標一覧",
+    "empty": "目標がまだありません。モチベーションを保つために目標を作成しましょう！",
+    "dialog": {
+      "createTitle": "新しい習慣目標を作成",
+      "editTitle": "目標を編集",
+      "createButton": "新規作成",
+      "saveButton": "保存"
+    },
+    "fields": {
+      "goal": "目標",
+      "goalPlaceholder": "例：90日間走る",
+      "habitName": "習慣名",
+      "habitNamePlaceholder": "例：ランニング",
+      "timePeriod": "期間",
+      "frequency": "習慣の頻度",
+      "frequencyPlaceholder": "習慣のタイプを選択",
+      "dayOfWeek": "曜日",
+      "dayOfWeekPlaceholder": "曜日を選択",
+      "daysOfWeek": "曜日"
+    },
+    "timePeriods": {
+      "1week": "1週間（7日）",
+      "2weeks": "2週間（14日）",
+      "1month": "1ヶ月（30日）",
+      "3months": "3ヶ月（90日）",
+      "6months": "6ヶ月（180日）",
+      "1year": "1年（365日）"
+    },
+    "frequency": {
+      "everyday": "毎日",
+      "weekly": "毎週",
+      "customDays": "カスタム日"
+    },
+    "progress": "{completions} / {target} 達成",
+    "delete": {
+      "title": "目標を削除しますか？",
+      "description": "目標とそれに関連する習慣が完全に削除されます。この操作は元に戻せません。",
+      "confirm": "削除"
+    },
+    "status": {
+      "achieved": "達成",
+      "inProgress": "進行中"
+    },
+    "table": {
+      "habitName": "習慣名：",
+      "target": "目標：",
+      "daysComplete": "完了日数：",
+      "daysRemaining": "残り日数：",
+      "habitType": "習慣タイプ：",
+      "createdOn": "作成日：",
+      "na": "N/A",
+      "daysCompleteValue": "{target}中{completionCount}",
+      "pluralDays": "{count, plural, other {#日}}"
+    }
+  },
+  "progress": {
+    "title": "進捗レポート",
+    "yourGoals": "目標",
+    "yourProgress": "進捗",
+    "overallCompletion": "全体の達成率",
+    "periods": {
+      "weekly": "週間",
+      "monthly": "月間",
+      "yearly": "年間"
+    },
+    "goalsPage": {
+      "filters": {
+        "all": "すべて",
+        "active": "進行中",
+        "completed": "完了済み"
+      },
+      "empty": "{status}の目標はありません"
+    },
+    "goalDetail": {
+      "notFound": "目標または習慣が見つかりません。",
+      "backToGoals": "目標に戻る",
+      "backToProgress": "進捗に戻る",
+      "startDate": "開始日",
+      "endDate": "終了日"
+    }
+  },
+  "settings": {
+    "title": "設定",
+    "account": "アカウント",
+    "appearance": "外観",
+    "weekStartsOn": "週の開始日",
+    "logout": "ログアウト",
+    "theme": {
+      "light": "ライト",
+      "dark": "ダーク",
+      "system": "システム"
+    },
+    "days": {
+      "sunday": "日曜日",
+      "monday": "月曜日"
+    },
+    "version": "v{version}",
+    "accountPage": {
+      "title": "アカウント",
+      "back": "設定に戻る",
+      "saveButton": "変更を保存",
+      "success": "プロフィールが正常に更新されました。"
+    }
+  },
+  "common": {
+    "save": "保存",
+    "cancel": "キャンセル",
+    "delete": "削除",
+    "edit": "編集",
+    "backToToday": "今日に戻る",
+    "backToDashboard": "ホームに戻る"
+  },
+  "banner": {
+    "noCompletions": "まだ習慣を完了していません！",
+    "letsGetStarted": "さあ始めましょう 💪",
+    "completedToday": "本日達成！",
+    "progress": "{total}個中{completed}個の習慣"
+  },
+  "notFound": {
+    "title": "ページが見つかりません。",
+    "description": "お探しのページは存在しないか、移動されました。",
+    "goHome": "ホームへ"
+  },
+  "landing": {
+    "heading": "より良い習慣を身につけよう。",
+    "subheading": "一日一日、着実に進捗を積み重ねましょう。",
+    "getStarted": "始める",
+    "logIn": "ログイン",
+    "footer": "無料でご利用いただけます。クレジットカード不要。"
+  },
+  "otp": {
+    "title": "認証",
+    "description": "メールに送信したワンタイムパスワード（OTP）を入力してください",
+    "submit": "送信"
+  },
+  "dates": {
+    "months": {
+      "january": "1月",
+      "february": "2月",
+      "march": "3月",
+      "april": "4月",
+      "may": "5月",
+      "june": "6月",
+      "july": "7月",
+      "august": "8月",
+      "september": "9月",
+      "october": "10月",
+      "november": "11月",
+      "december": "12月"
+    },
+    "days": {
+      "sun": "日",
+      "mon": "月",
+      "tue": "火",
+      "wed": "水",
+      "thu": "木",
+      "fri": "金",
+      "sat": "土"
+    }
+  }
+}
