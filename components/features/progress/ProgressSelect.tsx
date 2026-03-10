@@ -26,12 +26,12 @@ export function ReportSelect({ value, onChange }: ReportSelect) {
 
   return (
     <Select value={value} onValueChange={onChange}>
-      <SelectTrigger id="progressSelect" className="w-full max-w-[200px]">
+      <SelectTrigger id="progressSelect" className="w-full max-w-50">
         <SelectValue placeholder={value} />
       </SelectTrigger>
-      <SelectContent className="w-full max-w-[200px]" position="popper">
+      <SelectContent className="w-full max-w-50" position="popper">
         {ReportPeriods.map((option) => (
-          <SelectItem className="w-full max-w-[200px]" key={option.value} value={option.value}>
+          <SelectItem className="w-full max-w-50" key={option.value} value={option.value}>
             {option.label}
           </SelectItem>
         ))}

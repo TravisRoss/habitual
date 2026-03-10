@@ -67,7 +67,7 @@ export default function SignUpForm() {
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="w-full h-[49px] font-nunito font-extrabold text-sm text-white border-0 btn-primary"
+              className="w-full h-12.25 font-nunito font-extrabold text-sm text-white border-0 btn-primary"
             >
               {isSubmitting ? <Spinner className="size-4" /> : t("button")}
             </Button>
@@ -78,7 +78,7 @@ export default function SignUpForm() {
 
         <p className="font-nunito text-sm text-muted-foreground text-center">
           {t("hasAccount")}{" "}
-          <Link href="/login" className="font-extrabold text-brand underline hover:bg-blend-color-burn">
+          <Link href="/login" className="font-extrabold text-brand underline hover:mix-blend-color-burn">
             {t("signInLink")}
           </Link>
         </p>
