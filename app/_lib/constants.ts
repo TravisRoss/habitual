@@ -22,20 +22,20 @@ export const DAYS = [
 
 export const DAY_MS = 86_400_000;
 
-export const MONTH_NAMES = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
+export const MONTH_KEYS = [
+  "january",
+  "february",
+  "march",
+  "april",
+  "may",
+  "june",
+  "july",
+  "august",
+  "september",
+  "october",
+  "november",
+  "december",
+] as const;
 
 export const MONTH_INDEXES = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 export const PREVIEW_LIMIT = 3;
@@ -47,4 +47,8 @@ export const NAV_LABEL_KEYS: Record<
   "/dashboard": "dashboard",
   "/dashboard/progress": "progress",
   "/dashboard/settings": "settings",
+};
+
+export const SETTINGS_LABEL_KEYS: Record<string, "account"> = {
+  "settings/account": "account",
 };

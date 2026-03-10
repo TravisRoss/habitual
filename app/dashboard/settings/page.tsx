@@ -11,6 +11,7 @@ import Link from "next/link";
 import { version } from "@/package.json";
 import SignOutDialog from "@/components/features/auth/SignOutDialog";
 import { getTranslations } from "next-intl/server";
+import { SETTINGS_LABEL_KEYS } from "@/app/_lib/constants";
 
 export default async function Page() {
   const session = await auth();
@@ -25,10 +26,10 @@ export default async function Page() {
       <div className="space-y-4">
         <DashboardCard>
           <div className="space-y-4">
-            {settingsNavLinks.map(({ label, href, icon: Icon }) => (
+            {settingsNavLinks.map(({ href, icon: Icon }) => (
               <Link key={href} href={href} className={itemCls}>
                 <Icon className="size-5 shrink-0" />
-                <span className="flex-1">{label}</span>
+                <span className="flex-1">{t(SETTINGS_LABEL_KEYS[href])}</span>
                 <ChevronRight className="size-4 text-muted-foreground" />
               </Link>
             ))}
@@ -43,7 +44,9 @@ export default async function Page() {
           </div>
         </DashboardCard>
 
-        <p className="px-1 text-xs text-muted-foreground">{t("version", { version })}</p>
+        <p className="px-1 text-xs text-muted-foreground">
+          {t("version", { version })}
+        </p>
       </div>
     </SubPageLayout>
   );

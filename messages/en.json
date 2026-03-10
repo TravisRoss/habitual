@@ -152,6 +152,17 @@
     "status": {
       "achieved": "Achieved",
       "inProgress": "In Progress"
+    },
+    "table": {
+      "habitName": "Habit Name:",
+      "target": "Target:",
+      "daysComplete": "Days complete:",
+      "daysRemaining": "Days remaining:",
+      "habitType": "Habit type:",
+      "createdOn": "Created on:",
+      "na": "N/A",
+      "daysCompleteValue": "{completionCount} from {target}",
+      "pluralDays": "{count, plural, one {# day} other {# days}}"
     }
   },
   "progress": {
@@ -175,6 +186,7 @@
     "goalDetail": {
       "notFound": "Goal or habit not found.",
       "backToGoals": "Back to Goals",
+      "backToProgress": "Back to Progress",
       "startDate": "Start date",
       "endDate": "End date"
     }
@@ -220,6 +232,18 @@
     "title": "Page not found.",
     "description": "The page you're looking for doesn't exist or has been moved.",
     "goHome": "Go home"
+  },
+  "landing": {
+    "heading": "Build better habits.",
+    "subheading": "Track your progress and stay consistent, one day at a time.",
+    "getStarted": "Get started",
+    "logIn": "Log in",
+    "footer": "Free to use. No credit card required."
+  },
+  "otp": {
+    "title": "Verify",
+    "description": "Enter the One Time Password (OTP) code we've sent to your email",
+    "submit": "Submit"
   },
   "dates": {
     "months": {

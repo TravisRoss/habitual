@@ -1,6 +1,9 @@
-import { MONTH_NAMES } from "@/app/_lib/constants";
+"use client";
+
+import { MONTH_KEYS } from "@/app/_lib/constants";
 import { cn } from "@/lib/utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 type MonthNavigatorProps = {
@@ -9,6 +12,7 @@ type MonthNavigatorProps = {
 
 export default function MonthNavigator({ monthIndexes }: MonthNavigatorProps) {
   const [currentPosition, setcurrentPosition] = useState(0);
+  const t = useTranslations("dates.months");
 
   if (monthIndexes.length === 0) {
     return null;
@@ -40,7 +44,7 @@ export default function MonthNavigator({ monthIndexes }: MonthNavigatorProps) {
         />
       )}
       <p className="w-20 sm:w-28 text-center text-sm sm:text-base truncate">
-        {MONTH_NAMES[monthIndex]}
+        {t(MONTH_KEYS[monthIndex])}
       </p>
       {showControls && (
         <ChevronRight

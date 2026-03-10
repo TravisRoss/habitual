@@ -28,7 +28,7 @@ export default function FooterNav() {
                 )}
               >
                 <Icon className={cn("h-5 w-5", isActive && "stroke-[2.5]")} />
-                {t(NAV_LABEL_KEYS[href] ?? (href as never))}
+                {t(NAV_LABEL_KEYS[href])}
               </Link>
             </li>
           );
