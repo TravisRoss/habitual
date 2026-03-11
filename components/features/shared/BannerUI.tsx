@@ -27,7 +27,7 @@ export default function Banner({ habitsCount, completionsCount }: BannerProps) {
             <p className="md:text-2xl text-sm font-bold">
               {t("noCompletions")}
             </p>
-            <p className="md:text-lg text-xs">{t("noCompletions")} 💪</p>
+            <p className="md:text-lg text-xs">{t("letsGetStarted")}</p>
           </>
         ) : (
           <>
