@@ -14,6 +14,7 @@ import { useHabits } from "@/hooks/useHabits";
 import { cn } from "@/lib/utils";
 import { use } from "react";
 import { useTranslations } from "next-intl";
+import BackButton from "@/components/features/shared/BackButton";
 
 export default function Page({
   params,
@@ -40,7 +41,10 @@ export default function Page({
     return (
       <>
         <h1>{tDetail("notFound")}</h1>
-        <BackButton label={tDetail("backToGoals")} href="/dashboard/progress/goals" />
+        <BackButton
+          label={tDetail("backToGoals")}
+          href="/dashboard/progress/goals"
+        />
       </>
     );
   }
@@ -68,13 +72,17 @@ export default function Page({
         <div className="flex flex-col gap-3">
           <div className="flex justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">{tDetail("startDate")}</p>
+              <p className="text-sm text-muted-foreground">
+                {tDetail("startDate")}
+              </p>
               <time className="text-sm font-medium" dateTime={goal.start_date}>
                 {formatIsoDate(goal.start_date)}
               </time>
             </div>
             <div className="text-right">
-              <p className="text-sm text-muted-foreground">{tDetail("endDate")}</p>
+              <p className="text-sm text-muted-foreground">
+                {tDetail("endDate")}
+              </p>
               <time className="text-sm font-medium" dateTime={endDate}>
                 {formatIsoDate(endDate)}
               </time>
