@@ -2,7 +2,7 @@ import BackButton from "./BackButton";
 import { ReactNode } from "react";
 
 type PageLayoutProps = {
-  title: string;
+  title: ReactNode;
   titleAction?: ReactNode;
   back?: string;
   backHref?: string;
