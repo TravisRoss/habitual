@@ -143,7 +143,7 @@
       "weekly": "Wöchentlich",
       "customDays": "Benutzerdefinierte Tage"
     },
-    "progress": "{completions} von {target} Erledigungen",
+    "progress": "{completions} von {target} Erledigt",
     "delete": {
       "title": "Ziel löschen?",
       "description": "Dadurch wird das Ziel und die zugehörige Gewohnheit dauerhaft gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
