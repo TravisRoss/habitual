@@ -28,9 +28,10 @@ import {
   getPasswordResetToken,
   deletePasswordResetToken,
   updatePasswordByEmail,
+  getProfileById,
 } from "@/lib/data-service";
 import { getResend } from "@/lib/resend";
-import type { Completion, Habit, Streak } from "@/types";
+import type { Completion, Habit, Profile, Streak } from "@/types";
 import { revalidatePath } from "next/cache";
 import { GoalFormValues } from "@/lib/zod";
 import { dateToIsoStr } from "@/app/_lib/utils";
@@ -363,6 +364,12 @@ export async function updateGoalAction(
 
   revalidatePath("/dashboard");
   return error ? { error: "Failed to edit goal. Please try again." } : {};
+}
+
+export async function fetchProfileAction(): Promise<Profile | null> {
+  const session = await auth();
+  if (!session?.user?.id) return null;
+  return getProfileById(session.user.id);
 }
 
 export async function updateWeekStartsOnAction(

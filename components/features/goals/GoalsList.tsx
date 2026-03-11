@@ -26,9 +26,7 @@ export default function GoalsList({ isPreview = false }: GoalsListProps) {
   return (
     <ul className="flex flex-col gap-2">
       {goals.length === 0 && (
-        <li className="text-sm text-muted-foreground">
-          {t("empty")}
-        </li>
+        <li className="text-sm text-muted-foreground">{t("empty")}</li>
       )}
       {goalList.map((goal) => (
         <li key={goal.id}>

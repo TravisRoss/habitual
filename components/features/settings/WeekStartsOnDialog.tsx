@@ -1,6 +1,5 @@
 "use client";
 
-import { updateWeekStartsOnAction } from "@/app/_lib/actions";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -14,12 +13,15 @@ import { CalendarDays } from "lucide-react";
 import { useState } from "react";
 import SettingItem, { itemCls } from "./SettingItem";
 import { useTranslations } from "next-intl";
+import { useProfile, useUpdateWeekStartsOn } from "@/hooks/useProfile";
 
-type Props = { defaultValue: 0 | 1 };
-
-export function WeekStartsOnDialog({ defaultValue }: Props) {
+export function WeekStartsOnDialog() {
   const [open, setOpen] = useState(false);
   const t = useTranslations("settings");
+  const { data: profile } = useProfile();
+  const updateWeekStartsOn = useUpdateWeekStartsOn();
+
+  const weekStartsOn = (profile?.week_starts_on ?? 0) as 0 | 1;
 
   const OPTIONS = [
     { label: t("days.sunday"), value: 0 },
@@ -32,7 +34,7 @@ export function WeekStartsOnDialog({ defaultValue }: Props) {
         <SettingItem
           icon={CalendarDays}
           label={t("weekStartsOn")}
-          value={defaultValue === 0 ? t("days.sunday") : t("days.monday")}
+          value={profile ? (weekStartsOn === 0 ? t("days.sunday") : t("days.monday")) : undefined}
         />
       </DialogTrigger>
       <DialogContent>
@@ -46,7 +48,7 @@ export function WeekStartsOnDialog({ defaultValue }: Props) {
               variant="ghost"
               className={itemCls}
               onClick={() => {
-                updateWeekStartsOnAction(value);
+                updateWeekStartsOn(value);
                 setOpen(false);
               }}
             >

@@ -1,11 +1,9 @@
-import { auth } from "@/app/_lib/auth";
 import { settingsNavLinks } from "@/app/_config/nav";
 import DashboardCard from "@/components/features/shared/DashboardCard";
 import PageLayout from "@/components/features/shared/PageLayout";
 import { AppearanceDialog } from "@/components/features/settings/AppearanceDialog";
 import { WeekStartsOnDialog } from "@/components/features/settings/WeekStartsOnDialog";
 import { itemCls } from "@/components/features/settings/SettingItem";
-import { getProfileById } from "@/lib/data-service";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { version } from "@/package.json";
@@ -15,16 +13,11 @@ import { SETTINGS_LABEL_KEYS } from "@/app/_lib/constants";
 import { LanguageDialog } from "@/components/features/settings/LanguageDialog";
 
 export default async function Page() {
-  const session = await auth();
-  const profile = session?.user?.id
-    ? await getProfileById(session.user.id)
-    : null;
-  const weekStartsOn = (profile?.week_starts_on ?? 0) as 0 | 1;
-  const [t, tCommon] = await Promise.all([
+  const [t, tCommon, locale] = await Promise.all([
     getTranslations("settings"),
     getTranslations("common"),
+    getLocale(),
   ]);
-  const locale = await getLocale();
 
   return (
     <PageLayout title={t("title")} back={tCommon("backToDashboard")}>
@@ -44,7 +37,7 @@ export default async function Page() {
         <DashboardCard>
           <div className="space-y-4">
             <AppearanceDialog />
-            <WeekStartsOnDialog defaultValue={weekStartsOn} />
+            <WeekStartsOnDialog />
             <LanguageDialog currentLocale={locale} />
             <SignOutDialog isSetting={true} />
           </div>
