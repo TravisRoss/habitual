@@ -107,7 +107,19 @@
       "description": "This will permanently delete the habit and all its completion history. This action cannot be undone.",
       "confirm": "Delete"
     },
-    "streak": "🔥 {count}"
+    "streak": "🔥 {count}",
+    "toasts": {
+      "created": "Habit created successfully.",
+      "updated": "Habit updated successfully.",
+      "deleted": "Habit deleted successfully.",
+      "completed": "Habit marked as complete.",
+      "uncompleted": "Habit marked as incomplete.",
+      "errorCreate": "Failed to create habit. Please try again.",
+      "errorUpdate": "Failed to update habit. Please try again.",
+      "errorDelete": "Failed to delete habit. Please try again.",
+      "errorComplete": "Failed to mark habit as complete. Please try again.",
+      "errorUncomplete": "Failed to unmark habit as complete. Please try again."
+    }
   },
   "goals": {
     "title": "Your Goals",
@@ -163,6 +175,14 @@
       "na": "N/A",
       "daysCompleteValue": "{completionCount} from {target}",
       "pluralDays": "{count, plural, one {# day} other {# days}}"
+    },
+    "toasts": {
+      "created": "Goal created successfully.",
+      "updated": "Goal updated successfully.",
+      "deleted": "Goal deleted successfully.",
+      "errorCreate": "Failed to create goal. Please try again.",
+      "errorUpdate": "Failed to update goal. Please try again.",
+      "errorDelete": "Failed to delete goal. Please try again."
     }
   },
   "progress": {

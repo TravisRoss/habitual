@@ -107,7 +107,19 @@
       "description": "Esto eliminará permanentemente el hábito y todo su historial. Esta acción no se puede deshacer.",
       "confirm": "Eliminar"
     },
-    "streak": "🔥 {count}"
+    "streak": "🔥 {count}",
+    "toasts": {
+      "created": "Hábito creado exitosamente.",
+      "updated": "Hábito actualizado exitosamente.",
+      "deleted": "Hábito eliminado exitosamente.",
+      "completed": "Hábito marcado como completado.",
+      "uncompleted": "Marcación del hábito eliminada.",
+      "errorCreate": "No se pudo crear el hábito. Por favor, inténtalo de nuevo.",
+      "errorUpdate": "No se pudo actualizar el hábito. Por favor, inténtalo de nuevo.",
+      "errorDelete": "No se pudo eliminar el hábito. Por favor, inténtalo de nuevo.",
+      "errorComplete": "No se pudo marcar el hábito como completado. Por favor, inténtalo de nuevo.",
+      "errorUncomplete": "No se pudo desmarcar el hábito. Por favor, inténtalo de nuevo."
+    }
   },
   "goals": {
     "title": "Tus objetivos",
@@ -163,6 +175,14 @@
       "na": "N/D",
       "daysCompleteValue": "{completionCount} de {target}",
       "pluralDays": "{count, plural, one {# día} other {# días}}"
+    },
+    "toasts": {
+      "created": "Objetivo creado exitosamente.",
+      "updated": "Objetivo actualizado exitosamente.",
+      "deleted": "Objetivo eliminado exitosamente.",
+      "errorCreate": "No se pudo crear el objetivo. Por favor, inténtalo de nuevo.",
+      "errorUpdate": "No se pudo actualizar el objetivo. Por favor, inténtalo de nuevo.",
+      "errorDelete": "No se pudo eliminar el objetivo. Por favor, inténtalo de nuevo."
     }
   },
   "progress": {

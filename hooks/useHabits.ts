@@ -8,6 +8,7 @@ import {
 } from "@/app/_lib/actions";
 import type { HabitFormValues } from "@/lib/zod";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 export const HABITS_KEY = ["habits"];
 
@@ -23,45 +24,48 @@ export function useHabitsForDate(date: string) {
 }
 
 export function useCreateHabit() {
+  const t = useTranslations("habits.toasts");
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (data: HabitFormValues) =>
       createHabit({ ...data, target_days: data.target_days || [] }),
     onSuccess: () => {
-      toast.success("Habit created successfully!");
+      toast.success(t("created"));
       queryClient.invalidateQueries({ queryKey: HABITS_KEY });
     },
     onError: () => {
-      toast.error("Failed to create habit. Please try again.");
+      toast.error(t("errorCreate"));
     },
   });
 }
 
 export function useEditHabit() {
+  const t = useTranslations("habits.toasts");
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (data: { habit_id: string } & HabitFormValues) =>
       editHabitAction({ ...data, target_days: data.target_days || [] }),
     onSuccess: () => {
-      toast.success("Habit updated successfully!");
+      toast.success(t("updated"));
       queryClient.invalidateQueries({ queryKey: HABITS_KEY });
     },
     onError: () => {
-      toast.error("Failed to update habit. Please try again.");
+      toast.error(t("errorUpdate"));
     },
   });
 }
 
 export function useDeleteHabit() {
+  const t = useTranslations("habits.toasts");
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (habit_id: string) => deleteHabitAction(habit_id),
     onSuccess: () => {
-      toast.success("Habit deleted successfully!");
+      toast.success(t("deleted"));
       queryClient.invalidateQueries({ queryKey: HABITS_KEY });
     },
     onError: () => {
-      toast.error("Failed to delete habit. Please try again.");
+      toast.error(t("errorDelete"));
     },
   });
 }

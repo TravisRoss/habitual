@@ -107,7 +107,19 @@
       "description": "習慣とそのすべての完了履歴が完全に削除されます。この操作は元に戻せません。",
       "confirm": "削除"
     },
-    "streak": "🔥 {count}"
+    "streak": "🔥 {count}",
+    "toasts": {
+      "created": "習慣を作成しました。",
+      "updated": "習慣を更新しました。",
+      "deleted": "習慣を削除しました。",
+      "completed": "習慣を完了としてマークしました。",
+      "uncompleted": "習慣の完了マークを解除しました。",
+      "errorCreate": "習慣の作成に失敗しました。もう一度お試しください。",
+      "errorUpdate": "習慣の更新に失敗しました。もう一度お試しください。",
+      "errorDelete": "習慣の削除に失敗しました。もう一度お試しください。",
+      "errorComplete": "習慣を完了としてマークできませんでした。もう一度お試しください。",
+      "errorUncomplete": "習慣の完了マークを解除できませんでした。もう一度お試しください。"
+    }
   },
   "goals": {
     "title": "目標一覧",
@@ -163,6 +175,14 @@
       "na": "N/A",
       "daysCompleteValue": "{target}中{completionCount}",
       "pluralDays": "{count, plural, other {#日}}"
+    },
+    "toasts": {
+      "created": "目標を作成しました。",
+      "updated": "目標を更新しました。",
+      "deleted": "目標を削除しました。",
+      "errorCreate": "目標の作成に失敗しました。もう一度お試しください。",
+      "errorUpdate": "目標の更新に失敗しました。もう一度お試しください。",
+      "errorDelete": "目標の削除に失敗しました。もう一度お試しください。"
     }
   },
   "progress": {

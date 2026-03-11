@@ -107,7 +107,19 @@
       "description": "Dadurch wird die Gewohnheit und der gesamte Verlauf dauerhaft gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
       "confirm": "Löschen"
     },
-    "streak": "🔥 {count}"
+    "streak": "🔥 {count}",
+    "toasts": {
+      "created": "Gewohnheit erfolgreich erstellt.",
+      "updated": "Gewohnheit erfolgreich aktualisiert.",
+      "deleted": "Gewohnheit erfolgreich gelöscht.",
+      "completed": "Gewohnheit als erledigt markiert.",
+      "uncompleted": "Markierung der Gewohnheit aufgehoben.",
+      "errorCreate": "Gewohnheit konnte nicht erstellt werden. Bitte erneut versuchen.",
+      "errorUpdate": "Gewohnheit konnte nicht aktualisiert werden. Bitte erneut versuchen.",
+      "errorDelete": "Gewohnheit konnte nicht gelöscht werden. Bitte erneut versuchen.",
+      "errorComplete": "Gewohnheit konnte nicht als erledigt markiert werden. Bitte erneut versuchen.",
+      "errorUncomplete": "Markierung konnte nicht aufgehoben werden. Bitte erneut versuchen."
+    }
   },
   "goals": {
     "title": "Deine Ziele",
@@ -163,6 +175,14 @@
       "na": "N/A",
       "daysCompleteValue": "{completionCount} von {target}",
       "pluralDays": "{count, plural, one {# Tag} other {# Tage}}"
+    },
+    "toasts": {
+      "created": "Ziel erfolgreich erstellt.",
+      "updated": "Ziel erfolgreich aktualisiert.",
+      "deleted": "Ziel erfolgreich gelöscht.",
+      "errorCreate": "Ziel konnte nicht erstellt werden. Bitte erneut versuchen.",
+      "errorUpdate": "Ziel konnte nicht aktualisiert werden. Bitte erneut versuchen.",
+      "errorDelete": "Ziel konnte nicht gelöscht werden. Bitte erneut versuchen."
     }
   },
   "progress": {

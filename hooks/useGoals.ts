@@ -8,6 +8,7 @@ import { GoalFormValues } from "@/lib/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { HABITS_KEY } from "./useHabits";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 export const GOALS_KEY = ["goals"];
 
@@ -16,37 +17,40 @@ export function useGoals() {
 }
 
 export function useCreateGoal() {
+  const t = useTranslations("goals.toasts");
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (data: GoalFormValues) => createGoalAction(data),
     onSuccess: () => {
-      toast.success("Goal created successfully!");
+      toast.success(t("created"));
       queryClient.invalidateQueries({ queryKey: GOALS_KEY });
       queryClient.invalidateQueries({ queryKey: HABITS_KEY });
     },
     onError: () => {
-      toast.error("Failed to create goal. Please try again.");
+      toast.error(t("errorCreate"));
     },
   });
 }
 
 export function useDeleteGoal() {
+  const t = useTranslations("goals.toasts");
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (goal_id: string) => deleteGoalAction(goal_id),
     onSuccess: () => {
-      toast.success("Goal deleted successfully!");
+      toast.success(t("deleted"));
       queryClient.invalidateQueries({ queryKey: GOALS_KEY });
     },
     onError: () => {
-      toast.error("Failed to delete goal. Please try again.");
+      toast.error(t("errorDelete"));
     },
   });
 }
 
 export function useEditGoal() {
+  const t = useTranslations("goals.toasts");
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -62,12 +66,12 @@ export function useEditGoal() {
     } & GoalFormValues) =>
       updateGoalAction(goal_id, habit_id, start_date, data),
     onSuccess: () => {
-      toast.success("Goal updated successfully!");
+      toast.success(t("updated"));
       queryClient.invalidateQueries({ queryKey: GOALS_KEY });
       queryClient.invalidateQueries({ queryKey: HABITS_KEY });
     },
     onError: () => {
-      toast.error("Failed to update goal. Please try again.");
+      toast.error(t("errorUpdate"));
     },
   });
 }

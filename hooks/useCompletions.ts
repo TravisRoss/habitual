@@ -20,6 +20,7 @@ import {
 } from "@tanstack/react-query";
 import { fetchCompletionsForUser } from "@/app/_lib/actions";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 export const COMPLETIONS_KEY = ["completions"];
 
@@ -58,6 +59,7 @@ export function useCompletionCountForHabit(habit_id: string) {
 }
 
 export function useCreateCompletion() {
+  const t = useTranslations("habits.toasts");
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({
@@ -70,16 +72,17 @@ export function useCreateCompletion() {
       date: string;
     }) => createCompletionAction(habit_id, user_id, date),
     onSuccess: () => {
-      toast.success("Habit marked as complete!");
+      toast.success(t("completed"));
       queryClient.invalidateQueries({ queryKey: COMPLETIONS_KEY });
     },
     onError: () => {
-      toast.error("Failed to mark habit as complete. Please try again.");
+      toast.error(t("errorComplete"));
     },
   });
 }
 
 export function useDeleteCompletion() {
+  const t = useTranslations("habits.toasts");
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({
@@ -92,11 +95,11 @@ export function useDeleteCompletion() {
       date: string;
     }) => deleteCompletionAction(habit_id, user_id, date),
     onSuccess: () => {
-      toast.success("Habit marked as incomplete!");
+      toast.success(t("uncompleted"));
       queryClient.invalidateQueries({ queryKey: COMPLETIONS_KEY });
     },
     onError: () => {
-      toast.error("Failed to unmark habit as complete. Please try again.");
+      toast.error(t("errorUncomplete"));
     },
   });
 }
