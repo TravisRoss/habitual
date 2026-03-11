@@ -45,8 +45,8 @@ export default async function Page() {
           <div className="space-y-4">
             <AppearanceDialog />
             <WeekStartsOnDialog defaultValue={weekStartsOn} />
-            <SignOutDialog isSetting={true} />
             <LanguageDialog currentLocale={locale} />
+            <SignOutDialog isSetting={true} />
           </div>
         </DashboardCard>
 
