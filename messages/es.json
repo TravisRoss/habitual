@@ -176,6 +176,7 @@
       "yearly": "Anual"
     },
     "goalsPage": {
+      "title": "Todos los objetivos",
       "filters": {
         "all": "Todos",
         "active": "Activos",

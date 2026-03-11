@@ -4,7 +4,7 @@ import CircularProgress from "@/components/features/progress/CircularProgress";
 import { ReportSelect } from "@/components/features/progress/ProgressSelect";
 import { ReportPeriod } from "@/types";
 import { useState } from "react";
-import DashboardLayout from "@/components/features/shared/DashboardLayout";
+import PageLayout from "@/components/features/shared/PageLayout";
 import DashboardCard from "@/components/features/shared/DashboardCard";
 import GoalReportList from "@/components/features/goals/GoalReportList";
 import SeeAllButton from "@/components/features/shared/SeeAllButton";
@@ -21,7 +21,7 @@ export default function Page() {
   const t = useTranslations("progress");
 
   return (
-    <DashboardLayout
+    <PageLayout
       title={t("title")}
       titleAction={<ReportSelect value={period} onChange={setPeriod} />}
     >
@@ -46,6 +46,6 @@ export default function Page() {
         <GoalReportList isPreview={true} />
       </DashboardCard>
       <CreateGoalButton />
-    </DashboardLayout>
+    </PageLayout>
   );
 }

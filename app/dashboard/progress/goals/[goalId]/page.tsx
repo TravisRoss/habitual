@@ -3,9 +3,8 @@
 import { calcEndDate, formatIsoDate } from "@/app/_lib/utils";
 import { CustomMonthCaption } from "@/components/features/goals/CustomMonthCaption";
 import GoalTable from "@/components/features/goals/GoalTable";
-import BackButton from "@/components/features/shared/BackButton";
 import DashboardCard from "@/components/features/shared/DashboardCard";
-import DashboardLayout from "@/components/features/shared/DashboardLayout";
+import PageLayout from "@/components/features/shared/PageLayout";
 import { Badge } from "@/components/ui/badge";
 import { Calendar } from "@/components/ui/calendar";
 import { Spinner } from "@/components/ui/spinner";
@@ -60,8 +59,11 @@ export default function Page({
   );
 
   return (
-    <DashboardLayout title={goal.name}>
-      <BackButton label={tDetail("backToGoals")} href="/dashboard/progress/goals" />
+    <PageLayout
+      title={goal.name}
+      back={tDetail("backToGoals")}
+      backHref="/dashboard/progress/goals"
+    >
       <DashboardCard>
         <div className="flex flex-col gap-3">
           <div className="flex justify-between">
@@ -107,6 +109,6 @@ export default function Page({
           completionCount={completionCount}
         />
       </DashboardCard>
-    </DashboardLayout>
+    </PageLayout>
   );
 }

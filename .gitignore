@@ -50,3 +50,6 @@ storybook-static
 
 # declaration files from next-intl
 messages/*.d.json.ts
+
+.claude
+.agents/*

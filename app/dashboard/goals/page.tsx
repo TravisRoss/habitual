@@ -1,15 +1,18 @@
 import { CreateGoalButton } from "@/components/features/goals/CreateGoalButton";
 import GoalsList from "@/components/features/goals/GoalsList";
-import SubPageLayout from "@/components/features/shared/SubPageLayout";
+import PageLayout from "@/components/features/shared/PageLayout";
 import { getTranslations } from "next-intl/server";
 
 export default async function page() {
-  const t = await getTranslations("goals");
+  const [t, tCommon] = await Promise.all([
+    getTranslations("goals"),
+    getTranslations("common"),
+  ]);
 
   return (
-    <SubPageLayout title={t("title")}>
+    <PageLayout title={t("title")} back={tCommon("backToDashboard")}>
       <GoalsList />
       <CreateGoalButton />
-    </SubPageLayout>
+    </PageLayout>
   );
 }

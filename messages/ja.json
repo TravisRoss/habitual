@@ -176,6 +176,7 @@
       "yearly": "年間"
     },
     "goalsPage": {
+      "title": "すべての目標",
       "filters": {
         "all": "すべて",
         "active": "進行中",

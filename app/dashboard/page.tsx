@@ -21,7 +21,7 @@ import { dateToIsoStr } from "../_lib/utils";
 import GoalsList from "@/components/features/goals/GoalsList";
 import { CreateGoalButton } from "@/components/features/goals/CreateGoalButton";
 import SeeAllButton from "@/components/features/shared/SeeAllButton";
-import DashboardLayout from "@/components/features/shared/DashboardLayout";
+import PageLayout from "@/components/features/shared/PageLayout";
 import DashboardCard from "@/components/features/shared/DashboardCard";
 import { PREVIEW_LIMIT } from "../_lib/constants";
 import { getTranslations } from "next-intl/server";
@@ -72,7 +72,7 @@ export default async function Dashboard() {
   const userName = session.user?.name ?? "";
 
   return (
-    <DashboardLayout title={t("greeting", { name: userName })}>
+    <PageLayout title={t("greeting", { name: userName })}>
       <Banner />
 
       <HydrationBoundary state={dehydrate(queryClient)}>
@@ -100,6 +100,6 @@ export default async function Dashboard() {
       </HydrationBoundary>
 
       <CreateGoalButton />
-    </DashboardLayout>
+    </PageLayout>
   );
 }

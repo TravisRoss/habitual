@@ -176,6 +176,7 @@
       "yearly": "Yearly"
     },
     "goalsPage": {
+      "title": "All Goals",
       "filters": {
         "all": "All",
         "active": "Active",

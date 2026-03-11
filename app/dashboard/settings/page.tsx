@@ -1,7 +1,7 @@
 import { auth } from "@/app/_lib/auth";
 import { settingsNavLinks } from "@/app/_config/nav";
 import DashboardCard from "@/components/features/shared/DashboardCard";
-import SubPageLayout from "@/components/features/shared/SubPageLayout";
+import PageLayout from "@/components/features/shared/PageLayout";
 import { AppearanceDialog } from "@/components/features/settings/AppearanceDialog";
 import { WeekStartsOnDialog } from "@/components/features/settings/WeekStartsOnDialog";
 import { itemCls } from "@/components/features/settings/SettingItem";
@@ -20,11 +20,14 @@ export default async function Page() {
     ? await getProfileById(session.user.id)
     : null;
   const weekStartsOn = (profile?.week_starts_on ?? 0) as 0 | 1;
-  const t = await getTranslations("settings");
+  const [t, tCommon] = await Promise.all([
+    getTranslations("settings"),
+    getTranslations("common"),
+  ]);
   const locale = await getLocale();
 
   return (
-    <SubPageLayout title={t("title")}>
+    <PageLayout title={t("title")} back={tCommon("backToDashboard")}>
       <div className="space-y-4">
         <DashboardCard>
           <div className="space-y-4">
@@ -51,6 +54,6 @@ export default async function Page() {
           {t("version", { version })}
         </p>
       </div>
-    </SubPageLayout>
+    </PageLayout>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import GoalReportList from "@/components/features/goals/GoalReportList";
-import BackButton from "@/components/features/shared/BackButton";
+import PageLayout from "@/components/features/shared/PageLayout";
 import {
   Select,
   SelectContent,
@@ -16,7 +16,7 @@ import { useTranslations } from "next-intl";
 export default function Page() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const t = useTranslations("progress.goalsPage.filters");
+  const t = useTranslations("progress.goalsPage");
   const tDetail = useTranslations("progress.goalDetail");
 
   function handleSelectChange(value: string) {
@@ -30,24 +30,27 @@ export default function Page() {
   }
 
   return (
-    <>
-      <div className="flex justify-between items-center mb-2">
-        <BackButton label={tDetail("backToProgress")} href="/dashboard/progress" />
+    <PageLayout
+      title={t("title")}
+      back={tDetail("backToProgress")}
+      backHref="/dashboard/progress"
+      titleAction={
         <Select
           value={searchParams.get("status") || "all"}
           onValueChange={handleSelectChange}
         >
           <SelectTrigger>
-            <SelectValue placeholder={t("all")} />
+            <SelectValue placeholder={t("filters.all")} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">{t("all")}</SelectItem>
-            <SelectItem value="active">{t("active")}</SelectItem>
-            <SelectItem value="completed">{t("completed")}</SelectItem>
+            <SelectItem value="all">{t("filters.all")}</SelectItem>
+            <SelectItem value="active">{t("filters.active")}</SelectItem>
+            <SelectItem value="completed">{t("filters.completed")}</SelectItem>
           </SelectContent>
         </Select>
-      </div>
+      }
+    >
       <GoalReportList />
-    </>
+    </PageLayout>
   );
 }
