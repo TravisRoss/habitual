@@ -10,6 +10,7 @@ import SignUpFields from "@/components/features/auth/SignUpFields";
 import { updateProfileAction } from "@/app/_lib/actions";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 
 type Props = {
   defaultValues: Pick<SignUpFormValues, "name" | "email">;
@@ -17,13 +18,16 @@ type Props = {
 
 export default function AccountForm({ defaultValues }: Props) {
   const t = useTranslations("settings.accountPage");
+  const tCommon = useTranslations("common");
   const tFields = useTranslations("auth.fields");
+  const router = useRouter();
 
   const {
     register,
     handleSubmit,
     setError,
     formState: { errors, isSubmitting },
+    reset,
   } = useForm<SignUpFormValues>({
     resolver: zodResolver(signUpSchema),
     defaultValues,
@@ -36,6 +40,11 @@ export default function AccountForm({ defaultValues }: Props) {
     }
 
     toast.success(t("success"));
+  }
+
+  function handleReset() {
+    reset();
+    router.push("/dashboard/settings");
   }
 
   return (
@@ -60,9 +69,18 @@ export default function AccountForm({ defaultValues }: Props) {
         <Button
           type="submit"
           disabled={isSubmitting}
+          variant="outline"
           className="w-full h-12.25 font-nunito font-extrabold text-sm text-white border-0 btn-primary"
         >
           {isSubmitting ? <Spinner className="size-4" /> : t("saveButton")}
+        </Button>
+        <Button
+          variant="outline"
+          disabled={isSubmitting}
+          className="w-full h-12.25 font-nunito font-extrabold text-sm text-white border-0"
+          onClick={handleReset}
+        >
+          {isSubmitting ? <Spinner className="size-4" /> : tCommon("cancel")}
         </Button>
       </FieldGroup>
     </form>
