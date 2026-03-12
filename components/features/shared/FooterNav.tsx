@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { navLinks } from "@/app/_config/nav";
 import { useTranslations } from "next-intl";
 import { NAV_LABEL_KEYS } from "@/app/_lib/constants";
+import { haptic } from "@/app/_lib/haptics";
 
 export default function FooterNav() {
   const pathname = usePathname();
@@ -21,6 +22,7 @@ export default function FooterNav() {
               <Link
                 href={href}
                 prefetch={true}
+                onTouchStart={() => haptic()}
                 className={cn(
                   "flex flex-col items-center justify-center gap-1 w-full py-1 text-xs font-nunito font-semibold transition-colors touch-manipulation select-none",
                   isActive

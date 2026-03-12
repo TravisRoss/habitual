@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import {
   Item,
@@ -18,6 +17,7 @@ import BurgerMenu from "../shared/BurgerMenu";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { HabitCheckbox } from "./HabitCheckbox";
 import { useTranslations } from "next-intl";
+import { haptic } from "@/app/_lib/haptics";
 
 type HabitItemProps = {
   habit: Habit;
@@ -49,6 +49,7 @@ export default function HabitItem({
   const handleCheckboxChange = (val: boolean) => {
     setCompleted(val);
     onToggleComplete(val);
+    haptic();
   };
 
   return (
