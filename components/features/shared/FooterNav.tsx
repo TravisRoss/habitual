@@ -13,15 +13,15 @@ export default function FooterNav() {
 
   return (
     <nav className="md:hidden bg-card border-t border-border pb-[env(safe-area-inset-bottom)]">
-      <ul className="flex justify-around p-2">
+      <ul className="flex py-2">
         {navLinks.map(({ href, icon: Icon }) => {
           const isActive = pathname === href;
           return (
-            <li key={href}>
+            <li key={href} className="flex-1">
               <Link
                 href={href}
                 className={cn(
-                  "flex flex-col items-center gap-1 px-8 py-1 text-xs font-nunito font-semibold transition-colors",
+                  "flex flex-col items-center justify-center gap-1 w-full py-1 text-xs font-nunito font-semibold transition-colors touch-manipulation select-none",
                   isActive
                     ? "text-brand"
                     : "text-muted-foreground hover:text-brand",
