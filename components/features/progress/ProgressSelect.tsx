@@ -15,7 +15,7 @@ type ReportSelect = {
   onChange: (value: ReportPeriod) => void;
 };
 
-export function ReportSelect({ value, onChange }: ReportSelect) {
+export default function ReportSelect({ value, onChange }: ReportSelect) {
   const t = useTranslations("progress.periods");
 
   const ReportPeriods: { value: ReportPeriod; label: string }[] = [
@@ -31,7 +31,11 @@ export function ReportSelect({ value, onChange }: ReportSelect) {
       </SelectTrigger>
       <SelectContent className="w-full max-w-50" position="popper">
         {ReportPeriods.map((option) => (
-          <SelectItem className="w-full max-w-50" key={option.value} value={option.value}>
+          <SelectItem
+            className="w-full max-w-50"
+            key={option.value}
+            value={option.value}
+          >
             {option.label}
           </SelectItem>
         ))}

@@ -44,7 +44,10 @@ export default function GoalReportListItem({ goal }: GoalReportListItemProps) {
         <ItemContent>
           <ItemTitle>{goal.name}</ItemTitle>
           <ItemDescription>
-            {tGoals("progress", { completions: String(completionCount), target: String(goal.target) })}
+            {tGoals("progress", {
+              completions: String(completionCount),
+              target: String(goal.target),
+            })}
           </ItemDescription>
         </ItemContent>
         <ItemActions>
