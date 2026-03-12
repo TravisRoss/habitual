@@ -1,4 +1,5 @@
-export type HabitFrequency = "daily" | "weekly" | "custom";
+export const HABIT_FREQUENCIES = ["daily", "custom"] as const;
+export type HabitFrequency = (typeof HABIT_FREQUENCIES)[number];
 
 export type Profile = {
   id: string;
@@ -65,7 +66,7 @@ export type NewHabitInput = {
   type: "new";
   name: string;
   description?: string;
-  frequency?: "daily" | "weekly" | "custom";
+  frequency?: HabitFrequency;
   color?: string;
   weekly_target?: number;
   target_days?: number[];

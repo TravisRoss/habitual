@@ -23,10 +23,12 @@ import {
 } from "@/components/ui/select";
 import { ColorPicker } from "../shared/ColorPicker";
 import { TargetDaysCheckboxes } from "../shared/TargetDaysCheckboxes";
-import { WeeklyTargetSelect } from "../shared/WeeklyTargetSelect";
 import { inputClass } from "@/app/_lib/constants";
+import { HABIT_FREQUENCIES, type HabitFrequency } from "@/types";
 import type { HabitFormValues } from "@/lib/zod";
 import { useTranslations } from "next-intl";
+
+const FREQ_TRANSLATION_KEY = { daily: "daily", custom: "customDays" } as const;
 
 type HabitFieldsProps = {
   control: Control<HabitFormValues>;
@@ -76,7 +78,6 @@ export function HabitFields({
               value={f.value}
               onValueChange={(v) => {
                 f.onChange(v);
-                if (v === "weekly") setValue("weekly_target", 1);
                 if (v === "custom") setValue("target_days", []);
               }}
             >
@@ -84,29 +85,17 @@ export function HabitFields({
                 <SelectValue placeholder={tFields("frequencyPlaceholder")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="daily">{tFreq("daily")}</SelectItem>
-                <SelectItem value="weekly">{tFreq("weekly")}</SelectItem>
-                <SelectItem value="custom">{tFreq("customDays")}</SelectItem>
+                {HABIT_FREQUENCIES.map((freq: HabitFrequency) => (
+                  <SelectItem key={freq} value={freq}>
+                    {tFreq(FREQ_TRANSLATION_KEY[freq])}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           )}
         />
         <FieldError errors={[errors.frequency]} />
       </Field>
-
-      {frequency === "weekly" && (
-        <Field>
-          <FieldLabel htmlFor="weekly_target">{tFields("timesPerWeek")}</FieldLabel>
-          <Controller
-            name="weekly_target"
-            control={control}
-            render={({ field: f }) => (
-              <WeeklyTargetSelect value={f.value} onChange={f.onChange} />
-            )}
-          />
-          <FieldError errors={[errors.weekly_target]} />
-        </Field>
-      )}
 
       {frequency === "custom" && (
         <Field>

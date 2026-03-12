@@ -4,6 +4,7 @@ import {
   Completion,
   Goal,
   Habit,
+  HabitFrequency,
   Period,
   Profile,
   Streak,
@@ -158,7 +159,7 @@ export async function upsertProfile(data: {
 export async function insertHabit(data: {
   user_id: string;
   name: string;
-  frequency?: "daily" | "weekly" | "custom";
+  frequency?: HabitFrequency | null;
   description?: string | null;
   color?: string;
   weekly_target?: number | null;
@@ -188,7 +189,7 @@ export async function updateHabit(
   habit_id: string,
   data: {
     name?: string;
-    frequency?: "daily" | "weekly" | "custom";
+    frequency?: HabitFrequency;
     description?: string | null;
     color?: string;
     weekly_target?: number | null;

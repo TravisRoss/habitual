@@ -416,7 +416,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      habit_frequency: "daily" | "weekly" | "custom"
+      habit_frequency: "daily" | "custom"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -544,7 +544,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      habit_frequency: ["daily", "weekly", "custom"],
+      habit_frequency: ["daily", "custom"],
     },
   },
 } as const

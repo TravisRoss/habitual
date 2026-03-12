@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { HABIT_FREQUENCIES } from "@/types";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type T = (key: any) => string;
@@ -33,7 +34,7 @@ export const createHabitSchema = (t: T) =>
     .object({
       name: z.string().min(1, t("nameRequired")).max(50, t("nameMax")),
       description: z.string().max(100, t("descriptionMax")).optional(),
-      frequency: z.enum(["daily", "weekly", "custom"]),
+      frequency: z.enum(HABIT_FREQUENCIES),
       color: z.string().optional(),
       weekly_target: z
         .number()
@@ -45,14 +46,6 @@ export const createHabitSchema = (t: T) =>
         .array(z.number().int().min(0).max(6, t("selectDays")))
         .optional(),
     })
-    .refine(
-      (data) => {
-        if (data.frequency !== "weekly") return true;
-        const n = data.weekly_target;
-        return typeof n === "number" && n >= 1 && n <= 7;
-      },
-      { message: t("weeklyTarget"), path: ["weekly_target"] },
-    )
     .refine(
       (data) => {
         if (data.frequency !== "custom") return true;
