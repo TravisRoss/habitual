@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
 import { PasswordInput } from "@/components/ui/PasswordInput";
 import { OAuthSection } from "@/components/features/auth/OAuthSection";
-import { loginSchema, type LoginFormValues } from "@/lib/zod";
+import { createLoginSchema, type LoginFormValues } from "@/lib/zod";
 import { useTranslations } from "next-intl";
 
 const inputClass = "bg-card border-border focus-visible:ring-brand focus-visible:border-brand text-foreground aria-invalid:border-red-400";
@@ -23,13 +23,14 @@ export default function LoginForm({ resetSuccess }: { resetSuccess?: boolean }) 
   const router = useRouter();
   const t = useTranslations("auth.login");
   const tFields = useTranslations("auth.fields");
+  const tVal = useTranslations("validation");
   const {
     register,
     control,
     handleSubmit,
     setError,
     formState: { errors, isSubmitting },
-  } = useForm<LoginFormValues>({ resolver: zodResolver(loginSchema) });
+  } = useForm<LoginFormValues>({ resolver: zodResolver(createLoginSchema(tVal)) });
 
   async function onSubmit(data: LoginFormValues) {
     const result = await signIn("credentials", {

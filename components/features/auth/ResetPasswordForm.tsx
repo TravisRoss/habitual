@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { PasswordInput } from "@/components/ui/PasswordInput";
 import { Spinner } from "@/components/ui/spinner";
-import { resetPasswordSchema, type ResetPasswordFormValues } from "@/lib/zod";
+import { createResetPasswordSchema, type ResetPasswordFormValues } from "@/lib/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -21,13 +21,14 @@ export default function ResetPasswordForm({ token }: Props) {
   const router = useRouter();
   const t = useTranslations("auth.resetPassword");
   const tFields = useTranslations("auth.fields");
+  const tVal = useTranslations("validation");
 
   const {
     register,
     handleSubmit,
     setError,
     formState: { errors, isSubmitting },
-  } = useForm<ResetPasswordFormValues>({ resolver: zodResolver(resetPasswordSchema) });
+  } = useForm<ResetPasswordFormValues>({ resolver: zodResolver(createResetPasswordSchema(tVal)) });
 
   async function onSubmit(data: ResetPasswordFormValues) {
     const result = await resetPasswordAction(token, data.password);

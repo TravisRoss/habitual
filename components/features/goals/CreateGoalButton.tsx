@@ -5,17 +5,19 @@ import { CirclePlus } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useHabits } from "@/hooks/useHabits";
-import { goalSchema, GoalFormValues } from "@/lib/zod";
+import { GoalFormValues, createGoalSchema } from "@/lib/zod";
 import { useCreateGoal } from "@/hooks/useGoals";
 import { GoalDialog } from "./GoalDialog";
+import { useTranslations } from "next-intl";
 
 export function CreateGoalButton() {
   const [open, setOpen] = useState(false);
   const createGoalMutation = useCreateGoal();
   const { data: habits } = useHabits();
+  const tVal = useTranslations("validation");
 
   const form = useForm<GoalFormValues>({
-    resolver: zodResolver(goalSchema),
+    resolver: zodResolver(createGoalSchema(tVal)),
     defaultValues: { period: "30", habit_frequency: "daily" },
   });
 

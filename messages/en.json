@@ -256,6 +256,23 @@
     "completedToday": "completed today!",
     "progress": "{completed} of {total} habits"
   },
+  "validation": {
+    "emailInvalid": "Enter a valid email",
+    "passwordMin": "Password must be at least 8 characters",
+    "passwordUppercase": "Must include an uppercase letter",
+    "passwordNumber": "Must include a number",
+    "passwordConfirm": "Please confirm your password",
+    "passwordsNoMatch": "Passwords don't match",
+    "nameRequired": "Name is required",
+    "nameMax": "Name must be less than 50 characters",
+    "descriptionMax": "Description must be less than 100 characters",
+    "goalNameRequired": "Goal name is required",
+    "habitNameRequired": "Habit name is required",
+    "habitNameMax": "Habit name must be less than 50 characters",
+    "weeklyTarget": "Select how many days per week (1–7)",
+    "selectDay": "Select a day of the week",
+    "selectDays": "Select at least one day"
+  },
   "notFound": {
     "title": "Page not found.",
     "description": "The page you're looking for doesn't exist or has been moved.",

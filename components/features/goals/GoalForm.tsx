@@ -3,7 +3,8 @@
 import { useForm, type UseFormReturn } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldGroup } from "@/components/ui/field";
-import { goalSchema, type GoalFormValues } from "@/lib/zod";
+import { createGoalSchema, type GoalFormValues } from "@/lib/zod";
+import { useTranslations } from "next-intl";
 import { FormShell } from "../shared/FormShell";
 import { GoalFields } from "./GoalFields";
 
@@ -24,8 +25,9 @@ export function GoalForm({
   submitLabel = "Save",
   onCancel,
 }: GoalFormProps) {
+  const tVal = useTranslations("validation");
   const internalForm = useForm<GoalFormValues>({
-    resolver: zodResolver(goalSchema),
+    resolver: zodResolver(createGoalSchema(tVal)),
     defaultValues: {
       period: "30",
       habit_frequency: "daily",

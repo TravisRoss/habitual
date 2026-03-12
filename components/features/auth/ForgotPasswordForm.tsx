@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
-import { forgotPasswordSchema, type ForgotPasswordFormValues } from "@/lib/zod";
+import { createForgotPasswordSchema, type ForgotPasswordFormValues } from "@/lib/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useState } from "react";
@@ -19,13 +19,14 @@ export default function ForgotPasswordForm() {
   const [sent, setSent] = useState(false);
   const t = useTranslations("auth.forgotPassword");
   const tFields = useTranslations("auth.fields");
+  const tVal = useTranslations("validation");
 
   const {
     register,
     handleSubmit,
     setError,
     formState: { errors, isSubmitting },
-  } = useForm<ForgotPasswordFormValues>({ resolver: zodResolver(forgotPasswordSchema) });
+  } = useForm<ForgotPasswordFormValues>({ resolver: zodResolver(createForgotPasswordSchema(tVal)) });
 
   async function onSubmit(data: ForgotPasswordFormValues) {
     const result = await requestPasswordResetAction(data.email);

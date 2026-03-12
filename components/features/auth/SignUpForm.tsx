@@ -12,19 +12,20 @@ import { Spinner } from "@/components/ui/spinner";
 import { OAuthSection } from "./OAuthSection";
 import SignUpFields from "./SignUpFields";
 import { signUpWithCredentials } from "@/app/_lib/actions";
-import { signUpSchema, type SignUpFormValues } from "@/lib/zod";
+import { createSignUpSchema, type SignUpFormValues } from "@/lib/zod";
 import { useTranslations } from "next-intl";
 
 
 export default function SignUpForm() {
   const router = useRouter();
   const t = useTranslations("auth.signup");
+  const tVal = useTranslations("validation");
   const {
     register,
     handleSubmit,
     setError,
     formState: { errors, isSubmitting },
-  } = useForm<SignUpFormValues>({ resolver: zodResolver(signUpSchema) });
+  } = useForm<SignUpFormValues>({ resolver: zodResolver(createSignUpSchema(tVal)) });
 
   async function onSubmit(data: SignUpFormValues) {
     const result = await signUpWithCredentials({

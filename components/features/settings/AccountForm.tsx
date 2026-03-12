@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { FieldGroup } from "@/components/ui/field";
 import { Spinner } from "@/components/ui/spinner";
-import { signUpSchema, type SignUpFormValues } from "@/lib/zod";
+import { createSignUpSchema, type SignUpFormValues } from "@/lib/zod";
 import SignUpFields from "@/components/features/auth/SignUpFields";
 import { updateProfileAction } from "@/app/_lib/actions";
 import { toast } from "sonner";
@@ -20,6 +20,7 @@ export default function AccountForm({ defaultValues }: Props) {
   const t = useTranslations("settings.accountPage");
   const tCommon = useTranslations("common");
   const tFields = useTranslations("auth.fields");
+  const tVal = useTranslations("validation");
   const router = useRouter();
 
   const {
@@ -29,7 +30,7 @@ export default function AccountForm({ defaultValues }: Props) {
     formState: { errors, isSubmitting },
     reset,
   } = useForm<SignUpFormValues>({
-    resolver: zodResolver(signUpSchema),
+    resolver: zodResolver(createSignUpSchema(tVal)),
     defaultValues,
   });
 

@@ -297,5 +297,22 @@
       "fri": "金",
       "sat": "土"
     }
+  },
+  "validation": {
+    "emailInvalid": "有効なメールアドレスを入力してください",
+    "passwordMin": "パスワードは8文字以上である必要があります",
+    "passwordUppercase": "大文字を含める必要があります",
+    "passwordNumber": "数字を含める必要があります",
+    "passwordConfirm": "パスワードを確認してください",
+    "passwordsNoMatch": "パスワードが一致しません",
+    "nameRequired": "名前は必須です",
+    "nameMax": "名前は50文字以内にしてください",
+    "descriptionMax": "説明は100文字以内にしてください",
+    "goalNameRequired": "目標名は必須です",
+    "habitNameRequired": "習慣名は必須です",
+    "habitNameMax": "習慣名は50文字以内にしてください",
+    "weeklyTarget": "週に何日行うか選択してください（1〜7）",
+    "selectDay": "曜日を選択してください",
+    "selectDays": "少なくとも1日選択してください"
   }
 }

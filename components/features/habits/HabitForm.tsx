@@ -2,7 +2,8 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { habitSchema, type HabitFormValues } from "@/lib/zod";
+import { createHabitSchema, type HabitFormValues } from "@/lib/zod";
+import { useTranslations } from "next-intl";
 import { FormShell } from "../shared/FormShell";
 import { HabitFields } from "./HabitFields";
 
@@ -21,6 +22,7 @@ export function HabitForm({
   submitLabel = "Save",
   onCancel,
 }: HabitFormProps) {
+  const tVal = useTranslations("validation");
   const {
     control,
     watch,
@@ -29,7 +31,7 @@ export function HabitForm({
     setError,
     formState: { errors, isSubmitting },
   } = useForm<HabitFormValues>({
-    resolver: zodResolver(habitSchema),
+    resolver: zodResolver(createHabitSchema(tVal)),
     defaultValues: {
       frequency: "daily",
       weekly_target: 1,
