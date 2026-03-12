@@ -1,5 +1,3 @@
-import { RadialBarChart, RadialBar, PolarAngleAxis } from "recharts";
-
 interface CircularProgressProps {
   value: number;
   size?: number;
@@ -16,47 +14,43 @@ export default function CircularProgress({
   textColor = "#f59e0b",
 }: CircularProgressProps) {
   const center = size / 2;
+  const radius = center - thickness / 2;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference - (value / 100) * circumference;
 
   return (
-    <div className="**:outline-none **:focus:outline-none">
-      <RadialBarChart
-        width={size}
-        height={size}
+    <svg width={size} height={size}>
+      <circle
         cx={center}
         cy={center}
-        innerRadius={center - thickness}
-        outerRadius={center}
-        startAngle={90}
-        endAngle={-270}
-        data={[{ value }]}
-        responsive
-        tabIndex={-1}
+        r={radius}
+        fill="none"
+        stroke="#e5e7eb"
+        strokeWidth={thickness}
+      />
+      <circle
+        cx={center}
+        cy={center}
+        r={radius}
+        fill="none"
+        stroke={fillColor}
+        strokeWidth={thickness}
+        strokeDasharray={circumference}
+        strokeDashoffset={strokeDashoffset}
+        strokeLinecap="round"
+        transform={`rotate(-90 ${center} ${center})`}
+        style={{ transition: "stroke-dashoffset 0.5s ease" }}
+      />
+      <text
+        x={center}
+        y={center + 5}
+        textAnchor="middle"
+        fill={textColor}
+        fontWeight="bold"
+        fontSize={16}
       >
-        <PolarAngleAxis
-          type="number"
-          domain={[0, 100]}
-          angleAxisId={0}
-          tick={false}
-        />
-        <RadialBar
-          background={{ fill: "#e5e7eb" }}
-          dataKey="value"
-          angleAxisId={0}
-          fill={fillColor}
-          cornerRadius={10}
-        />
-        <text
-          x={center}
-          y={center + 5}
-          textAnchor="middle"
-          fill={textColor ? textColor : "#f59e0b"}
-          fontWeight="bold"
-          fontSize={16}
-          className="font-bold"
-        >
-          {value}%
-        </text>
-      </RadialBarChart>
-    </div>
+        {value}%
+      </text>
+    </svg>
   );
 }
