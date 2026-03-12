@@ -1,35 +1,20 @@
-"use client";
-
-import dynamic from "next/dynamic";
+import { getLocale, getTranslations } from "next-intl/server";
 import { settingsNavLinks } from "@/app/_config/nav";
 import DashboardCard from "@/components/features/shared/DashboardCard";
 import PageLayout from "@/components/features/shared/PageLayout";
 import { itemCls } from "@/components/features/settings/SettingItem";
-import { Skeleton } from "@/components/ui/skeleton";
+import { SettingsDialogsLoader } from "@/components/features/settings/SettingsDialogsLoader";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { version } from "@/package.json";
 import { SETTINGS_LABEL_KEYS } from "@/app/_lib/constants";
-import { useLocale, useTranslations } from "next-intl";
 
-const SettingsDialogs = dynamic(
-  () => import("@/components/features/settings/SettingsDialogs"),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="space-y-4">
-        {Array.from({ length: 4 }).map((_, i) => (
-          <Skeleton key={i} className="h-14 w-full rounded-md" />
-        ))}
-      </div>
-    ),
-  },
-);
-
-export default function Page() {
-  const locale = useLocale();
-  const t = useTranslations("settings");
-  const tCommon = useTranslations("common");
+export default async function Page() {
+  const [t, tCommon, locale] = await Promise.all([
+    getTranslations("settings"),
+    getTranslations("common"),
+    getLocale(),
+  ]);
 
   return (
     <PageLayout title={t("title")} back={tCommon("backToDashboard")}>
@@ -48,7 +33,7 @@ export default function Page() {
 
         <DashboardCard>
           <div className="space-y-4">
-            <SettingsDialogs currentLocale={locale} />
+            <SettingsDialogsLoader currentLocale={locale} />
           </div>
         </DashboardCard>
 
