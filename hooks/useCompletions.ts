@@ -11,7 +11,7 @@ import {
   dateToIsoStr,
   getReportPeriodDates,
 } from "@/app/_lib/utils";
-import { ReportPeriod } from "@/types";
+import { Completion, ReportPeriod } from "@/types";
 import {
   keepPreviousData,
   useMutation,
@@ -58,48 +58,26 @@ export function useCompletionCountForHabit(habit_id: string) {
   });
 }
 
-export function useCreateCompletion() {
-  const t = useTranslations("habits.toasts");
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: ({
-      habit_id,
-      user_id,
-      date,
-    }: {
-      habit_id: string;
-      user_id: string;
-      date: string;
-    }) => createCompletionAction(habit_id, user_id, date),
-    onSuccess: () => {
-      toast.success(t("completed"));
-      queryClient.invalidateQueries({ queryKey: COMPLETIONS_KEY });
-    },
-    onError: () => {
-      toast.error(t("errorComplete"));
-    },
-  });
-}
+type CompletionVars = { habit_id: string; user_id: string; date: string; done: boolean };
 
-export function useDeleteCompletion() {
+export function useToggleCompletion() {
   const t = useTranslations("habits.toasts");
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({
-      habit_id,
-      user_id,
-      date,
-    }: {
-      habit_id: string;
-      user_id: string;
-      date: string;
-    }) => deleteCompletionAction(habit_id, user_id, date),
-    onSuccess: () => {
-      toast.success(t("uncompleted"));
-      queryClient.invalidateQueries({ queryKey: COMPLETIONS_KEY });
+    mutationFn: ({ habit_id, user_id, date, done }: CompletionVars) =>
+      done
+        ? createCompletionAction(habit_id, user_id, date)
+        : deleteCompletionAction(habit_id, user_id, date),
+    onMutate: ({ habit_id, user_id, date, done }) => {
+      queryClient.setQueryData<Completion[]>([...COMPLETIONS_KEY, date], (old = []) =>
+        done
+          ? [...old, { id: "optimistic", habit_id, user_id, completed_on: date }]
+          : old.filter((c) => c.habit_id !== habit_id),
+      );
     },
-    onError: () => {
-      toast.error(t("errorUncomplete"));
+    onError: (_err, { done }) => toast.error(t(done ? "errorComplete" : "errorUncomplete")),
+    onSettled: (_data, _err, { date }) => {
+      queryClient.invalidateQueries({ queryKey: [...COMPLETIONS_KEY, date] });
     },
   });
 }

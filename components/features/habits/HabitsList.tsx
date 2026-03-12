@@ -6,10 +6,7 @@ import {
   useEditHabit,
   useHabitsForDate,
 } from "@/hooks/useHabits";
-import {
-  useCreateCompletion,
-  useDeleteCompletion,
-} from "@/hooks/useCompletions";
+import { useToggleCompletion } from "@/hooks/useCompletions";
 import { useCompletionsForDate } from "@/hooks/useCompletions";
 import { useStreakMap } from "@/hooks/useStreaks";
 import ListSkeleton from "../shared/ListSkeleton";
@@ -33,8 +30,7 @@ export default function HabitsList({
 
   const editMutation = useEditHabit();
   const deleteMutation = useDeleteHabit();
-  const createCompletionMutation = useCreateCompletion();
-  const deleteCompletionMutation = useDeleteCompletion();
+  const toggleCompletion = useToggleCompletion();
 
   const completedHabitIds = new Set(completions.map((c) => c.habit_id));
   const streakMap = useStreakMap();
@@ -60,21 +56,9 @@ export default function HabitsList({
           habit={habit}
           isCompleted={completedHabitIds.has(habit.id)}
           streak={streakMap.get(habit.id)}
-          onToggleComplete={(done) => {
-            if (done) {
-              createCompletionMutation.mutate({
-                habit_id: habit.id,
-                user_id: habit.user_id,
-                date,
-              });
-            } else {
-              deleteCompletionMutation.mutate({
-                habit_id: habit.id,
-                user_id: habit.user_id,
-                date,
-              });
-            }
-          }}
+          onToggleComplete={(done) =>
+            toggleCompletion.mutate({ habit_id: habit.id, user_id: habit.user_id, date, done })
+          }
           onEdit={(data) =>
             editMutation.mutateAsync({ habit_id: habit.id, ...data })
           }
