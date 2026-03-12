@@ -27,10 +27,12 @@ export function AppearanceDialog() {
     { key: "system", label: t("theme.system") },
   ] as const;
 
+  const currentTheme = THEMES.find((t) => t.key === theme)?.label;
+
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <SettingItem icon={Sun} label={t("appearance")} value={theme} />
+        <SettingItem icon={Sun} label={t("appearance")} value={currentTheme} />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

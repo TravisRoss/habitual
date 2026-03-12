@@ -26,13 +26,15 @@ export function LanguageDialog({ currentLocale }: { currentLocale: string }) {
     { label: t("languages.ja"), value: "ja" },
   ] as const;
 
+  const currentLanguage = OPTIONS.find((o) => o.value === currentLocale)?.label;
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <SettingItem
           icon={Languages}
           label={t("language")}
-          value={currentLocale}
+          value={currentLanguage}
         />
       </DialogTrigger>
       <DialogContent>
