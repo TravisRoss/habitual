@@ -20,6 +20,7 @@ export default function FooterNav() {
             <li key={href} className="flex-1">
               <Link
                 href={href}
+                prefetch={true}
                 className={cn(
                   "flex flex-col items-center justify-center gap-1 w-full py-1 text-xs font-nunito font-semibold transition-colors touch-manipulation select-none",
                   isActive
