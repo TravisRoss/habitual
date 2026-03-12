@@ -1,23 +1,35 @@
+"use client";
+
+import dynamic from "next/dynamic";
 import { settingsNavLinks } from "@/app/_config/nav";
 import DashboardCard from "@/components/features/shared/DashboardCard";
 import PageLayout from "@/components/features/shared/PageLayout";
-import { AppearanceDialog } from "@/components/features/settings/AppearanceDialog";
-import { WeekStartsOnDialog } from "@/components/features/settings/WeekStartsOnDialog";
 import { itemCls } from "@/components/features/settings/SettingItem";
+import { Skeleton } from "@/components/ui/skeleton";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { version } from "@/package.json";
-import SignOutDialog from "@/components/features/auth/SignOutDialog";
-import { getLocale, getTranslations } from "next-intl/server";
 import { SETTINGS_LABEL_KEYS } from "@/app/_lib/constants";
-import { LanguageDialog } from "@/components/features/settings/LanguageDialog";
+import { useLocale, useTranslations } from "next-intl";
 
-export default async function Page() {
-  const [t, tCommon, locale] = await Promise.all([
-    getTranslations("settings"),
-    getTranslations("common"),
-    getLocale(),
-  ]);
+const SettingsDialogs = dynamic(
+  () => import("@/components/features/settings/SettingsDialogs"),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="space-y-4">
+        {Array.from({ length: 4 }).map((_, i) => (
+          <Skeleton key={i} className="h-14 w-full rounded-md" />
+        ))}
+      </div>
+    ),
+  },
+);
+
+export default function Page() {
+  const locale = useLocale();
+  const t = useTranslations("settings");
+  const tCommon = useTranslations("common");
 
   return (
     <PageLayout title={t("title")} back={tCommon("backToDashboard")}>
@@ -36,10 +48,7 @@ export default async function Page() {
 
         <DashboardCard>
           <div className="space-y-4">
-            <AppearanceDialog />
-            <WeekStartsOnDialog />
-            <LanguageDialog currentLocale={locale} />
-            <SignOutDialog isSetting={true} />
+            <SettingsDialogs currentLocale={locale} />
           </div>
         </DashboardCard>
 
