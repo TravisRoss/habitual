@@ -10,14 +10,11 @@ import GoalReportList from "@/components/features/goals/GoalReportList";
 import SeeAllButton from "@/components/features/shared/SeeAllButton";
 import { CreateGoalButton } from "@/components/features/goals/CreateGoalButton";
 import { useOverallCompletionRate } from "@/hooks/useCompletions";
-import { useGoals } from "@/hooks/useGoals";
-import { PREVIEW_LIMIT } from "@/app/_lib/constants";
 import { useTranslations } from "next-intl";
 
 export default function Page() {
   const [period, setPeriod] = useState<ReportPeriod>("Weekly");
   const { data: overallRate = 0 } = useOverallCompletionRate(period);
-  const { data: goals } = useGoals();
   const t = useTranslations("progress");
 
   return (
@@ -36,12 +33,7 @@ export default function Page() {
 
       <DashboardCard
         title={t("yourProgress")}
-        action={
-          goals &&
-          goals.length > PREVIEW_LIMIT && (
-            <SeeAllButton href="/dashboard/progress/goals" />
-          )
-        }
+        action={<SeeAllButton href="/dashboard/progress/goals" />}
       >
         <GoalReportList isPreview={true} />
       </DashboardCard>
