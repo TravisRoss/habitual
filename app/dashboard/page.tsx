@@ -3,5 +3,6 @@ import { Dashboard } from "./Dashboard";
 
 export default async function Page() {
   const session = await auth();
-  return <Dashboard userName={session?.user?.name ?? ""} />;
+  const firstName = session?.user?.name?.split(" ")[0] ?? "";
+  return <Dashboard userName={firstName} />;
 }
