@@ -204,7 +204,7 @@
         "active": "Activos",
         "completed": "Completados"
       },
-      "empty": "No hay objetivos {status}"
+      "empty": "Ningún objetivo coincide con el filtro activo"
     },
     "goalDetail": {
       "notFound": "Objetivo o hábito no encontrado.",

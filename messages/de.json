@@ -204,7 +204,7 @@
         "active": "Aktiv",
         "completed": "Abgeschlossen"
       },
-      "empty": "Es gibt keine {status} Ziele"
+      "empty": "Keine Ziele entsprechen dem aktiven Filter"
     },
     "goalDetail": {
       "notFound": "Ziel oder Gewohnheit nicht gefunden.",

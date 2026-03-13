@@ -33,9 +33,7 @@ export default function GoalReportList({ isPreview }: GoalReportListProps) {
   return (
     <ul className="flex flex-col gap-2">
       {filteredGoals?.length === 0 && (
-        <li className="text-sm text-muted-foreground">
-          {t("empty", { status: filteredStatus ?? "" })}
-        </li>
+        <li className="text-sm text-muted-foreground">{t("empty")}</li>
       )}
       {goalList?.map((goal) => (
         <GoalReportListItem key={goal.id} goal={goal} />

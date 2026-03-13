@@ -204,7 +204,7 @@
         "active": "Active",
         "completed": "Completed"
       },
-      "empty": "There are no {status} goals"
+      "empty": "No goals match the active filter"
     },
     "goalDetail": {
       "notFound": "Goal or habit not found.",

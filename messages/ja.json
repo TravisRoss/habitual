@@ -204,7 +204,7 @@
         "active": "進行中",
         "completed": "完了済み"
       },
-      "empty": "{status}の目標はありません"
+      "empty": "アクティブなフィルターに一致する目標はありません"
     },
     "goalDetail": {
       "notFound": "目標または習慣が見つかりません。",
