@@ -124,7 +124,7 @@
   },
   "goals": {
     "title": "Your Goals",
-    "empty": "No goals yet. Create some to stay motivated!",
+    "empty": "No goals yet. Create some to stay motivated.",
     "dialog": {
       "createTitle": "Create New Habit Goal",
       "editTitle": "Edit Goal",
@@ -253,9 +253,9 @@
     "backToDashboard": "Back to Dashboard"
   },
   "banner": {
-    "noCompletions": "No habits completed yet!",
+    "noCompletions": "No habits completed yet",
     "letsGetStarted": "Let's get started 💪",
-    "completedToday": "completed today!",
+    "completedToday": "completed today",
     "progress": "{completed} of {total} habits"
   },
   "validation": {

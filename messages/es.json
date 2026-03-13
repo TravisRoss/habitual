@@ -124,7 +124,7 @@
   },
   "goals": {
     "title": "Tus objetivos",
-    "empty": "Aún no hay objetivos. ¡Crea algunos para mantenerte motivado!",
+    "empty": "Aún no hay objetivos. Crea algunos para mantenerte motivado.",
     "dialog": {
       "createTitle": "Crear nuevo objetivo de hábito",
       "editTitle": "Editar objetivo",
@@ -253,7 +253,7 @@
     "backToDashboard": "Volver al inicio"
   },
   "banner": {
-    "noCompletions": "¡Aún no has completado ningún hábito!",
+    "noCompletions": "Aún no has completado ningún hábito.",
     "letsGetStarted": "¡Vamos a empezar! 💪",
     "completedToday": "completados hoy.",
     "progress": "{completed} de {total} hábitos"

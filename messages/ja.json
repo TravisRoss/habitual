@@ -124,7 +124,7 @@
   },
   "goals": {
     "title": "目標一覧",
-    "empty": "目標がまだありません。モチベーションを保つために目標を作成しましょう！",
+    "empty": "目標がまだありません。モチベーションを保つために目標を作成しましょう。",
     "dialog": {
       "createTitle": "新しい習慣目標を作成",
       "editTitle": "目標を編集",
@@ -253,9 +253,9 @@
     "backToDashboard": "ホームに戻る"
   },
   "banner": {
-    "noCompletions": "まだ習慣を完了していません！",
+    "noCompletions": "まだ習慣を完了していません。",
     "letsGetStarted": "さあ始めましょう 💪",
-    "completedToday": "本日達成！",
+    "completedToday": "本日達成。",
     "progress": "{total}個中{completed}個の習慣"
   },
   "notFound": {

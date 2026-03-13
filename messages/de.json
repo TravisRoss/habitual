@@ -124,7 +124,7 @@
   },
   "goals": {
     "title": "Deine Ziele",
-    "empty": "Noch keine Ziele. Erstelle welche, um motiviert zu bleiben!",
+    "empty": "Noch keine Ziele. Erstelle welche, um motiviert zu bleiben.",
     "dialog": {
       "createTitle": "Neues Gewohnheitsziel erstellen",
       "editTitle": "Ziel bearbeiten",
@@ -253,9 +253,9 @@
     "backToDashboard": "Zurück zum Dashboard"
   },
   "banner": {
-    "noCompletions": "Noch keine Gewohnheiten erledigt!",
+    "noCompletions": "Noch keine Gewohnheiten erledigt",
     "letsGetStarted": "Lass uns anfangen 💪",
-    "completedToday": "heute erledigt!",
+    "completedToday": "heute erledigt",
     "progress": "{completed} von {total} Gewohnheiten"
   },
   "notFound": {
