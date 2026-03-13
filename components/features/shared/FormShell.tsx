@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components/ui/spinner";
+import { Button, SubmitButton } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 
 type FormShellProps = {
@@ -40,13 +39,13 @@ export function FormShell({
       )}
 
       <div className="flex gap-2 pt-2">
-        <Button
+        <SubmitButton
           type="submit"
-          disabled={isSubmitting}
+          isSubmitting={isSubmitting}
           className="btn-primary border-0 font-nunito text-sm font-extrabold text-white"
         >
-          {isSubmitting ? <Spinner className="size-4" /> : (submitLabel ?? t("save"))}
-        </Button>
+          {submitLabel ?? t("save")}
+        </SubmitButton>
         {onCancel ? (
           <Button
             type="button"
