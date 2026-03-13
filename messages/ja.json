@@ -83,6 +83,7 @@
       "noHabitsDescription": "最初の習慣を作成してルーティンを始めましょう。"
     },
     "createButton": "習慣を作成",
+    "addGoal": "目標を追加",
     "dialog": {
       "createTitle": "習慣を追加",
       "editTitle": "習慣を編集"
@@ -104,7 +105,7 @@
     },
     "delete": {
       "title": "この習慣を削除しますか？",
-      "description": "習慣とそのすべての完了履歴が完全に削除されます。この操作は元に戻せません。",
+      "description": "習慣、すべての完了履歴、および関連する目標が完全に削除されます。この操作は元に戻せません。",
       "confirm": "削除"
     },
     "streak": "🔥 {count}",
@@ -127,6 +128,7 @@
     "dialog": {
       "createTitle": "新しい習慣目標を作成",
       "editTitle": "目標を編集",
+      "addGoalTitle": "目標を追加",
       "createButton": "新規作成",
       "saveButton": "保存"
     },
@@ -158,7 +160,7 @@
     "progress": "{completions} / {target} 達成",
     "delete": {
       "title": "目標を削除しますか？",
-      "description": "目標とそれに関連する習慣が完全に削除されます。この操作は元に戻せません。",
+      "description": "目標が完全に削除されます。この操作は元に戻せません。",
       "confirm": "削除"
     },
     "status": {

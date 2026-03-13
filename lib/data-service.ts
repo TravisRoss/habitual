@@ -159,7 +159,7 @@ export async function upsertProfile(data: {
 export async function insertHabit(data: {
   user_id: string;
   name: string;
-  frequency?: HabitFrequency | null;
+  frequency?: HabitFrequency;
   description?: string | null;
   color?: string;
   weekly_target?: number | null;
@@ -218,6 +218,10 @@ export async function deleteHabit(
   habit_id: string,
 ): Promise<{ error: string | null }> {
   const supabase = createAdminClient();
+  // delete associated completion and goal
+  await supabase.from("completions").delete().eq("habit_id", habit_id);
+  await supabase.from("goals").delete().eq("habit_id", habit_id);
+
   const { error } = await supabase.from("habits").delete().eq("id", habit_id);
 
   return { error: error?.message ?? null };
@@ -432,22 +436,7 @@ export async function deleteGoal(
   goal_id: string,
 ): Promise<{ error: string | null }> {
   const supabase = createAdminClient();
-  const { data: goal, error: fetchError } = await supabase
-    .from("goals")
-    .select("habit_id")
-    .eq("id", goal_id)
-    .single();
-
-  if (fetchError || !goal.habit_id)
-    return { error: fetchError?.message ?? "Goal has no associated habit." };
-
   const { error } = await supabase.from("goals").delete().eq("id", goal_id);
-
-  // delete the associated habit as well to keep data consistent, since a goal must have a habit
-  if (!error) {
-    await supabase.from("habits").delete().eq("id", goal.habit_id);
-  }
-
   return { error: error?.message ?? null };
 }
 

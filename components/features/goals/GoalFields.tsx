@@ -18,7 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type { GoalFormValues } from "@/lib/zod";
-import { inputClass, DAYS } from "@/app/_lib/constants";
+import { inputClass } from "@/app/_lib/constants";
 import { TargetDaysCheckboxes } from "../shared/TargetDaysCheckboxes";
 import { useTranslations } from "next-intl";
 
@@ -38,7 +38,6 @@ export function GoalFields({
   setValue,
 }: GoalFieldsProps) {
   const frequency = watch("habit_frequency");
-  const targetDays = watch("habit_target_days");
   const tFields = useTranslations("goals.fields");
   const tPeriods = useTranslations("goals.timePeriods");
   const tFreq = useTranslations("goals.frequency");
@@ -104,7 +103,9 @@ export function GoalFields({
       </Field>
 
       <Field>
-        <FieldLabel htmlFor="habit_frequency">{tFields("frequency")}</FieldLabel>
+        <FieldLabel htmlFor="habit_frequency">
+          {tFields("frequency")}
+        </FieldLabel>
         <Controller
           name="habit_frequency"
           control={control}
@@ -121,7 +122,6 @@ export function GoalFields({
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="daily">{tFreq("everyday")}</SelectItem>
-                <SelectItem value="weekly">{tFreq("weekly")}</SelectItem>
                 <SelectItem value="custom">{tFreq("customDays")}</SelectItem>
               </SelectContent>
             </Select>
@@ -129,32 +129,6 @@ export function GoalFields({
         />
         <FieldError errors={[errors.habit_frequency as never]} />
       </Field>
-
-      {frequency === "weekly" && (
-        <Field>
-          <FieldLabel htmlFor="habit_target_days_weekly">
-            {tFields("dayOfWeek")}
-          </FieldLabel>
-          <Select
-            value={targetDays?.length === 1 ? String(targetDays[0]) : ""}
-            onValueChange={(v) =>
-              setValue("habit_target_days", v !== "" ? [Number(v)] : undefined)
-            }
-          >
-            <SelectTrigger id="habit_target_days_weekly" className={inputClass}>
-              <SelectValue placeholder={tFields("dayOfWeekPlaceholder")} />
-            </SelectTrigger>
-            <SelectContent>
-              {DAYS.map(([index, label]) => (
-                <SelectItem key={index} value={String(index)}>
-                  {label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <FieldError errors={[errors.habit_target_days as never]} />
-        </Field>
-      )}
 
       {frequency === "custom" && (
         <Field>

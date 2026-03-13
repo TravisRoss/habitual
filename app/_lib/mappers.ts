@@ -23,7 +23,6 @@ export function goalToFormValues(goal: Goal, habit?: Habit): GoalFormValues {
     habit_name: habit?.name ?? "",
     period: goal.period,
     habit_frequency: frequency,
-    habit_target_days:
-      frequency === "weekly" || frequency === "custom" ? targetDays : undefined,
+    habit_target_days: frequency === "custom" ? targetDays : undefined,
   };
 }

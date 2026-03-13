@@ -52,8 +52,7 @@ export const Weekly: Story = {
   args: {
     habit: {
       ...baseHabit,
-      frequency: "weekly",
-      weekly_target: 3,
+      frequency: "daily",
       color: "#6366f1",
     },
   },

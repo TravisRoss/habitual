@@ -83,6 +83,7 @@
       "noHabitsDescription": "Empieza a construir tu rutina creando tu primer hábito."
     },
     "createButton": "Crear hábito",
+    "addGoal": "Añadir objetivo",
     "dialog": {
       "createTitle": "Añadir hábito",
       "editTitle": "Editar hábito"
@@ -104,7 +105,7 @@
     },
     "delete": {
       "title": "¿Seguro que quieres eliminar este hábito?",
-      "description": "Esto eliminará permanentemente el hábito y todo su historial. Esta acción no se puede deshacer.",
+      "description": "Esto eliminará permanentemente el hábito, todo su historial y cualquier objetivo asociado. Esta acción no se puede deshacer.",
       "confirm": "Eliminar"
     },
     "streak": "🔥 {count}",
@@ -127,6 +128,7 @@
     "dialog": {
       "createTitle": "Crear nuevo objetivo de hábito",
       "editTitle": "Editar objetivo",
+      "addGoalTitle": "Añadir objetivo",
       "createButton": "Crear nuevo",
       "saveButton": "Guardar"
     },
@@ -158,7 +160,7 @@
     "progress": "{completions} de {target} completados",
     "delete": {
       "title": "¿Eliminar objetivo?",
-      "description": "Esto eliminará permanentemente el objetivo y su hábito asociado. Esta acción no se puede deshacer.",
+      "description": "Esto eliminará permanentemente el objetivo. Esta acción no se puede deshacer.",
       "confirm": "Eliminar"
     },
     "status": {

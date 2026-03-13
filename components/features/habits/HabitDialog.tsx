@@ -31,7 +31,7 @@ export function HabitDialog({ habit, action, open, onOpenChange, onSubmit }: Hab
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent onCloseAutoFocus={(e) => e.preventDefault()}>
+      <DialogContent aria-describedby={undefined} onCloseAutoFocus={(e) => e.preventDefault()}>
         <DialogHeader>
           <DialogTitle>{action === "edit" ? t("editTitle") : t("createTitle")}</DialogTitle>
         </DialogHeader>

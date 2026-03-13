@@ -7,8 +7,11 @@ import {
   fetchHabitsForDateAction,
 } from "@/app/_lib/actions";
 import type { HabitFormValues } from "@/lib/zod";
+import { COMPLETIONS_KEY } from "./useCompletions";
+import { GOALS_KEY } from "./useGoals";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
+import { Habit } from "@/types";
 
 export const HABITS_KEY = ["habits"];
 
@@ -60,11 +63,22 @@ export function useDeleteHabit() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (habit_id: string) => deleteHabitAction(habit_id),
+    onMutate: async (habit_id) => {
+      await queryClient.cancelQueries({ queryKey: HABITS_KEY });
+      const previous = queryClient.getQueryData<Habit[]>(HABITS_KEY);
+      queryClient.setQueryData<Habit[]>(HABITS_KEY, (old = []) =>
+        old.filter((h) => h.id !== habit_id),
+      );
+      return { previous };
+    },
     onSuccess: () => {
       toast.success(t("deleted"));
       queryClient.invalidateQueries({ queryKey: HABITS_KEY });
+      queryClient.invalidateQueries({ queryKey: COMPLETIONS_KEY });
+      queryClient.invalidateQueries({ queryKey: GOALS_KEY });
     },
-    onError: () => {
+    onError: (_err, _id, context) => {
+      if (context?.previous) queryClient.setQueryData(HABITS_KEY, context.previous);
       toast.error(t("errorDelete"));
     },
   });

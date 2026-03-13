@@ -31,9 +31,15 @@ import {
   getProfileById,
 } from "@/lib/data-service";
 import { getResend } from "@/lib/resend";
-import type { Completion, Habit, Profile, Streak } from "@/types";
+import type {
+  Completion,
+  Habit,
+  HabitFrequency,
+  Profile,
+  Streak,
+} from "@/types";
 import { revalidatePath } from "next/cache";
-import { GoalFormValues } from "@/lib/zod";
+import { GoalFormValues, GoalForHabitFormValues } from "@/lib/zod";
 import { dateToIsoStr } from "@/app/_lib/utils";
 import { cookies } from "next/headers";
 
@@ -95,7 +101,7 @@ export async function updateProfileAction(data: {
 export async function createHabit(data: {
   name: string;
   description?: string;
-  frequency?: "daily" | "weekly" | "custom";
+  frequency?: HabitFrequency;
   color?: string;
   weekly_target?: number;
   target_days: number[];
@@ -111,8 +117,7 @@ export async function createHabit(data: {
     description: data.description || null,
     frequency: data.frequency,
     color: data.color,
-    weekly_target:
-      data.frequency === "weekly" ? (data.weekly_target ?? null) : null,
+    weekly_target: null,
     target_days: data.frequency === "custom" ? data.target_days : [],
   });
 
@@ -214,7 +219,7 @@ export async function editHabitAction(data: {
   habit_id: string;
   name?: string;
   description?: string;
-  frequency?: "daily" | "weekly" | "custom";
+  frequency?: HabitFrequency;
   color?: string;
   weekly_target?: number | null;
   target_days?: number[];
@@ -313,6 +318,35 @@ export async function createGoalAction(
   const { error } = await insertGoal({
     user_id: session.user.id,
     habit_id: habitId,
+    name: data.name,
+    target,
+    period: data.period,
+    start_date: dateToIsoStr(new Date()),
+  });
+
+  revalidatePath("/dashboard");
+  return error ? { error: "Failed to create goal. Please try again." } : {};
+}
+
+export async function createGoalForHabitAction(
+  habit: { id: string; frequency: HabitFrequency; target_days: number[] },
+  data: GoalForHabitFormValues,
+): Promise<{ error?: string }> {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return { error: "You must be logged in to create a goal." };
+  }
+
+  const daysPerWeek =
+    habit.frequency === "daily" ? 7 : (habit.target_days?.length ?? 1);
+  const target = Math.max(
+    1,
+    Math.floor((Number(data.period) / 7) * daysPerWeek),
+  );
+
+  const { error } = await insertGoal({
+    user_id: session.user.id,
+    habit_id: habit.id,
     name: data.name,
     target,
     period: data.period,

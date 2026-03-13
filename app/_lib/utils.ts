@@ -135,13 +135,6 @@ export function calculateHabitCompletionRate(
     return date >= startDate && date <= endDate;
   }).length;
 
-  if (habit.frequency === "weekly") {
-    const totalDays =
-      Math.round((endDate.getTime() - startDate.getTime()) / DAY_MS) + 1;
-    const weekCount = Math.ceil(totalDays / 7);
-    return calcPercentage(completedCount, weekCount);
-  }
-
   let scheduledDays = 0;
   const current = new Date(startDate);
 
@@ -209,4 +202,3 @@ export function calculateOverallCompletionRate(
 }
 
 export const pluralDays = (n: number) => `${n} Day${n !== 1 ? "s" : ""}`;
-

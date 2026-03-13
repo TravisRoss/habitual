@@ -1,10 +1,12 @@
 import {
   createGoalAction,
+  createGoalForHabitAction,
   deleteGoalAction,
   fetchGoalsAction,
   updateGoalAction,
 } from "@/app/_lib/actions";
-import { GoalFormValues } from "@/lib/zod";
+import { GoalFormValues, GoalForHabitFormValues } from "@/lib/zod";
+import type { HabitFrequency } from "@/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { HABITS_KEY } from "./useHabits";
 import { toast } from "sonner";
@@ -26,6 +28,26 @@ export function useCreateGoal() {
       toast.success(t("created"));
       queryClient.invalidateQueries({ queryKey: GOALS_KEY });
       queryClient.invalidateQueries({ queryKey: HABITS_KEY });
+    },
+    onError: () => {
+      toast.error(t("errorCreate"));
+    },
+  });
+}
+
+export function useCreateGoalForHabit() {
+  const t = useTranslations("goals.toasts");
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({
+      habit,
+      ...data
+    }: { habit: { id: string; frequency: HabitFrequency; target_days: number[] } } & GoalForHabitFormValues) =>
+      createGoalForHabitAction(habit, data),
+    onSuccess: () => {
+      toast.success(t("created"));
+      queryClient.invalidateQueries({ queryKey: GOALS_KEY });
     },
     onError: () => {
       toast.error(t("errorCreate"));

@@ -28,11 +28,11 @@ const MOCK_HABITS: Habit[] = [
     id: "habit-3",
     user_id: "user-1",
     name: "Meditate",
-    frequency: "weekly" as const,
+    frequency: "custom" as const,
     description: null,
     color: null,
     weekly_target: 3,
-    target_days: [],
+    target_days: [1,2,3,4,5],
   },
 ];
 
