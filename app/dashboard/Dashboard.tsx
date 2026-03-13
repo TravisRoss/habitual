@@ -6,17 +6,28 @@ import { dateToIsoStr } from "../_lib/utils";
 import SeeAllButton from "@/components/features/shared/SeeAllButton";
 import PageLayout from "@/components/features/shared/PageLayout";
 import DashboardCard from "@/components/features/shared/DashboardCard";
+import { useHabitsForDate } from "@/hooks/useHabits";
+import { useGoals } from "@/hooks/useGoals";
 
 const Banner = dynamic(
-  () => import("@/components/features/shared/Banner").then((m) => ({ default: m.Banner })),
+  () =>
+    import("@/components/features/shared/Banner").then((m) => ({
+      default: m.Banner,
+    })),
   { ssr: false },
 );
-const HabitsList = dynamic(() => import("@/components/features/habits/HabitsList"), {
-  ssr: false,
-});
-const GoalsList = dynamic(() => import("@/components/features/goals/GoalsList"), {
-  ssr: false,
-});
+const HabitsList = dynamic(
+  () => import("@/components/features/habits/HabitsList"),
+  {
+    ssr: false,
+  },
+);
+const GoalsList = dynamic(
+  () => import("@/components/features/goals/GoalsList"),
+  {
+    ssr: false,
+  },
+);
 const CreateGoalButton = dynamic(
   () =>
     import("@/components/features/goals/CreateGoalButton").then((m) => ({
@@ -33,18 +44,22 @@ export function Dashboard({ userName }: DashboardProps) {
   const t = useTranslations("dashboard");
   const today = dateToIsoStr();
 
+  const { data: habits = [] } = useHabitsForDate(today);
+  const { data: goals = [] } = useGoals();
+  console.log(habits);
+
   return (
     <PageLayout title={t("greeting", { name: userName })}>
       <Banner />
       <DashboardCard
         title={t("todaysHabits")}
-        action={<SeeAllButton href="/dashboard/habits" />}
+        action={habits.length > 0 && <SeeAllButton href="/dashboard/habits" />}
       >
         <HabitsList date={today} isPreview />
       </DashboardCard>
       <DashboardCard
         title={t("yourGoals")}
-        action={<SeeAllButton href="/dashboard/goals" />}
+        action={goals.length > 0 && <SeeAllButton href="/dashboard/goals" />}
       >
         <GoalsList isPreview />
       </DashboardCard>

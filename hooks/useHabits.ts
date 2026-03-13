@@ -11,7 +11,7 @@ import { COMPLETIONS_KEY } from "./useCompletions";
 import { GOALS_KEY } from "./useGoals";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
-import { Habit } from "@/types";
+import { Completion, Goal, Habit } from "@/types";
 
 export const HABITS_KEY = ["habits"];
 
@@ -69,6 +69,13 @@ export function useDeleteHabit() {
       queryClient.setQueryData<Habit[]>(HABITS_KEY, (old = []) =>
         old.filter((h) => h.id !== habit_id),
       );
+      queryClient.setQueryData<Completion[]>(["completions"], (old = []) =>
+        old.filter((c) => c.habit_id !== habit_id),
+      );
+      queryClient.setQueryData<Goal[]>(["goals"], (old = []) =>
+        old.filter((g) => g.habit_id !== habit_id),
+      );
+
       return { previous };
     },
     onSuccess: () => {
@@ -78,7 +85,8 @@ export function useDeleteHabit() {
       queryClient.invalidateQueries({ queryKey: GOALS_KEY });
     },
     onError: (_err, _id, context) => {
-      if (context?.previous) queryClient.setQueryData(HABITS_KEY, context.previous);
+      if (context?.previous)
+        queryClient.setQueryData(HABITS_KEY, context.previous);
       toast.error(t("errorDelete"));
     },
   });

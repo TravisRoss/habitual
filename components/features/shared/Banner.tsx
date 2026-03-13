@@ -11,11 +11,9 @@ export function Banner() {
   const { data: completions = [] } = useCompletionsForDate(today);
 
   return (
-    habits.length > 0 && (
-      <BannerUI
-        habitsCount={habits.length}
-        completionsCount={completions.length}
-      />
-    )
+    <BannerUI
+      habitsCount={habits.length}
+      completionsCount={completions.length}
+    />
   );
 }

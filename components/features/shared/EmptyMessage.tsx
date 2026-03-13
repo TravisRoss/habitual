@@ -27,7 +27,7 @@ export default function EmptyMessage() {
           <Sparkles className="h-7 w-7" />
         </EmptyMedia>
         <EmptyTitle className="font-nunito font-bold text-xl text-foreground">
-          {t("noHabitsEver")}
+          {t("noHabits")}
         </EmptyTitle>
         <EmptyDescription className="font-nunito text-muted-foreground max-w-60">
           {t("noHabitsDescription")}

@@ -79,8 +79,8 @@
     "title": "Deine Gewohnheiten",
     "empty": {
       "noHabitsToday": "An diesem Tag gibt es keine Gewohnheiten.",
-      "noHabitsEver": "Noch keine Gewohnheiten",
-      "noHabitsDescription": "Beginne mit dem Aufbau deiner Routine, indem du deine erste Gewohnheit erstellst."
+      "noHabits": "Du hast noch keine Gewohnheiten.",
+      "noHabitsDescription": "Sie erscheinen hier, nachdem du ein Ziel erstellt hast."
     },
     "createButton": "Gewohnheit erstellen",
     "addGoal": "Ziel hinzufügen",
@@ -124,7 +124,7 @@
   },
   "goals": {
     "title": "Deine Ziele",
-    "empty": "Noch keine Ziele. Erstelle welche, um motiviert zu bleiben.",
+    "empty": "Erstelle dein erstes Gewohnheitsziel, um deinen Fortschritt zu verfolgen.",
     "dialog": {
       "createTitle": "Neues Gewohnheitsziel erstellen",
       "editTitle": "Ziel bearbeiten",

@@ -79,8 +79,8 @@
     "title": "習慣一覧",
     "empty": {
       "noHabitsToday": "この日に習慣はありません。",
-      "noHabitsEver": "習慣がまだありません",
-      "noHabitsDescription": "最初の習慣を作成してルーティンを始めましょう。"
+      "noHabits": "まだ習慣がありません。",
+      "noHabitsDescription": "目標を作成すると、ここに表示されます。"
     },
     "createButton": "習慣を作成",
     "addGoal": "目標を追加",
@@ -124,7 +124,7 @@
   },
   "goals": {
     "title": "目標一覧",
-    "empty": "目標がまだありません。モチベーションを保つために目標を作成しましょう。",
+    "empty": "最初の習慣目標を作成して、進捗を記録しましょう。",
     "dialog": {
       "createTitle": "新しい習慣目標を作成",
       "editTitle": "目標を編集",

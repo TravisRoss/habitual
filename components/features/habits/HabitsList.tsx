@@ -4,6 +4,7 @@ import HabitItem from "@/components/features/habits/HabitItem";
 import {
   useDeleteHabit,
   useEditHabit,
+  useHabits,
   useHabitsForDate,
 } from "@/hooks/useHabits";
 import { useToggleCompletion } from "@/hooks/useCompletions";
@@ -21,8 +22,9 @@ export default function HabitsList({
   date,
   isPreview = false,
 }: HabitsListProps) {
-  const { data: habits = [], isLoading: habitsLoading } =
+  const { data: todaysHabits = [], isLoading: habitsLoading } =
     useHabitsForDate(date);
+  const { data: allHabits = [] } = useHabits();
   const { data: completions = [], isLoading: completionsLoading } =
     useCompletionsForDate(date);
 
@@ -34,22 +36,27 @@ export default function HabitsList({
 
   const completedHabitIds = new Set(completions.map((c) => c.habit_id));
   const streakMap = useStreakMap();
-  const previewHabits = habits.slice(0, 3);
-  const habitList = isPreview ? previewHabits : habits;
+  const previewHabits = todaysHabits.slice(0, 3);
+  const habitList = isPreview ? previewHabits : todaysHabits;
 
   const t = useTranslations("habits.empty");
 
   if (isLoading) {
-    return <ListSkeleton count={habits.length} />;
+    return <ListSkeleton count={todaysHabits.length} />;
   }
 
   return (
     <ul className="flex flex-col gap-2">
-      {habits.length === 0 && (
-        <p className="text-sm text-muted-foreground">
-          {t("noHabitsToday")}
-        </p>
-      )}
+      {allHabits.length === 0 ? (
+        <>
+          <li className="text-sm text-muted-foreground">
+            {t("noHabits")} {t("noHabitsDescription")}
+          </li>
+          <li className="text-sm text-muted-foreground"></li>
+        </>
+      ) : todaysHabits.length === 0 ? (
+        <li className="text-sm text-muted-foreground">{t("noHabitsToday")}</li>
+      ) : null}
       {habitList.map((habit) => (
         <HabitItem
           key={habit.id}
@@ -57,7 +64,12 @@ export default function HabitsList({
           isCompleted={completedHabitIds.has(habit.id)}
           streak={streakMap.get(habit.id)}
           onToggleComplete={(done) =>
-            toggleCompletion.mutate({ habit_id: habit.id, user_id: habit.user_id, date, done })
+            toggleCompletion.mutate({
+              habit_id: habit.id,
+              user_id: habit.user_id,
+              date,
+              done,
+            })
           }
           onEdit={(data) =>
             editMutation.mutateAsync({ habit_id: habit.id, ...data })

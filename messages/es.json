@@ -79,8 +79,8 @@
     "title": "Tus hábitos",
     "empty": {
       "noHabitsToday": "No hay hábitos para este día.",
-      "noHabitsEver": "Aún no hay hábitos",
-      "noHabitsDescription": "Empieza a construir tu rutina creando tu primer hábito."
+      "noHabits": "Aún no tienes ningún hábito.",
+      "noHabitsDescription": "Aparecerán aquí después de que crees un objetivo."
     },
     "createButton": "Crear hábito",
     "addGoal": "Añadir objetivo",
@@ -124,7 +124,7 @@
   },
   "goals": {
     "title": "Tus objetivos",
-    "empty": "Aún no hay objetivos. Crea algunos para mantenerte motivado.",
+    "empty": "Crea tu primer objetivo de hábito para empezar a seguir tu progreso.",
     "dialog": {
       "createTitle": "Crear nuevo objetivo de hábito",
       "editTitle": "Editar objetivo",

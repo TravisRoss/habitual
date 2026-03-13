@@ -79,8 +79,8 @@
     "title": "Your Habits",
     "empty": {
       "noHabitsToday": "There aren't any habits on this day.",
-      "noHabitsEver": "No habits yet",
-      "noHabitsDescription": "Start building your routine by creating your first habit."
+      "noHabits": "You don't have any habits yet.",
+      "noHabitsDescription": "They will appear here after you create a goal."
     },
     "createButton": "Create Habit",
     "addGoal": "Add Goal",
@@ -124,7 +124,7 @@
   },
   "goals": {
     "title": "Your Goals",
-    "empty": "No goals yet. Create some to stay motivated.",
+    "empty": "Create your first habit goal to start tracking your progress toward it.",
     "dialog": {
       "createTitle": "Create New Habit Goal",
       "editTitle": "Edit Goal",

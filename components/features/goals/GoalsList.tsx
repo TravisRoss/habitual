@@ -5,6 +5,7 @@ import { useDeleteGoal, useEditGoal, useGoals } from "@/hooks/useGoals";
 import { useHabits } from "@/hooks/useHabits";
 import ListSkeleton from "../shared/ListSkeleton";
 import { useTranslations } from "next-intl";
+import { CreateGoalButton } from "./CreateGoalButton";
 
 type GoalsListProps = {
   isPreview?: boolean;
@@ -21,6 +22,17 @@ export default function GoalsList({ isPreview = false }: GoalsListProps) {
 
   if (isLoading) {
     return <ListSkeleton count={goals.length} />;
+  }
+
+  if (goals.length === 0) {
+    return (
+      <ul className="flex flex-col gap-2">
+        <li className="text-sm text-muted-foreground">{t("empty")}</li>
+        <li>
+          <CreateGoalButton label={t("dialog.addGoalTitle")} />
+        </li>
+      </ul>
+    );
   }
 
   return (

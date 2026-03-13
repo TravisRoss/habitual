@@ -10,6 +10,7 @@ type BannerProps = {
 
 export default function Banner({ habitsCount, completionsCount }: BannerProps) {
   const t = useTranslations("banner");
+  const tHabits = useTranslations("habits");
 
   const percentage =
     habitsCount === 0 ? 0 : Math.round((completionsCount / habitsCount) * 100);
@@ -22,7 +23,14 @@ export default function Banner({ habitsCount, completionsCount }: BannerProps) {
         textColor="white"
       />
       <div className="text-white">
-        {completionsCount === 0 ? (
+        {habitsCount === 0 ? (
+          <>
+            <p className="md:text-2xl text-sm font-bold">
+              {tHabits("empty.noHabits")}
+            </p>
+            <p className="md:text-lg text-xs">{t("letsGetStarted")}</p>
+          </>
+        ) : completionsCount === 0 ? (
           <>
             <p className="md:text-2xl text-sm font-bold">
               {t("noCompletions")}

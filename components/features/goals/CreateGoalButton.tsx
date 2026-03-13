@@ -9,8 +9,17 @@ import { GoalFormValues, createGoalSchema } from "@/lib/zod";
 import { useCreateGoal } from "@/hooks/useGoals";
 import { GoalDialog } from "./GoalDialog";
 import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
-export function CreateGoalButton() {
+const commonClassNames = "bg-brand text-white p-3 cursor-pointer hover:bg-brand-dim transition-colors duration-300"
+
+type CreateGoalButtonProps = {
+  className?: string;
+  label?: string;
+};
+
+export function CreateGoalButton({ className, label }: CreateGoalButtonProps) {
   const [open, setOpen] = useState(false);
   const createGoalMutation = useCreateGoal();
   const { data: habits } = useHabits();
@@ -30,10 +39,23 @@ export function CreateGoalButton() {
 
   return (
     <>
-      <CirclePlus
-        className="fixed bottom-[calc(5rem+env(safe-area-inset-bottom))] right-6 md:bottom-6 h-12 w-12 rounded-full bg-brand text-white p-3 cursor-pointer hover:bg-brand-dim transition-colors duration-300"
-        onClick={() => setOpen(true)}
-      />
+      {label ? (
+        <Button className={cn(className, commonClassNames)} onClick={() => setOpen(true)}>
+          {label}
+        </Button>
+      ) : (
+        <CirclePlus
+          className={
+            className ??
+            cn(
+              "fixed bottom-[calc(5rem+env(safe-area-inset-bottom))] right-6 md:bottom-6 h-12 w-12 rounded-full",
+              commonClassNames,
+            )
+          }
+          onClick={() => setOpen(true)}
+        />
+      )}
+
       <GoalDialog
         form={form}
         action="create"
