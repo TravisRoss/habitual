@@ -2,11 +2,14 @@ import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
 import {
   deleteCompletion,
+  deleteHabit,
   getCompletionsByUserIdAndDate,
   getCompletionsByUserIdForDateRange,
+  getGoalsByUserId,
   getHabitsByUserId,
   getHabitsByUserIdAndDate,
   insertCompletion,
+  insertGoal,
   insertHabit,
 } from "./data-service";
 
@@ -149,6 +152,96 @@ describe("insertHabit / getHabitsByUserId", () => {
       name: "Integration Test Habit",
       frequency: "daily",
     });
+  });
+});
+
+describe("deleteHabit", () => {
+  // Track IDs so afterEach can clean up any habits that weren't deleted by the test itself
+  let testHabitIds: string[] = [];
+
+  afterEach(async () => {
+    if (testHabitIds.length > 0) {
+      const db = adminClient();
+      await db.from("goals").delete().in("habit_id", testHabitIds);
+      await db.from("completions").delete().in("habit_id", testHabitIds);
+      await db.from("habits").delete().in("id", testHabitIds);
+      testHabitIds = [];
+    }
+  });
+
+  async function createTestHabit(name = "Habit to Delete") {
+    const { id, error } = await insertHabit({
+      user_id: USER_ID,
+      name,
+      frequency: "daily",
+      target_days: [0, 1, 2, 3, 4, 5, 6],
+    });
+    if (!id || error) throw new Error(error ?? "Setup failed");
+    testHabitIds.push(id);
+    return id;
+  }
+
+  it("removes the habit — the habit is gone immediately after the call", async () => {
+    const id = await createTestHabit();
+
+    const { error } = await deleteHabit(id);
+    expect(error).toBeNull();
+
+    const habits = await getHabitsByUserId(USER_ID);
+    expect(habits?.find((h) => h.id === id)).toBeUndefined();
+  });
+
+  it("cascades to delete associated goals — the goal is gone in the same operation", async () => {
+    const id = await createTestHabit();
+    await insertGoal({
+      user_id: USER_ID,
+      habit_id: id,
+      name: "Run for 30 days",
+      target: 30,
+      period: "30",
+      start_date: "2024-03-01",
+    });
+
+    await deleteHabit(id);
+
+    const goals = await getGoalsByUserId(USER_ID);
+    expect(goals?.find((g) => g.habit_id === id)).toBeUndefined();
+  });
+
+  it("cascades to delete associated completions", async () => {
+    const id = await createTestHabit();
+    await insertCompletion(id, USER_ID, "2024-03-10");
+    await insertCompletion(id, USER_ID, "2024-03-11");
+
+    await deleteHabit(id);
+
+    const completions = await getCompletionsByUserIdAndDate(USER_ID, "2024-03-10");
+    expect(completions?.filter((c) => c.habit_id === id)).toHaveLength(0);
+  });
+
+  it("deletes a habit that has both goals and completions in one call", async () => {
+    const id = await createTestHabit();
+    await insertCompletion(id, USER_ID, "2024-03-10");
+    await insertGoal({
+      user_id: USER_ID,
+      habit_id: id,
+      name: "Run for 90 days",
+      target: 90,
+      period: "90",
+      start_date: "2024-03-01",
+    });
+
+    const { error } = await deleteHabit(id);
+    expect(error).toBeNull();
+
+    const [habits, goals, completions] = await Promise.all([
+      getHabitsByUserId(USER_ID),
+      getGoalsByUserId(USER_ID),
+      getCompletionsByUserIdAndDate(USER_ID, "2024-03-10"),
+    ]);
+    expect(habits?.find((h) => h.id === id)).toBeUndefined();
+    expect(goals?.find((g) => g.habit_id === id)).toBeUndefined();
+    expect(completions?.filter((c) => c.habit_id === id)).toHaveLength(0);
   });
 });
 
