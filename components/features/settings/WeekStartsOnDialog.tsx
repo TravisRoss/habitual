@@ -19,7 +19,7 @@ export function WeekStartsOnDialog() {
   const [open, setOpen] = useState(false);
   const t = useTranslations("settings");
   const { data: profile } = useProfile();
-  const updateWeekStartsOn = useUpdateWeekStartsOn();
+  const updateWeekStartsOnMutation = useUpdateWeekStartsOn();
 
   const weekStartsOn = (profile?.week_starts_on ?? 0) as 0 | 1;
 
@@ -34,7 +34,13 @@ export function WeekStartsOnDialog() {
         <SettingItem
           icon={CalendarDays}
           label={t("weekStartsOn")}
-          value={profile ? (weekStartsOn === 0 ? t("days.sunday") : t("days.monday")) : undefined}
+          value={
+            profile
+              ? weekStartsOn === 0
+                ? t("days.sunday")
+                : t("days.monday")
+              : undefined
+          }
         />
       </DialogTrigger>
       <DialogContent>
@@ -48,7 +54,7 @@ export function WeekStartsOnDialog() {
               variant="ghost"
               className={itemCls}
               onClick={() => {
-                updateWeekStartsOn(value);
+                updateWeekStartsOnMutation.mutate(value);
                 setOpen(false);
               }}
             >

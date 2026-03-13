@@ -9,6 +9,7 @@ import {
   Profile,
   Streak,
   Unit,
+  WeekStartsOn,
 } from "@/types";
 
 /** Inserts a new profile. Used by email/password sign-up. */
@@ -81,7 +82,7 @@ export async function getProfileById(id: string): Promise<Profile | null> {
 
 export async function updateWeekStartsOn(
   userId: string,
-  weekStartsOn: 0 | 1,
+  weekStartsOn: WeekStartsOn,
 ): Promise<{ error: string | null }> {
   const supabase = createAdminClient();
   const { error } = await supabase

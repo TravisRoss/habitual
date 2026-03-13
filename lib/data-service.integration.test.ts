@@ -8,9 +8,11 @@ import {
   getGoalsByUserId,
   getHabitsByUserId,
   getHabitsByUserIdAndDate,
+  getProfileById,
   insertCompletion,
   insertGoal,
   insertHabit,
+  updateWeekStartsOn,
 } from "./data-service";
 
 function adminClient() {
@@ -215,7 +217,10 @@ describe("deleteHabit", () => {
 
     await deleteHabit(id);
 
-    const completions = await getCompletionsByUserIdAndDate(USER_ID, "2024-03-10");
+    const completions = await getCompletionsByUserIdAndDate(
+      USER_ID,
+      "2024-03-10",
+    );
     expect(completions?.filter((c) => c.habit_id === id)).toHaveLength(0);
   });
 
@@ -261,5 +266,14 @@ describe("getHabitsByUserIdAndDate", () => {
     const result = await getHabitsByUserIdAndDate(USER_ID, yesterday);
 
     expect(result).toHaveLength(0);
+  });
+});
+
+describe("updateWeekStartsOn", () => {
+  it("updates the week_starts_on setting", async () => {
+    const { error } = await updateWeekStartsOn(USER_ID, 1);
+    expect(error).toBeNull();
+    const profile = await getProfileById(USER_ID);
+    expect(profile?.week_starts_on).toBe(1);
   });
 });

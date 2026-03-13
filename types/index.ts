@@ -86,3 +86,4 @@ export type UpdateGoalInput = Omit<CreateGoalInput, "habit"> & {
 };
 
 export type ReportPeriod = "Weekly" | "Monthly" | "Yearly";
+export type WeekStartsOn = 0 | 1;

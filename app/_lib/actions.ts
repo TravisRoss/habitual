@@ -37,6 +37,7 @@ import type {
   HabitFrequency,
   Profile,
   Streak,
+  WeekStartsOn,
 } from "@/types";
 import { revalidatePath } from "next/cache";
 import { GoalFormValues, GoalForHabitFormValues } from "@/lib/zod";
@@ -407,7 +408,7 @@ export async function fetchProfileAction(): Promise<Profile | null> {
 }
 
 export async function updateWeekStartsOnAction(
-  weekStartsOn: 0 | 1,
+  weekStartsOn: WeekStartsOn,
 ): Promise<{ error?: string }> {
   const session = await auth();
   if (!session?.user?.id) return { error: "Not authenticated." };
