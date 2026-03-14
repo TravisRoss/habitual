@@ -50,8 +50,8 @@ export default function Page({
   }
 
   const completionCount = completions.length;
-  const endDate = calcEndDate(goal.start_date, goal.period);
-  const isAchieved = completionCount >= goal.target;
+  const endDate = calcEndDate(goal.start_date, String(goal.duration_days));
+  const isAchieved = completionCount >= goal.target_completions;
 
   const badge = (
     <Badge

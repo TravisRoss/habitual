@@ -1,4 +1,4 @@
-import { Habit, Completion, Period, ReportPeriod } from "@/types";
+import { Habit, Completion, ReportPeriod } from "@/types";
 import { DAY_MS, MONTH_INDEXES } from "./constants";
 
 /** Converts a date string (e.g. "2026-02-24") to a day number (0 = Sunday, 6 = Saturday) */
@@ -22,10 +22,10 @@ export function formatIsoDate(iso: string, locale?: string): string {
   });
 }
 
-/** Calculates the end date based on the start date and the period (in days) */
-export function calcEndDate(start_date: string, period: Period): string {
+/** Calculates the end date based on the start date and the duration (in days) */
+export function calcEndDate(start_date: string, durationDays: string): string {
   const start = new Date(start_date);
-  const end = start.getTime() + parseInt(period) * 24 * 60 * 60 * 1000; // period is in days, convert to milliseconds
+  const end = start.getTime() + parseInt(durationDays) * 24 * 60 * 60 * 1000; // duration is in days, convert to milliseconds
   return dateToIsoStr(new Date(end));
 }
 

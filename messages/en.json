@@ -137,7 +137,10 @@
       "goalPlaceholder": "e.g. Run for 90 days",
       "habitName": "Habit Name",
       "habitNamePlaceholder": "e.g. Run",
-      "timePeriod": "Time Period",
+      "durationDays": "Duration (number of days)",
+      "durationDaysPlaceholder": "Enter the duration of your goal in days",
+      "customDurationDays": "Custom duration",
+      "customDurationDaysPlaceholder": "Enter the duration of your goal in days",
       "frequency": "Habit Frequency",
       "frequencyPlaceholder": "Select habit type",
       "dayOfWeek": "Day of the week",
@@ -150,7 +153,8 @@
       "1month": "1 Month (30 Days)",
       "3months": "3 Months (90 Days)",
       "6months": "6 Months (180 Days)",
-      "1year": "1 Year (365 Days)"
+      "1year": "1 Year (365 Days)",
+      "custom": "Custom"
     },
     "frequency": {
       "everyday": "Everyday",
@@ -273,7 +277,11 @@
     "habitNameMax": "Habit name must be less than 50 characters",
     "weeklyTarget": "Select how many days per week (1–7)",
     "selectDay": "Select a day of the week",
-    "selectDays": "Select at least one day"
+    "selectDays": "Select at least one day",
+    "durationDaysRequired": "Enter the duration (number of days)",
+    "customPeriodRequired": "Enter a custom time period",
+    "durationDays": "Duration must be at least 1 day",
+    "customDurationDays": "Custom duration must be at least 1 day"
   },
   "notFound": {
     "title": "Page not found.",

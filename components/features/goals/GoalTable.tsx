@@ -18,16 +18,19 @@ export default function GoalTable({
   completionCount,
 }: GoalTableProps) {
   const t = useTranslations("goals.table");
-  const daysRemaining = Math.max(0, goal.target - completionCount);
+  const daysRemaining = Math.max(0, goal.target_completions - completionCount);
 
   const rows = [
     { label: t("habitName"), value: habit?.name, bold: true },
-    { label: t("target"), value: t("pluralDays", { count: goal.target }) },
+    {
+      label: t("target"),
+      value: t("pluralDays", { count: goal.target_completions }),
+    },
     {
       label: t("daysComplete"),
       value: t("daysCompleteValue", {
         completionCount: String(completionCount),
-        target: t("pluralDays", { count: goal.target }),
+        target: t("pluralDays", { count: goal.target_completions }),
       }),
     },
     {

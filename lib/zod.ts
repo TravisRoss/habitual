@@ -62,9 +62,13 @@ export const createGoalSchema = (t: T) =>
         .string()
         .min(1, t("habitNameRequired"))
         .max(50, t("habitNameMax")),
-      period: z.enum(["7", "14", "30", "90", "180", "365"]),
+      duration_days: z.enum(["7", "14", "30", "90", "180", "365", "custom"]),
       habit_frequency: z.enum(HABIT_FREQUENCIES),
       habit_target_days: z.array(z.number().int().min(0).max(6)).optional(),
+      custom_duration_days: z
+        .string()
+        .min(1, t("customPeriodRequired"))
+        .optional(),
     })
     .refine(
       (data) => {
@@ -75,12 +79,19 @@ export const createGoalSchema = (t: T) =>
         );
       },
       { message: t("selectDays"), path: ["habit_target_days"] },
+    )
+    .refine(
+      (data) => {
+        if (data.duration_days !== "custom") return true;
+        return Number(data.custom_duration_days) >= 1;
+      },
+      { message: t("customDurationDays"), path: ["custom_duration_days"] },
     );
 
 export const createGoalForHabitSchema = (t: T) =>
   z.object({
     name: z.string().min(1, t("goalNameRequired")).max(50, t("nameMax")),
-    period: z.enum(["7", "14", "30", "90", "180", "365"]),
+    duration_days: z.enum(["7", "14", "30", "90", "180", "365", "custom"]),
   });
 
 export const createForgotPasswordSchema = (t: T) =>
@@ -107,7 +118,9 @@ export type LoginFormValues = z.infer<ReturnType<typeof createLoginSchema>>;
 export type SignUpFormValues = z.infer<ReturnType<typeof createSignUpSchema>>;
 export type HabitFormValues = z.infer<ReturnType<typeof createHabitSchema>>;
 export type GoalFormValues = z.infer<ReturnType<typeof createGoalSchema>>;
-export type GoalForHabitFormValues = z.infer<ReturnType<typeof createGoalForHabitSchema>>;
+export type GoalForHabitFormValues = z.infer<
+  ReturnType<typeof createGoalForHabitSchema>
+>;
 export type ForgotPasswordFormValues = z.infer<
   ReturnType<typeof createForgotPasswordSchema>
 >;

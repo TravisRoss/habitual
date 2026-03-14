@@ -29,7 +29,7 @@ export function GoalForm({
   const internalForm = useForm<GoalFormValues>({
     resolver: zodResolver(createGoalSchema(tVal)),
     defaultValues: {
-      period: "30",
+      duration_days: "30",
       habit_frequency: "daily",
       ...defaultValues,
     },

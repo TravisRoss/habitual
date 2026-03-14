@@ -33,7 +33,7 @@ export default function GoalItem({
 
   const habitCompletions = useCompletionsForHabit(goal.habit_id);
   const completionCount = habitCompletions.data?.length ?? 0;
-  const completionPercentage = calcPercentage(completionCount, goal.target);
+  const completionPercentage = calcPercentage(completionCount, goal.target_completions);
 
   return (
     <Item
@@ -50,7 +50,7 @@ export default function GoalItem({
         <Progress value={completionPercentage} />
         <ItemDescription>
           <span>
-            {tGoals("progress", { completions: String(completionCount), target: String(goal.target) })}
+            {tGoals("progress", { completions: String(completionCount), target: String(goal.target_completions) })}
           </span>
         </ItemDescription>
       </ItemContent>

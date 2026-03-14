@@ -93,7 +93,6 @@ export default function HabitItem({
         <BurgerMenu
           onEdit={() => setEditOpen(true)}
           onDelete={() => setDeleteOpen(true)}
-          onAddGoal={() => setAddGoalOpen(true)}
         />
         <ConfirmDialog
           open={deleteOpen}
@@ -109,11 +108,6 @@ export default function HabitItem({
           open={editOpen}
           onOpenChange={setEditOpen}
           onSubmit={onEdit}
-        />
-        <AddHabitGoalDialog
-          habit={habit}
-          open={addGoalOpen}
-          onOpenChange={setAddGoalOpen}
         />
       </ItemActions>
     </Item>

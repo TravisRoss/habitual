@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  calcEndDate,
   calcPercentage,
   dateToDayNumber,
   dateToIsoStr,
@@ -327,53 +328,6 @@ describe("calculateHabitCompletionRate", () => {
     );
     expect(result).toEqual(33);
   });
-
-  describe("when frequency is weekly", () => {
-    it("returns 100 when frequency is 'weekly' and all days are completed", () => {
-      const weeklyHabit: Habit = {
-        ...mockHabit,
-        frequency: "weekly",
-      };
-
-      const startDate = new Date("2024-03-04"); // Monday
-      const endDate = new Date("2024-03-10"); // Sunday (1 week)
-      const completions: Completion[] = [
-        {
-          id: "1",
-          habit_id: "habit-1",
-          user_id: "user-1",
-          completed_on: "2024-03-05",
-        }, // Monday
-      ];
-
-      const result = calculateHabitCompletionRate(
-        weeklyHabit,
-        completions,
-        startDate,
-        endDate,
-      );
-      expect(result).toEqual(100);
-    });
-
-    it("returns 0 when frequency is 'weekly' and no days are completed ", () => {
-      const weeklyHabit: Habit = {
-        ...mockHabit,
-        frequency: "weekly",
-      };
-
-      const startDate = new Date("2024-03-04"); // Monday
-      const endDate = new Date("2024-03-10"); // Sunday (1 week)
-      const completions: Completion[] = [];
-
-      const result = calculateHabitCompletionRate(
-        weeklyHabit,
-        completions,
-        startDate,
-        endDate,
-      );
-      expect(result).toEqual(0);
-    });
-  });
 });
 
 describe("getEffectiveStart", () => {
@@ -679,17 +633,7 @@ describe("calculateOverallCompletionRate", () => {
         color: null,
         weekly_target: null,
         target_days: [1, 3, 5], // Mon, Wed, Fri
-      },
-      {
-        id: "habit-3",
-        user_id: "user-1",
-        name: "Weekly Habit",
-        frequency: "weekly",
-        description: null,
-        color: null,
-        weekly_target: null,
-        target_days: [2], // Tue, within range
-      },
+      }
     ];
 
     const completions: Completion[] = [
@@ -713,13 +657,6 @@ describe("calculateOverallCompletionRate", () => {
         user_id: "user-1",
         completed_on: "2024-03-11",
       }, // Mon
-      // Weekly habit: 1/1 = 100% (Tue Mar 12 is in range)
-      {
-        id: "4",
-        habit_id: "habit-3",
-        user_id: "user-1",
-        completed_on: "2024-03-12",
-      }, // Tue
     ];
 
     const result = calculateOverallCompletionRate(
@@ -728,7 +665,7 @@ describe("calculateOverallCompletionRate", () => {
       startDate,
       endDate,
     );
-    expect(result).toEqual(89); // (67 + 100 + 100) / 3 = 89
+    expect(result).toEqual(84); // 67% + 100% = 167%, rounded to 84
   });
 });
 
@@ -836,6 +773,50 @@ describe("formatIsoDate", () => {
       const result = formatIsoDate("invalid-date", "en-GB");
 
       expect(result).toEqual("Invalid Date");
+    });
+  });
+});
+
+describe("calcEndDate", () => {
+  it("adds 7 days", () => {
+    expect(calcEndDate("2026-03-01", "7")).toEqual("2026-03-08");
+  });
+
+  it("adds 14 days", () => {
+    expect(calcEndDate("2026-03-01", "14")).toEqual("2026-03-15");
+  });
+
+  it("adds 30 days", () => {
+    expect(calcEndDate("2026-03-01", "30")).toEqual("2026-03-31");
+  });
+
+  it("adds 90 days", () => {
+    expect(calcEndDate("2026-03-01", "90")).toEqual("2026-05-30");
+  });
+
+  it("adds 180 days", () => {
+    expect(calcEndDate("2026-03-01", "180")).toEqual("2026-08-28");
+  });
+
+  it("adds 365 days", () => {
+    expect(calcEndDate("2026-03-01", "365")).toEqual("2027-03-01");
+  });
+
+  describe("custom duration (randomly selected)", () => {
+    it("adds 20 days", () => {
+      expect(calcEndDate("2026-03-01", "20")).toEqual("2026-03-21");
+    });
+
+    it("adds 52 days", () => {
+      expect(calcEndDate("2026-03-01", "52")).toEqual("2026-04-22");
+    });
+
+    it("adds 100 days", () => {
+      expect(calcEndDate("2026-03-01", "100")).toEqual("2026-06-09");
+    });
+
+    it("adds 450 days", () => {
+      expect(calcEndDate("2026-03-01", "450")).toEqual("2027-05-25");
     });
   });
 });

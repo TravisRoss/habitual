@@ -35,6 +35,7 @@ import type {
   Completion,
   Habit,
   HabitFrequency,
+  Period,
   Profile,
   Streak,
   WeekStartsOn,
@@ -307,26 +308,30 @@ export async function createGoalAction(
     return { error: "Failed to create habit. Please try again." };
   }
 
+  const effectiveDurationDays =
+    data.duration_days === "custom"
+      ? data.custom_duration_days
+      : data.duration_days;
   const daysPerWeek =
     data.habit_frequency === "daily"
       ? 7
       : (data.habit_target_days?.length ?? 1);
-  const target = Math.max(
+  const target_completions = Math.max(
     1,
-    Math.floor((Number(data.period) / 7) * daysPerWeek),
+    Math.floor((Number(effectiveDurationDays) / 7) * daysPerWeek),
   );
 
   const { error } = await insertGoal({
     user_id: session.user.id,
-    habit_id: habitId,
     name: data.name,
-    target,
-    period: data.period,
+    habit_id: habitId,
+    target_completions: target_completions,
+    duration_days: effectiveDurationDays as Period,
     start_date: dateToIsoStr(new Date()),
   });
 
   revalidatePath("/dashboard");
-  return error ? { error: "Failed to create goal. Please try again." } : {};
+  return error ? { error: `Failed to create goal: ${error}.` } : {};
 }
 
 export async function createGoalForHabitAction(
@@ -340,17 +345,17 @@ export async function createGoalForHabitAction(
 
   const daysPerWeek =
     habit.frequency === "daily" ? 7 : (habit.target_days?.length ?? 1);
-  const target = Math.max(
+  const target_completions = Math.max(
     1,
-    Math.floor((Number(data.period) / 7) * daysPerWeek),
+    Math.floor((Number(data.duration_days) / 7) * daysPerWeek),
   );
 
   const { error } = await insertGoal({
     user_id: session.user.id,
     habit_id: habit.id,
     name: data.name,
-    target,
-    period: data.period,
+    duration_days: data.duration_days as Period,
+    target_completions: target_completions,
     start_date: dateToIsoStr(new Date()),
   });
 
@@ -389,10 +394,12 @@ export async function updateGoalAction(
       data.habit_frequency === "daily" ? [] : (data.habit_target_days ?? []),
   });
 
+  const effectivePeriod =
+    data.duration_days === "custom" ? String(data.custom_duration_days) : data.duration_days;
   const { error } = await updateGoal({
     goal_id,
     name: data.name,
-    period: data.period,
+    duration_days: effectivePeriod as Period,
     start_date,
     unit: "times",
   });

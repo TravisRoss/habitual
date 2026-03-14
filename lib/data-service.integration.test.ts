@@ -199,8 +199,8 @@ describe("deleteHabit", () => {
       user_id: USER_ID,
       habit_id: id,
       name: "Run for 30 days",
-      target: 30,
-      period: "30",
+      target_completions: 30,
+      duration_days: "30",
       start_date: "2024-03-01",
     });
 
@@ -231,8 +231,8 @@ describe("deleteHabit", () => {
       user_id: USER_ID,
       habit_id: id,
       name: "Run for 90 days",
-      target: 90,
-      period: "90",
+      target_completions: 90,
+      duration_days: "90",
       start_date: "2024-03-01",
     });
 
@@ -266,6 +266,88 @@ describe("getHabitsByUserIdAndDate", () => {
     const result = await getHabitsByUserIdAndDate(USER_ID, yesterday);
 
     expect(result).toHaveLength(0);
+  });
+});
+
+describe("insertGoal / getGoalsByUserId", () => {
+  afterEach(async () => {
+    await adminClient().from("goals").delete().eq("user_id", USER_ID);
+  });
+
+  it("inserts a goal and returns no error", async () => {
+    const { error } = await insertGoal({
+      user_id: USER_ID,
+      habit_id: HABIT_ID,
+      name: "Run for 30 days",
+      target_completions: 30,
+      duration_days: "30",
+      start_date: "2024-03-01",
+    });
+
+    expect(error).toBeNull();
+  });
+
+  it("inserted goal can be retrieved with correct fields", async () => {
+    await insertGoal({
+      user_id: USER_ID,
+      habit_id: HABIT_ID,
+      name: "Run for 30 days",
+      target_completions: 30,
+      duration_days: "30",
+      start_date: "2024-03-01",
+    });
+
+    const goals = await getGoalsByUserId(USER_ID);
+
+    expect(goals).toHaveLength(1);
+    expect(goals![0]).toMatchObject({
+      user_id: USER_ID,
+      habit_id: HABIT_ID,
+      name: "Run for 30 days",
+      target_completions: 30,
+      start_date: "2024-03-01",
+    });
+  });
+
+  it("returns an error when habit_id does not exist", async () => {
+    const { error } = await insertGoal({
+      user_id: USER_ID,
+      habit_id: crypto.randomUUID(),
+      name: "Orphan goal",
+      target_completions: 30,
+      duration_days: "30",
+      start_date: "2024-03-01",
+    });
+
+    expect(error).not.toBeNull();
+  });
+
+  it("does not return goals belonging to a different user", async () => {
+    await insertGoal({
+      user_id: USER_ID,
+      habit_id: HABIT_ID,
+      name: "My goal",
+      target_completions: 30,
+      duration_days: "30",
+      start_date: "2024-03-01",
+    });
+
+    const goals = await getGoalsByUserId(crypto.randomUUID());
+
+    expect(goals?.find((g) => g.user_id === USER_ID)).toBeUndefined();
+  });
+
+  it("inserts a goal with a custom time duration_days", async () => {
+    const { error } = await insertGoal({
+      user_id: USER_ID,
+      habit_id: HABIT_ID,
+      name: "Run for 300 days",
+      target_completions: 300,
+      duration_days: "300",
+      start_date: "2024-03-01",
+    });
+
+    expect(error).toBeNull();
   });
 });
 

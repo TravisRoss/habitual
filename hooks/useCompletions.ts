@@ -58,7 +58,12 @@ export function useCompletionCountForHabit(habit_id: string) {
   });
 }
 
-type CompletionVars = { habit_id: string; user_id: string; date: string; done: boolean };
+type CompletionVars = {
+  habit_id: string;
+  user_id: string;
+  date: string;
+  done: boolean;
+};
 
 export function useToggleCompletion() {
   const t = useTranslations("habits.toasts");
@@ -69,15 +74,15 @@ export function useToggleCompletion() {
         ? createCompletionAction(habit_id, user_id, date)
         : deleteCompletionAction(habit_id, user_id, date),
     onMutate: ({ habit_id, user_id, date, done }) => {
-      queryClient.setQueryData<Completion[]>([...COMPLETIONS_KEY, date], (old = []) =>
-        done
-          ? [...old, { id: "optimistic", habit_id, user_id, completed_on: date }]
-          : old.filter((c) => c.habit_id !== habit_id),
-      );
+      const completion = { id: "optimistic", habit_id, user_id, completed_on: date };
+      queryClient.setQueryData<Completion[]>([...COMPLETIONS_KEY, date],
+        (old = []) => done ? [...old, completion] : old.filter((c) => c.habit_id !== habit_id));
+      queryClient.setQueryData<Completion[]>([...COMPLETIONS_KEY, habit_id],
+        (old = []) => done ? [...old, completion] : old.filter((c) => c.completed_on !== date));
     },
     onError: (_err, { done }) => toast.error(t(done ? "errorComplete" : "errorUncomplete")),
     onSettled: (_data, _err, { date }) => {
-      queryClient.invalidateQueries({ queryKey: [...COMPLETIONS_KEY, date] });
+      queryClient.invalidateQueries({ queryKey: [...COMPLETIONS_KEY] });
     },
   });
 }

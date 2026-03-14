@@ -117,13 +117,13 @@ export type Database = {
           archived_at: string | null
           color: string
           created_at: string
+          duration_days: number
           end_date: string
           habit_id: string | null
           id: string
           name: string
-          period: string
           start_date: string
-          target: number
+          target_completions: number
           unit: string
           updated_at: string
           user_id: string
@@ -132,13 +132,13 @@ export type Database = {
           archived_at?: string | null
           color?: string
           created_at?: string
+          duration_days: number
           end_date: string
           habit_id?: string | null
           id?: string
           name: string
-          period?: string
           start_date: string
-          target: number
+          target_completions: number
           unit?: string
           updated_at?: string
           user_id: string
@@ -147,13 +147,13 @@ export type Database = {
           archived_at?: string | null
           color?: string
           created_at?: string
+          duration_days?: number
           end_date?: string
           habit_id?: string | null
           id?: string
           name?: string
-          period?: string
           start_date?: string
-          target?: number
+          target_completions?: number
           unit?: string
           updated_at?: string
           user_id?: string

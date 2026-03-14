@@ -398,7 +398,7 @@ export async function getGoalsByUserId(
   const { data, error } = await supabase
     .from("goals")
     .select(
-      "id, user_id, habit_id, name, target, period, start_date, unit, color",
+      "id, user_id, habit_id, name, target_completions, duration_days, start_date, unit, color",
     )
     .eq("user_id", user_id);
 
@@ -414,8 +414,8 @@ export async function insertGoal(data: {
   user_id: string;
   name: string;
   habit_id: string;
-  target: number;
-  period: Period;
+  target_completions: number;
+  duration_days: string;
   start_date: string;
 }): Promise<{ error: string | null }> {
   const supabase = createAdminClient();
@@ -424,10 +424,10 @@ export async function insertGoal(data: {
     user_id: data.user_id,
     name: data.name,
     habit_id: data.habit_id,
-    target: data.target,
-    period: data.period,
+    target_completions: data.target_completions,
+    duration_days: Number(data.duration_days),
     start_date: data.start_date,
-    end_date: calcEndDate(data.start_date, data.period),
+    end_date: calcEndDate(data.start_date, data.duration_days),
   });
 
   return { error: error?.message ?? null };
@@ -465,9 +465,9 @@ export async function updateGoal(data: {
   goal_id: string;
   name?: string;
   habit_id?: string;
-  target?: number;
+  target_completions?: number;
   unit: Unit;
-  period?: Period;
+  duration_days?: Period;
   start_date?: string;
 }): Promise<{ error: string | null }> {
   const supabase = createAdminClient();
@@ -476,10 +476,10 @@ export async function updateGoal(data: {
     .update({
       name: data.name,
       habit_id: data.habit_id,
-      target: data.target,
-      period: data.period,
+      target: data.target_completions,
+      duration_days: Number(data.duration_days),
       start_date: data.start_date,
-      end_date: calcEndDate(data.start_date!, data.period!),
+      end_date: calcEndDate(data.start_date!, data.duration_days!),
     })
     .eq("id", data.goal_id);
 

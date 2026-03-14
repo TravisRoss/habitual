@@ -22,7 +22,7 @@ export default function GoalReportList({ isPreview }: GoalReportListProps) {
     const completionCount = completions.filter(
       (c) => c.habit_id === goal.habit_id,
     ).length;
-    const target = goal.target;
+    const target = goal.target_completions;
 
     if (filteredStatus === "active") return completionCount < target;
     if (filteredStatus === "completed") return completionCount >= target;

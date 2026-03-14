@@ -137,7 +137,10 @@
       "goalPlaceholder": "例：90日間走る",
       "habitName": "習慣名",
       "habitNamePlaceholder": "例：ランニング",
-      "timePeriod": "期間",
+      "durationDays": "期間（日数）",
+      "durationDaysPlaceholder": "目標の期間を日数で入力してください",
+      "customDurationDays": "カスタム期間",
+      "customDurationDaysPlaceholder": "目標の期間を日数で入力してください",
       "frequency": "習慣の頻度",
       "frequencyPlaceholder": "習慣のタイプを選択",
       "dayOfWeek": "曜日",
@@ -150,7 +153,8 @@
       "1month": "1ヶ月（30日）",
       "3months": "3ヶ月（90日）",
       "6months": "6ヶ月（180日）",
-      "1year": "1年（365日）"
+      "1year": "1年（365日）",
+      "custom": "カスタム"
     },
     "frequency": {
       "everyday": "毎日",
@@ -315,6 +319,10 @@
     "habitNameMax": "習慣名は50文字以内にしてください",
     "weeklyTarget": "週に何日行うか選択してください（1〜7）",
     "selectDay": "曜日を選択してください",
-    "selectDays": "少なくとも1日選択してください"
+    "selectDays": "少なくとも1日選択してください",
+    "customPeriodRequired": "日数を入力してください",
+    "durationDaysRequired": "日数（期間）を入力してください",
+    "durationDays": "期間は1日以上にしてください",
+    "customDurationDays": "カスタム期間は0より大きくしてください"
   }
 }

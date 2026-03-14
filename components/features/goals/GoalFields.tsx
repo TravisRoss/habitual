@@ -38,6 +38,7 @@ export function GoalFields({
   setValue,
 }: GoalFieldsProps) {
   const frequency = watch("habit_frequency");
+  const durationDays = watch("duration_days");
   const tFields = useTranslations("goals.fields");
   const tPeriods = useTranslations("goals.timePeriods");
   const tFreq = useTranslations("goals.frequency");
@@ -49,6 +50,7 @@ export function GoalFields({
     { value: "90", label: tPeriods("3months") },
     { value: "180", label: tPeriods("6months") },
     { value: "365", label: tPeriods("1year") },
+    { value: "custom", label: tPeriods("custom") },
   ];
 
   return (
@@ -80,14 +82,14 @@ export function GoalFields({
       </Field>
 
       <Field>
-        <FieldLabel htmlFor="period">{tFields("timePeriod")}</FieldLabel>
+        <FieldLabel htmlFor="period">{tFields("durationDays")}</FieldLabel>
         <Controller
-          name="period"
+          name="duration_days"
           control={control}
           render={({ field }) => (
-            <Select value={field.value} onValueChange={field.onChange}>
+            <Select value={String(field.value)} onValueChange={field.onChange}>
               <SelectTrigger id="period" className={inputClass}>
-                <SelectValue placeholder={tFields("timePeriod")} />
+                <SelectValue placeholder={tFields("durationDaysPlaceholder")} />
               </SelectTrigger>
               <SelectContent>
                 {PERIOD_OPTIONS.map((o) => (
@@ -99,8 +101,24 @@ export function GoalFields({
             </Select>
           )}
         />
-        <FieldError errors={[errors.period]} />
+        <FieldError errors={[errors.duration_days]} />
       </Field>
+
+      {durationDays === "custom" && (
+        <Field>
+          <FieldLabel>{tFields("customDurationDays")}</FieldLabel>
+          <Input
+            id="custom_duration_days"
+            type="number"
+            min={1}
+            placeholder={tFields("customDurationDaysPlaceholder")}
+            aria-invalid={!!errors.custom_duration_days}
+            className={inputClass}
+            {...register("custom_duration_days")}
+          />
+          <FieldError errors={[errors.custom_duration_days]} />
+        </Field>
+      )}
 
       <Field>
         <FieldLabel htmlFor="habit_frequency">

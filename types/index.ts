@@ -26,11 +26,11 @@ export type Goal = {
   user_id: string;
   habit_id: string;
   name: string;
-  target: number;
+  target_completions: number;
   unit: Unit;
   start_date: string;
   color: string;
-  period: Period;
+  duration_days: number;
 };
 
 export type Completion = {

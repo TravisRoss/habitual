@@ -137,7 +137,10 @@
       "goalPlaceholder": "z. B. 90 Tage laufen",
       "habitName": "Name der Gewohnheit",
       "habitNamePlaceholder": "z. B. Laufen",
-      "timePeriod": "Zeitraum",
+      "durationDays": "Dauer (Anzahl der Tage)",
+      "durationDaysPlaceholder": "Gib die Dauer deines Ziels in Tagen ein",
+      "customDurationDays": "Benutzerdefinierte Dauer",
+      "customDurationDaysPlaceholder": "Gib die Dauer deines Ziels in Tagen ein",
       "frequency": "Häufigkeit der Gewohnheit",
       "frequencyPlaceholder": "Gewohnheitstyp auswählen",
       "dayOfWeek": "Wochentag",
@@ -150,7 +153,8 @@
       "1month": "1 Monat (30 Tage)",
       "3months": "3 Monate (90 Tage)",
       "6months": "6 Monate (180 Tage)",
-      "1year": "1 Jahr (365 Tage)"
+      "1year": "1 Jahr (365 Tage)",
+      "custom": "Benutzerdefiniert"
     },
     "frequency": {
       "everyday": "Täglich",
@@ -315,6 +319,10 @@
     "habitNameMax": "Der Gewohnheitsname darf maximal 50 Zeichen lang sein",
     "weeklyTarget": "Wähle, wie viele Tage pro Woche (1–7)",
     "selectDay": "Wähle einen Wochentag",
-    "selectDays": "Wähle mindestens einen Tag"
+    "selectDays": "Wähle mindestens einen Tag",
+    "customPeriodRequired": "Gib eine Anzahl von Tagen ein",
+    "durationDaysRequired": "Gib die Dauer in Tagen ein",
+    "durationDays": "Die Dauer muss mindestens 1 Tag betragen",
+    "customDurationDays": "Der benutzerdefinierte Zeitraum muss größer als 0 sein"
   }
 }
