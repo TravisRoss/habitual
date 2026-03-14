@@ -395,7 +395,9 @@ export async function updateGoalAction(
   });
 
   const effectivePeriod =
-    data.duration_days === "custom" ? String(data.custom_duration_days) : data.duration_days;
+    data.duration_days === "custom"
+      ? String(data.custom_duration_days)
+      : data.duration_days;
   const { error } = await updateGoal({
     goal_id,
     name: data.name,

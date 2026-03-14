@@ -18,6 +18,7 @@ import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { HabitCheckbox } from "./HabitCheckbox";
 import { useTranslations } from "next-intl";
 import { haptic } from "@/app/_lib/haptics";
+import { Flame } from "lucide-react";
 import { habitBgColor } from "@/app/_lib/utils";
 
 type HabitItemProps = {
@@ -41,7 +42,6 @@ export default function HabitItem({
   const [editOpen, setEditOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const tDelete = useTranslations("habits.delete");
-  const tStreak = useTranslations("habits");
 
   useEffect(() => {
     setCompleted(isCompleted);
@@ -78,8 +78,9 @@ export default function HabitItem({
             {habit.frequency}
           </Badge>
           {streak && streak.streak_length >= 2 && (
-            <span className="text-xs text-muted-foreground">
-              {tStreak("streak", { count: String(streak.streak_length) })}
+            <span className="flex items-center gap-0.5 text-xs text-orange-500">
+              <Flame className="h-4 w-4" fill="currentColor" />
+              {streak.streak_length}
             </span>
           )}
         </ItemDescription>
