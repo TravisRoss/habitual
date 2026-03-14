@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Nunito } from "next/font/google";
 import { Providers } from "@/components/providers";
-import { getLocale, getMessages } from "next-intl/server";
+import { getLocale, getMessages, getTimeZone } from "next-intl/server";
 import { auth } from "@/app/_lib/auth";
 import "./globals.css";
 
@@ -35,9 +35,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [locale, messages, session] = await Promise.all([
+  const [locale, messages, timeZone, session] = await Promise.all([
     getLocale(),
     getMessages(),
+    getTimeZone(),
     auth(),
   ]);
 
@@ -46,7 +47,7 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${nunito.variable} antialiased`}
       >
-        <Providers locale={locale} messages={messages} session={session}>{children}</Providers>
+        <Providers locale={locale} messages={messages} timeZone={timeZone} session={session}>{children}</Providers>
       </body>
     </html>
   );

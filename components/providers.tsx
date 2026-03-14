@@ -16,11 +16,13 @@ export function Providers({
   children,
   locale,
   messages,
+  timeZone,
   session,
 }: {
   children: React.ReactNode;
   locale: string;
   messages: Record<string, unknown>;
+  timeZone: string | undefined;
   session: Session | null;
 }) {
   const [queryClient] = useState(() => makeQueryClient());
@@ -36,7 +38,7 @@ export function Providers({
   const maxAge = 1000 * 60 * 60 * 24; // 1 day
 
   const content = (
-    <NextIntlClientProvider locale={locale} messages={messages}>
+    <NextIntlClientProvider locale={locale} messages={messages} timeZone={timeZone}>
       <Toaster
         position="top-center"
         toastOptions={{
