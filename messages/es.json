@@ -105,7 +105,7 @@
     },
     "delete": {
       "title": "¿Seguro que quieres eliminar este hábito?",
-      "description": "Esto eliminará permanentemente el hábito, todo su historial y cualquier objetivo asociado. Esta acción no se puede deshacer.",
+      "description": "Esto eliminará permanentemente el hábito, todo su historial y su objetivo asociado. Esta acción no se puede deshacer.",
       "confirm": "Eliminar"
     },
     "streak": "🔥 {count}",

@@ -66,7 +66,7 @@ export function useDeleteHabit() {
     onMutate: async (habit_id) => {
       await queryClient.cancelQueries({ queryKey: HABITS_KEY });
       const previous = queryClient.getQueryData<Habit[]>(HABITS_KEY);
-      queryClient.setQueryData<Habit[]>(HABITS_KEY, (old = []) =>
+      queryClient.setQueriesData<Habit[]>({ queryKey: HABITS_KEY }, (old = []) =>
         old.filter((h) => h.id !== habit_id),
       );
       queryClient.setQueryData<Completion[]>(["completions"], (old = []) =>

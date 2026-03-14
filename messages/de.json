@@ -105,7 +105,7 @@
     },
     "delete": {
       "title": "Möchtest du diese Gewohnheit wirklich löschen?",
-      "description": "Dadurch werden die Gewohnheit, der gesamte Verlauf und alle zugehörigen Ziele dauerhaft gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
+      "description": "Dadurch werden die Gewohnheit, der gesamte Verlauf und das zugehörige Ziel dauerhaft gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
       "confirm": "Löschen"
     },
     "streak": "🔥 {count}",

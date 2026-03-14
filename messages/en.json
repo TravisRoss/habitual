@@ -70,7 +70,7 @@
     "logout": "Log out"
   },
   "dashboard": {
-    "greeting": "Hello, {name}!",
+    "greeting": "Hi, {name}!",
     "todaysHabits": "Today's Habits",
     "yourGoals": "Your Goals",
     "seeAll": "See all"
@@ -105,7 +105,7 @@
     },
     "delete": {
       "title": "Are you sure you want to delete this habit?",
-      "description": "This will permanently delete the habit, all its completion history, and any associated goals. This action cannot be undone.",
+      "description": "This will permanently delete the habit, all its completion history, and its associated goal. This action cannot be undone.",
       "confirm": "Delete"
     },
     "streak": "🔥 {count}",
