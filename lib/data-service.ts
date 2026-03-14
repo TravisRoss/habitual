@@ -8,7 +8,6 @@ import {
   Period,
   Profile,
   Streak,
-  Unit,
   WeekStartsOn,
 } from "@/types";
 
@@ -398,7 +397,7 @@ export async function getGoalsByUserId(
   const { data, error } = await supabase
     .from("goals")
     .select(
-      "id, user_id, habit_id, name, target_completions, duration_days, start_date, unit, color",
+      "id, user_id, habit_id, name, target_completions, duration_days, start_date, color",
     )
     .eq("user_id", user_id);
 
@@ -466,7 +465,6 @@ export async function updateGoal(data: {
   name?: string;
   habit_id?: string;
   target_completions?: number;
-  unit: Unit;
   duration_days?: Period;
   start_date?: string;
 }): Promise<{ error: string | null }> {

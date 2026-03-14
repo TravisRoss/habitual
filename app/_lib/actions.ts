@@ -401,7 +401,6 @@ export async function updateGoalAction(
     name: data.name,
     duration_days: effectivePeriod as Period,
     start_date,
-    unit: "times",
   });
 
   revalidatePath("/dashboard");

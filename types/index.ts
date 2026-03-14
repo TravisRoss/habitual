@@ -27,7 +27,7 @@ export type Goal = {
   habit_id: string;
   name: string;
   target_completions: number;
-  unit: Unit;
+  unit: string;
   start_date: string;
   color: string;
   duration_days: number;
@@ -48,8 +48,6 @@ export type Streak = {
   streak_end: string;
   is_active: boolean;
 };
-
-export type Unit = "times" | "hours" | "minutes" | "pages" | "kg" | "custom";
 
 export type Period = "7" | "14" | "30" | "90" | "180" | "365";
 
@@ -77,7 +75,7 @@ export type CreateGoalInput = {
   target: number;
   period: Period;
   start_date: string;
-  unit: Unit;
+  unit: string;
   habit: ExistingHabitInput | NewHabitInput;
 };
 
