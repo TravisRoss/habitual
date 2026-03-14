@@ -295,11 +295,6 @@
     "logIn": "Log in",
     "footer": "Free to use. No credit card required."
   },
-  "otp": {
-    "title": "Verify",
-    "description": "Enter the One Time Password (OTP) code we've sent to your email",
-    "submit": "Submit"
-  },
   "dates": {
     "months": {
       "january": "January",

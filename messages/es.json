@@ -274,11 +274,6 @@
     "logIn": "Iniciar sesión",
     "footer": "Gratis. Sin tarjeta de crédito."
   },
-  "otp": {
-    "title": "Verificar",
-    "description": "Introduce el código de un solo uso (OTP) que hemos enviado a tu correo",
-    "submit": "Enviar"
-  },
   "dates": {
     "months": {
       "january": "enero",

@@ -274,11 +274,6 @@
     "logIn": "Anmelden",
     "footer": "Kostenlos nutzbar. Keine Kreditkarte erforderlich."
   },
-  "otp": {
-    "title": "Verifizieren",
-    "description": "Gib den Einmalpasswort-Code (OTP) ein, den wir an deine E-Mail gesendet haben",
-    "submit": "Absenden"
-  },
   "dates": {
     "months": {
       "january": "Januar",
