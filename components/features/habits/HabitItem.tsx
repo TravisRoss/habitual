@@ -18,6 +18,7 @@ import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { HabitCheckbox } from "./HabitCheckbox";
 import { useTranslations } from "next-intl";
 import { haptic } from "@/app/_lib/haptics";
+import { habitBgColor } from "@/app/_lib/utils";
 
 type HabitItemProps = {
   habit: Habit;
@@ -53,15 +54,16 @@ export default function HabitItem({
   };
 
   return (
-    <Item
-      className={cn(
-        "relative overflow-hidden border-l-4 transition-colors duration-300",
-        completed ? "bg-habit-done-bg" : "bg-card",
-      )}
-      style={{
-        borderLeftColor: habit.color ?? "var(--color-habit-border-default)",
-      }}
-    >
+    <Item className="relative overflow-hidden">
+      <div
+        className={cn(
+          "absolute inset-0 pointer-events-none transition-[opacity,filter] duration-300",
+          completed && "opacity-75 saturate-75",
+        )}
+        style={{
+          backgroundColor: habitBgColor(habit.color),
+        }}
+      />
       <ItemContent>
         <ItemTitle
           className={cn(

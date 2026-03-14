@@ -2,12 +2,17 @@
 
 import { GoalFormValues } from "@/lib/zod";
 import { Goal, Habit } from "@/types";
-import { Item, ItemContent, ItemDescription, ItemTitle, ItemActions } from "@/components/ui/item";
+import {
+  Item,
+  ItemContent,
+  ItemDescription,
+  ItemTitle,
+  ItemActions,
+} from "@/components/ui/item";
 import BurgerMenu from "../shared/BurgerMenu";
 import { Progress } from "@/components/ui/progress";
 import { useState } from "react";
 import { GoalDialog } from "./GoalDialog";
-import { cn } from "@/lib/utils";
 import { useCompletionsForHabit } from "@/hooks/useCompletions";
 import { calcPercentage } from "@/app/_lib/utils";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
@@ -33,16 +38,18 @@ export default function GoalItem({
 
   const habitCompletions = useCompletionsForHabit(goal.habit_id);
   const completionCount = habitCompletions.data?.length ?? 0;
-  const completionPercentage = calcPercentage(completionCount, goal.target_completions);
+  const completionPercentage = calcPercentage(
+    completionCount,
+    goal.target_completions,
+  );
+
+  const habit = habits?.find((h) => h.id === goal.habit_id);
 
   return (
     <Item
-      className={cn(
-        "relative overflow-hidden border-l-4 transition-colors duration-300",
-        "bg-card",
-      )}
+      className="relative overflow-hidden border-l-8 bg-goal transition-colors duration-300"
       style={{
-        borderLeftColor: goal.color ?? "var(--color-habit-border-default)",
+        borderLeftColor: `color-mix(in srgb, ${habit?.color ?? "var(--color-habit-border-default)"} var(--habit-color-tint), transparent)`,
       }}
     >
       <ItemContent>
@@ -50,12 +57,18 @@ export default function GoalItem({
         <Progress value={completionPercentage} />
         <ItemDescription>
           <span>
-            {tGoals("progress", { completions: String(completionCount), target: String(goal.target_completions) })}
+            {tGoals("progress", {
+              completions: String(completionCount),
+              target: String(goal.target_completions),
+            })}
           </span>
         </ItemDescription>
       </ItemContent>
       <ItemActions>
-        <BurgerMenu onEdit={() => setEditOpen(true)} onDelete={() => setDeleteOpen(true)} />
+        <BurgerMenu
+          onEdit={() => setEditOpen(true)}
+          onDelete={() => setDeleteOpen(true)}
+        />
         <ConfirmDialog
           open={deleteOpen}
           onOpenChange={setDeleteOpen}

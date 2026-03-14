@@ -202,3 +202,9 @@ export function calculateOverallCompletionRate(
 }
 
 export const pluralDays = (n: number) => `${n} Day${n !== 1 ? "s" : ""}`;
+
+/** Builds the CSS color-mix background value for a habit, using the habit color or the default. */
+export function habitBgColor(color: string | null | undefined): string {
+  const base = color ?? "var(--color-habit-border-default)";
+  return `color-mix(in srgb, ${base} var(--habit-color-tint), transparent)`;
+}

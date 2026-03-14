@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   calcEndDate,
   calcPercentage,
+  habitBgColor,
   dateToDayNumber,
   dateToIsoStr,
   formatIsoDate,
@@ -818,5 +819,25 @@ describe("calcEndDate", () => {
     it("adds 450 days", () => {
       expect(calcEndDate("2026-03-01", "450")).toEqual("2027-05-25");
     });
+  });
+});
+
+describe("habitBgColor", () => {
+  it("uses the habit color when provided", () => {
+    expect(habitBgColor("#3B82F6")).toBe(
+      "color-mix(in srgb, #3B82F6 var(--habit-color-tint), transparent)",
+    );
+  });
+
+  it("falls back to the default CSS variable when color is null", () => {
+    expect(habitBgColor(null)).toBe(
+      "color-mix(in srgb, var(--color-habit-border-default) var(--habit-color-tint), transparent)",
+    );
+  });
+
+  it("falls back to the default CSS variable when color is undefined", () => {
+    expect(habitBgColor(undefined)).toBe(
+      "color-mix(in srgb, var(--color-habit-border-default) var(--habit-color-tint), transparent)",
+    );
   });
 });

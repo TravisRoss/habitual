@@ -25,11 +25,14 @@ export default function GoalReportListItem({ goal }: GoalReportListItemProps) {
   const { data: completionCount = 0 } = useCompletionCountForHabit(
     goal.habit_id,
   );
-  const completionPercentage = calcPercentage(completionCount, goal.target);
+  const completionPercentage = calcPercentage(
+    completionCount,
+    goal.target_completions,
+  );
   const tStatus = useTranslations("goals.status");
   const tGoals = useTranslations("goals");
 
-  const isAchieved = completionCount >= goal.target;
+  const isAchieved = completionCount >= goal.target_completions;
 
   return (
     <Link href={`/dashboard/progress/goals/${goal.id}`}>
@@ -46,7 +49,7 @@ export default function GoalReportListItem({ goal }: GoalReportListItemProps) {
           <ItemDescription>
             {tGoals("progress", {
               completions: String(completionCount),
-              target: String(goal.target),
+              target: String(goal.target_completions),
             })}
           </ItemDescription>
         </ItemContent>
