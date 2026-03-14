@@ -8,6 +8,7 @@ import PageLayout from "@/components/features/shared/PageLayout";
 import DashboardCard from "@/components/features/shared/DashboardCard";
 import { useHabitsForDate } from "@/hooks/useHabits";
 import { useGoals } from "@/hooks/useGoals";
+import { Quote } from "@/types";
 
 const Banner = dynamic(
   () =>
@@ -38,9 +39,10 @@ const CreateGoalButton = dynamic(
 
 interface DashboardProps {
   userName: string;
+  quote?: Quote;
 }
 
-export function Dashboard({ userName }: DashboardProps) {
+export function Dashboard({ userName, quote }: DashboardProps) {
   const t = useTranslations("dashboard");
   const today = dateToIsoStr();
 
@@ -50,7 +52,7 @@ export function Dashboard({ userName }: DashboardProps) {
 
   return (
     <PageLayout title={t("greeting", { name: userName })}>
-      <Banner />
+      <Banner quote={quote} />
       <DashboardCard
         title={t("todaysHabits")}
         action={habits.length > 0 && <SeeAllButton href="/dashboard/habits" />}

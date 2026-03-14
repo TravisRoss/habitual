@@ -87,3 +87,8 @@ export type UpdateGoalInput = Omit<CreateGoalInput, "habit"> & {
 
 export type ReportPeriod = "Weekly" | "Monthly" | "Yearly";
 export type WeekStartsOn = 0 | 1;
+export type Quote = {
+  q: string; // quote text
+  a: string; // author
+  h: string; // pre-formatted HTML quote
+};

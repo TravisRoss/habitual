@@ -4,6 +4,7 @@ interface CircularProgressProps {
   thickness?: number;
   fillColor?: string;
   textColor?: string;
+  className?: string;
 }
 
 export default function CircularProgress({
@@ -12,6 +13,7 @@ export default function CircularProgress({
   thickness = 10,
   fillColor = "#f59e0b",
   textColor = "#f59e0b",
+  className = "",
 }: CircularProgressProps) {
   const center = size / 2;
   const radius = center - thickness / 2;
@@ -19,7 +21,7 @@ export default function CircularProgress({
   const strokeDashoffset = circumference - (value / 100) * circumference;
 
   return (
-    <svg width={size} height={size}>
+    <svg width={size} height={size} className={className}>
       <circle
         cx={center}
         cy={center}
