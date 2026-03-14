@@ -13,7 +13,7 @@ export default function FooterNav() {
   const t = useTranslations("nav");
 
   return (
-    <nav className="md:hidden bg-card border-t border-border pb-[env(safe-area-inset-bottom)]">
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-card border-t border-border pb-[env(safe-area-inset-bottom)]">
       <ul className="flex py-2">
         {navLinks.map(({ href, icon: Icon }) => {
           const isActive = pathname === href;
