@@ -12,11 +12,8 @@ export function DarkModeToggle() {
       size="icon"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
     >
-      {theme === "dark" || theme === undefined ? (
-        <Sun className="h-5 w-5" />
-      ) : (
-        <Moon className="h-5 w-5" />
-      )}
+      <Sun className="h-5 w-5 hidden dark:block" />
+      <Moon className="h-5 w-5 dark:hidden" />
     </Button>
   );
 }
