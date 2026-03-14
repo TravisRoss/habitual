@@ -13,7 +13,6 @@ import { cn } from "@/lib/utils";
 import type { Habit, Streak } from "@/types";
 import type { HabitFormValues } from "@/lib/zod";
 import { HabitDialog } from "./HabitDialog";
-import { AddHabitGoalDialog } from "../goals/AddHabitGoalDialog";
 import BurgerMenu from "../shared/BurgerMenu";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { HabitCheckbox } from "./HabitCheckbox";
@@ -40,7 +39,6 @@ export default function HabitItem({
   const [completed, setCompleted] = useState(isCompleted);
   const [editOpen, setEditOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
-  const [addGoalOpen, setAddGoalOpen] = useState(false);
   const tDelete = useTranslations("habits.delete");
   const tStreak = useTranslations("habits");
 
