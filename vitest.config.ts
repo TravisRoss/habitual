@@ -17,12 +17,20 @@ export default defineConfig({
         test: {
           name: "unit",
           environment: "node",
-          include: ["**/*.test.ts", "**/*.test.tsx"],
-          exclude: [
-            "**/*.integration.test.ts",
-            "**/*.stories.*",
-            "**/node_modules/**",
-          ],
+          include: ["**/*.test.ts"],
+          exclude: ["**/*.integration.test.ts", "**/node_modules/**"],
+        },
+      },
+      // Component tests (React Testing Library)
+      {
+        resolve: {
+          alias: { "@": dirname },
+        },
+        test: {
+          name: "component",
+          environment: "jsdom",
+          include: ["**/*.test.tsx"],
+          exclude: ["**/*.stories.*", "**/node_modules/**"],
         },
       },
       // Integration tests (hit the real database)
