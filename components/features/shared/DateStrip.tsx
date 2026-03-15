@@ -33,6 +33,8 @@ export function DateStrip({ selectedDate, onSelect }: DateStripProps) {
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
             dragElastic={0.15}
+            dragMomentum={false}
+            style={{ willChange: "transform" }}
             onDragEnd={(_, { offset, velocity }) => {
               const swipe = Math.abs(offset.x) > 50 || Math.abs(velocity.x) > 500;
               if (!swipe) return;
@@ -47,7 +49,7 @@ export function DateStrip({ selectedDate, onSelect }: DateStripProps) {
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            transition={{ type: "spring", stiffness: 600, damping: 40 }}
             className="flex gap-2 pb-1"
           >
             {dates.map((dateStr) => (
