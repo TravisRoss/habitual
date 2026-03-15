@@ -1,6 +1,12 @@
 # Habitual
 
+**Live demo: [habitual-tracking.vercel.app](https://habitual-tracking.vercel.app/)**
+
 Build better habits. Track your progress and stay consistent, one day at a time. It's about progress, not perfection.
+
+Designed mobile-first, with full desktop support.
+
+![App demo](public/demo.gif)
 
 ## Features
 
