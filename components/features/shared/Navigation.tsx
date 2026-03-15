@@ -27,7 +27,7 @@ export default function Navigation({ session }: { session: Session | null }) {
   const t = useTranslations("nav");
 
   return (
-    <nav className="hidden md:block bg-card border-b border-border">
+    <nav className="hidden md:block bg-card border-b border-border sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-6 h-14 flex items-center gap-2">
         <Link
           href={session ? "/dashboard" : "/"}

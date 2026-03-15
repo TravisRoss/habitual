@@ -11,9 +11,9 @@ export default async function DashboardLayout({
 }) {
   const session = await auth();
   return (
-    <div className="flex flex-col h-dvh bg-page-bg">
+    <div className="min-h-dvh bg-page-bg">
       <Navigation session={session} />
-      <main className="flex-1 min-h-0 overflow-auto px-4 py-8 pb-[calc(env(safe-area-inset-bottom)+4rem)] md:pb-8">
+      <main className="px-4 py-8 pb-[calc(env(safe-area-inset-bottom)+4rem)] md:pb-8">
         {children}
       </main>
       <FooterNav />
