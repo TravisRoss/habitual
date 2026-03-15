@@ -35,6 +35,12 @@ export function calcPercentage(value: number, total: number): number {
   return Math.round(Math.min((value / total) * 100, 100));
 }
 
+/** Shifts a date string by the given number of days (negative = backwards) */
+export function shiftDate(dateStr: string, days: number): string {
+  const ms = new Date(dateStr).getTime() + days * DAY_MS;
+  return new Date(ms).toISOString().slice(0, 10);
+}
+
 /** Returns an array of 7 dates centered on the given date */
 export function getWindowDates(centerDate: string): string[] {
   const centerMs = new Date(centerDate).getTime();

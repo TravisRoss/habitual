@@ -12,6 +12,7 @@ import {
   calculateOverallCompletionRate,
   getEffectiveStart,
   getMonthIndexesBetweenDates,
+  shiftDate,
 } from "./utils";
 import { Habit, Completion } from "@/types";
 
@@ -839,5 +840,35 @@ describe("habitBgColor", () => {
     expect(habitBgColor(undefined)).toBe(
       "color-mix(in srgb, var(--color-habit-border-default) var(--habit-color-tint), transparent)",
     );
+  });
+});
+
+describe("shiftDate", () => {
+  it("shifts forward by 1 day", () => {
+    expect(shiftDate("2024-01-15", 1)).toBe("2024-01-16");
+  });
+
+  it("shifts backward by 1 day", () => {
+    expect(shiftDate("2024-01-15", -1)).toBe("2024-01-14");
+  });
+
+  it("shifts forward by 7 days", () => {
+    expect(shiftDate("2024-01-15", 7)).toBe("2024-01-22");
+  });
+
+  it("shifts backward by 7 days", () => {
+    expect(shiftDate("2024-01-15", -7)).toBe("2024-01-08");
+  });
+
+  it("crosses a month boundary", () => {
+    expect(shiftDate("2024-01-28", 7)).toBe("2024-02-04");
+  });
+
+  it("crosses a year boundary", () => {
+    expect(shiftDate("2024-12-30", 7)).toBe("2025-01-06");
+  });
+
+  it("handles zero days", () => {
+    expect(shiftDate("2024-01-15", 0)).toBe("2024-01-15");
   });
 });
